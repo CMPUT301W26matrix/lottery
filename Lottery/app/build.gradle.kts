@@ -45,11 +45,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 }
 
-val sdkDir: String = rootProject.file("local.properties")
-    .readLines()
-    .first { it.startsWith("sdk.dir=") }
-    .removePrefix("sdk.dir=")
-
 tasks.register<Javadoc>("generateJavadoc") {
     dependsOn("compileReleaseJavaWithJavac")
     source(android.sourceSets["main"].java.directories)
