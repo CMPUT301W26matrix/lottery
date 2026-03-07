@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/background_light">
+
+    <TextView
+        android:id="@+id/tvDialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload Poster"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/primary_blue"
+        android:gravity="center"
+        android:layout_marginBottom="24dp" />
+
+    <!-- Preview Area with Placeholder -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvDialogPreview"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:strokeColor="@color/divider_gray"
+        app:strokeWidth="1dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/ivDialogPreview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/event_placeholder"
+            android:contentDescription="Poster Preview" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvPreviewHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tap image to enlarge"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:textColor="@color/text_gray"
+        android:layout_marginBottom="20dp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btnBrowseImage"
+        style="@style/Widget.Material3.Button.TonalButton"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:text="Browse Device"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/primary_light_blue"
+        android:textColor="@color/primary_blue"
+        app:icon="@android:drawable/ic_menu_gallery"
+        app:iconTint="@color/primary_blue" />
+
+    <!-- Symmetrical Action Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:textColor="@color/primary_blue"
+            app:strokeColor="@color/primary_blue"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/btnSelectConfirm"
+            style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_weight="1"
+            android:text="Select"
+            android:enabled="false"
+            android:backgroundTint="@color/primary_blue"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+</LinearLayout>

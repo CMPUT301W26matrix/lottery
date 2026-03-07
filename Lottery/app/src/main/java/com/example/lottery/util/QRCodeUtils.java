@@ -10,24 +10,30 @@ import java.util.UUID;
 
 /**
  * Utility class for QR code related operations.
+ * Provides methods to generate unique QR content strings and render them as Bitmaps.
+ * 
+ * <p>Satisfies requirements for:
+ * US 02.01.01: Event creation with promotional QR code.
+ * </p>
  */
 public class QRCodeUtils {
 
     /**
      * Generates a unique string to be used as QR code content.
+     * Combines the eventId with a random UUID to ensure global uniqueness.
      * 
-     * @param eventId The unique ID of the event.
-     * @return A unique string combining eventId and a random UUID.
+     * @param eventId The unique ID of the event to link with the QR code.
+     * @return A unique string combining eventId and a random UUID seed.
      */
     public static String generateUniqueQrContent(String eventId) {
         return eventId + "_" + UUID.randomUUID().toString();
     }
 
     /**
-     * Generates a QR Code Bitmap from the given content string.
+     * Generates a QR Code Bitmap from the given content string using the ZXing library.
      * 
-     * @param content The string to encode in the QR code.
-     * @return A Bitmap of the QR code, or null if generation fails.
+     * @param content The string content to be encoded into the QR code.
+     * @return A 512x512 Bitmap of the generated QR code, or null if an error occurs.
      */
     public static Bitmap generateQRCodeBitmap(String content) {
         QRCodeWriter writer = new QRCodeWriter();

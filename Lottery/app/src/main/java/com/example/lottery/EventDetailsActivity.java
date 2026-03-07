@@ -3,6 +3,7 @@ package com.example.lottery;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import java.util.Locale;
  *   <li>Retrieves event metadata from Firebase Firestore based on a passed event ID.</li>
  *   <li>Displays event information including title, description, and dates.</li>
  *   <li>Renders the event poster image or a placeholder if none exists.</li>
+ *   <li>Displays event-specific requirements such as geolocation (US 02.02.03).</li>
  * </ul>
  * </p>
  * 
@@ -32,6 +34,7 @@ import java.util.Locale;
  * 
  * <p>Satisfies requirements for:
  * US 02.04.01: Event poster visualization for entrants.
+ * US 02.02.03: Geolocation requirement visualization.
  * </p>
  * 
  * @see com.example.lottery.model.Event
@@ -45,7 +48,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private ImageView ivEventPoster;
     
     /** TextViews for title, dates, and event description. */
-    private TextView tvEventTitle, tvScheduledDate, tvRegistrationDeadline, tvEventDetails;
+    private TextView tvEventTitle, tvScheduledDate, tvRegistrationDeadline, tvEventDetails, tvLocationRequirement;
     
     /** Firestore database instance for fetching event data. */
     private FirebaseFirestore db;
@@ -72,6 +75,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvScheduledDate = findViewById(R.id.tvScheduledDate);
         tvRegistrationDeadline = findViewById(R.id.tvRegistrationDeadline);
         tvEventDetails = findViewById(R.id.tvEventDetails);
+        tvLocationRequirement = findViewById(R.id.tvLocationRequirement);
 
         db = FirebaseFirestore.getInstance();
 
@@ -126,6 +130,17 @@ public class EventDetailsActivity extends AppCompatActivity {
         
         if (event.getRegistrationDeadline() != null) {
             tvRegistrationDeadline.setText(dateFormat.format(event.getRegistrationDeadline()));
+        }
+
+        // US 02.02.03: Display geolocation requirement
+        if (tvLocationRequirement != null) {
+            if (event.isRequireLocation()) {
+                tvLocationRequirement.setText("Location Verification Required");
+                tvLocationRequirement.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+                tvLocationRequirement.setVisibility(View.VISIBLE);
+            } else {
+                tvLocationRequirement.setVisibility(View.GONE);
+            }
         }
 
         /**

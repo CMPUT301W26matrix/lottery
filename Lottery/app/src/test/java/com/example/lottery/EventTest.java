@@ -8,12 +8,14 @@ import java.util.Calendar;
 
 /**
  * Unit tests for the Event model class.
- * Ensures data integrity and validation for core fields including US 02.04.01 requirements.
+ * Ensures data integrity and validation for core fields including US 02.04.01 
+ * and US 02.02.03 requirements.
  */
 public class EventTest {
 
     /**
      * Verifies that the constructor and getters correctly handle and return the provided values.
+     * Updated to include US 02.02.03 (requireLocation).
      */
     @Test
     public void testEventConstructorAndGetters() {
@@ -25,12 +27,31 @@ public class EventTest {
         String posterUri = "content://media/external/images/media/1";
         String qrCodeContent = "qr_content";
         String organizerId = "org456";
+        boolean requireLocation = true;
 
+        // Pass 10 arguments to match the updated Event constructor
         Event event = new Event(eventId, title, now, now, 
-                                maxCapacity, details, posterUri, qrCodeContent, organizerId);
+                                maxCapacity, details, posterUri, qrCodeContent, 
+                                organizerId, requireLocation);
 
         assertEquals(eventId, event.getEventId());
         assertEquals(posterUri, event.getPosterUri());
+        assertEquals(requireLocation, event.isRequireLocation());
+    }
+
+    /**
+     * US 02.02.03 Requirement:
+     * Verifies that the requireLocation toggle can be stored and retrieved correctly.
+     */
+    @Test
+    public void testRequireLocationStorage() {
+        Event event = new Event();
+        
+        event.setRequireLocation(true);
+        assertTrue("Geolocation requirement should be true", event.isRequireLocation());
+        
+        event.setRequireLocation(false);
+        assertFalse("Geolocation requirement should be false", event.isRequireLocation());
     }
 
     /**
