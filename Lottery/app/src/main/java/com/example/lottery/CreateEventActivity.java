@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -116,22 +117,22 @@ public class CreateEventActivity extends AppCompatActivity {
                     if (uri != null) {
                         posterUriString = uri.toString();
                         ivPosterPreview.setImageURI(uri);
+                        btnUploadPoster.setVisibility(View.GONE);
                     }
                 });
         btnUploadPoster.setOnClickListener(v -> getContentLauncher.launch("image/*"));
+        ivPosterPreview.setOnClickListener(v -> getContentLauncher.launch("image/*"));
     }
 
     private void showDateTimePicker(Button button, boolean isEventTime) {
         final Calendar calendar = Calendar.getInstance();
-        new DatePickerDialog(this, (view, year, month, day) -> {
-            new TimePickerDialog(this, (v, hour, min) -> {
-                Calendar selected = Calendar.getInstance();
-                selected.set(year, month, day, hour, min);
-                Date date = selected.getTime();
-                button.setText(String.format(Locale.getDefault(), "%04d-%02d-%02d %02d:%02d", year, month + 1, day, hour, min));
-                if (isEventTime) eventDate = date; else deadlineDate = date;
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
-        }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(this, (view, year, month, day) -> new TimePickerDialog(this, (v, hour, min) -> {
+            Calendar selected = Calendar.getInstance();
+            selected.set(year, month, day, hour, min);
+            Date date = selected.getTime();
+            button.setText(String.format(Locale.getDefault(), "%04d-%02d-%02d %02d:%02d", year, month + 1, day, hour, min));
+            if (isEventTime) eventDate = date; else deadlineDate = date;
+        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show(), calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     /**
@@ -139,13 +140,18 @@ public class CreateEventActivity extends AppCompatActivity {
      * Ensures Event object is stored in the "events" collection with eventId as the document ID.
      */
     private void createEvent() {
-        String title = etEventTitle.getText().toString().trim();
-        String capacityStr = etMaxCapacity.getText().toString().trim();
-        String details = etEventDetails.getText().toString().trim();
+        String title = Objects.requireNonNull(etEventTitle.getText()).toString().trim();
+        String capacityStr = Objects.requireNonNull(etMaxCapacity.getText()).toString().trim();
+        String details = Objects.requireNonNull(etEventDetails.getText()).toString().trim();
 
         // Basic validation
         if (title.isEmpty() || eventDate == null) {
             Toast.makeText(this, "Title and Date are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (deadlineDate != null && !deadlineDate.before(eventDate)) {
+            Toast.makeText(this, "Registration deadline must be before event date", Toast.LENGTH_SHORT).show();
             return;
         }
 
