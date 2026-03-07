@@ -92,7 +92,13 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Event</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Model class representing an Event.
- Integrates requirements for US 02.01.01 and US 02.01.04.</div>
+ This class encapsulates all data related to an event, including its identity,
+ scheduling, registration details, and promotional content.
+ It is designed to be compatible with Firebase Firestore serialization.
+ 
+ Satisfies requirements for:
+ US 02.01.01: Event creation with promotional QR code.
+ US 02.01.04: Registration deadline management.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -105,7 +111,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Event</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Default no-argument constructor required for Firebase Firestore serialization.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.util.Date,java.util.Date,java.lang.Integer,java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">Event</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventId,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;title,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Date.html" title="class or interface in java.util" class="external-link">Date</a>&nbsp;scheduledDateTime,
@@ -115,7 +123,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;posterUri,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qrCodeContent,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;organizerId)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a new Event with all required fields.</div>
+</div>
 </div>
 </section>
 </li>
@@ -205,6 +215,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>Event</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Event</span>()</div>
+<div class="block">Default no-argument constructor required for Firebase Firestore serialization.</div>
 </section>
 </li>
 <li>
@@ -219,6 +230,19 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;posterUri,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qrCodeContent,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;organizerId)</span></div>
+<div class="block">Constructs a new Event with all required fields.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>eventId</code> - The unique ID of the event.</dd>
+<dd><code>title</code> - The title of the event.</dd>
+<dd><code>scheduledDateTime</code> - The date and time the event starts.</dd>
+<dd><code>registrationDeadline</code> - The deadline for entrant registration.</dd>
+<dd><code>maxCapacity</code> - The maximum participant capacity.</dd>
+<dd><code>details</code> - The event description.</dd>
+<dd><code>posterUri</code> - The URI of the event poster.</dd>
+<dd><code>qrCodeContent</code> - The content of the promotional QR code.</dd>
+<dd><code>organizerId</code> - The ID of the event organizer.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -233,108 +257,180 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getEventId()">
 <h3>getEventId</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getEventId</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The unique identifier of the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setEventId(java.lang.String)">
 <h3>setEventId</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setEventId</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;eventId)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>eventId</code> - The unique identifier to set for the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getTitle()">
 <h3>getTitle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getTitle</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The title of the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setTitle(java.lang.String)">
 <h3>setTitle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTitle</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;title)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>title</code> - The title to set for the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getScheduledDateTime()">
 <h3>getScheduledDateTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Date.html" title="class or interface in java.util" class="external-link">Date</a></span>&nbsp;<span class="element-name">getScheduledDateTime</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The scheduled date and time of the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setScheduledDateTime(java.util.Date)">
 <h3>setScheduledDateTime</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setScheduledDateTime</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Date.html" title="class or interface in java.util" class="external-link">Date</a>&nbsp;scheduledDateTime)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>scheduledDateTime</code> - The scheduled date and time to set for the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getRegistrationDeadline()">
 <h3>getRegistrationDeadline</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Date.html" title="class or interface in java.util" class="external-link">Date</a></span>&nbsp;<span class="element-name">getRegistrationDeadline</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The registration deadline for the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setRegistrationDeadline(java.util.Date)">
 <h3>setRegistrationDeadline</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRegistrationDeadline</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Date.html" title="class or interface in java.util" class="external-link">Date</a>&nbsp;registrationDeadline)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>registrationDeadline</code> - The registration deadline to set for the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getMaxCapacity()">
 <h3>getMaxCapacity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></span>&nbsp;<span class="element-name">getMaxCapacity</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The maximum participant capacity.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setMaxCapacity(java.lang.Integer)">
 <h3>setMaxCapacity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMaxCapacity</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;maxCapacity)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>maxCapacity</code> - The maximum participant capacity to set.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getDetails()">
 <h3>getDetails</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDetails</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The detailed description of the event.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setDetails(java.lang.String)">
 <h3>setDetails</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDetails</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;details)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>details</code> - The detailed description to set.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getPosterUri()">
 <h3>getPosterUri</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getPosterUri</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The URI of the event poster.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setPosterUri(java.lang.String)">
 <h3>setPosterUri</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPosterUri</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;posterUri)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>posterUri</code> - The URI of the event poster to set.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getQrCodeContent()">
 <h3>getQrCodeContent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getQrCodeContent</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The content of the promotional QR code.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setQrCodeContent(java.lang.String)">
 <h3>setQrCodeContent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setQrCodeContent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;qrCodeContent)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>qrCodeContent</code> - The QR code content to set.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getOrganizerId()">
 <h3>getOrganizerId</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getOrganizerId</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The identifier of the event organizer.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setOrganizerId(java.lang.String)">
 <h3>setOrganizerId</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOrganizerId</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;organizerId)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>organizerId</code> - The identifier of the event organizer to set.</dd>
+</dl>
 </section>
 </li>
 </ul>
