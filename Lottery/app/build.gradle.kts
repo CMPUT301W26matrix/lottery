@@ -41,12 +41,16 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Import the Firebase BoM
+    // Firebase
     implementation(platform("com.google.firebase:firebase-bom:34.9.0"))
     implementation("com.google.firebase:firebase-firestore")
 
     // ZXing for QR Code generation (US 02.01.01)
     implementation("com.google.zxing:core:3.5.3")
+
+    // Glide for image loading (Optional but useful for local URIs too)
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 }
 
 tasks.register<Javadoc>("generateJavadoc") {

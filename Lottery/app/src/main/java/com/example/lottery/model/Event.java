@@ -4,13 +4,27 @@ import java.util.Date;
 
 /**
  * Model class representing an Event.
- * This class encapsulates all data related to an event, including its identity,
- * scheduling, registration details, and promotional content.
- * It is designed to be compatible with Firebase Firestore serialization.
- * 
- * Satisfies requirements for:
+ *
+ * <p>Key Responsibilities:
+ * <ul>
+ *   <li>Encapsulates all metadata for an event, including titles, dates, and descriptions.</li>
+ *   <li>Stores references to promotional assets like poster URIs and QR code content.</li>
+ *   <li>Acts as a Data Transfer Object (DTO) for Firebase Firestore serialization.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Known Limitations:
+ * <ul>
+ *   <li>The {@code posterUri} field currently stores a local device URI string. For cross-device 
+ *       functionality, this should be replaced with a remote storage URL (e.g., Firebase Storage).</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Satisfies requirements for:
  * US 02.01.01: Event creation with promotional QR code.
  * US 02.01.04: Registration deadline management.
+ * US 02.04.01: Event poster support.
+ * </p>
  */
 public class Event {
     /** Unique identifier for the event, used as the Firestore document ID. */
