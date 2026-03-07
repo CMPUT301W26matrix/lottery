@@ -1,30 +1,52 @@
 package com.example.lottery;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.view.View;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
+/**
+ * MainActivity serves as the main dashboard and entry point for the application.
+ * It implements basic role-based navigation logic to support different user stories.
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseFirestore db;
+    /**
+     * Simulation of the user's role.
+     * Set to true to simulate an Organizer (US 02.01.01 access), 
+     * or false to simulate a regular Entrant.
+     * TODO: Replace with real user role from Firebase Auth in future sprints.
+     */
+    private boolean isOrganizer = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-        db = FirebaseFirestore.getInstance();
+        // Find the "Create Event" navigation button from the layout
+        Button btnGoToCreateEvent = findViewById(R.id.btnGoToCreateEvent);
+
+        /**
+         * Access Control Logic for US 02.01.01:
+         * Only users identified as Organizers are permitted to see and access 
+         * the Create Event feature.
+         */
+        if (isOrganizer) {
+            btnGoToCreateEvent.setVisibility(View.VISIBLE);
+        } else {
+            btnGoToCreateEvent.setVisibility(View.GONE);
+        }
+
+        /**
+         * Navigation Setup:
+         * Sets a click listener on the button to transition from the Dashboard
+         * to the CreateEventActivity (Organizer workflow).
+         */
+        btnGoToCreateEvent.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CreateEventActivity.class);
+            startActivity(intent);
+        });
     }
 }
