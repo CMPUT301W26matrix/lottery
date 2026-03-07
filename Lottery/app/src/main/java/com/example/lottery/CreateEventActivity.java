@@ -176,8 +176,21 @@ public class CreateEventActivity extends AppCompatActivity {
         String details = Objects.requireNonNull(etEventDetails.getText()).toString().trim();
 
         // US 02.01.04 Validation: Chronological check
-        if (title.isEmpty() || eventDate == null || deadlineDate == null) {
-            Toast.makeText(this, "All fields including dates are required", Toast.LENGTH_SHORT).show();
+        // Event must have title
+        if (title.isEmpty()) {
+            Toast.makeText(this, "Event title is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Event must have start date and time
+        if (eventDate == null) {
+            Toast.makeText(this, "Event date and time are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Event must have registration deadline
+        if (deadlineDate == null) {
+            Toast.makeText(this, "Registration deadline is required", Toast.LENGTH_SHORT).show();
             return;
         }
 
