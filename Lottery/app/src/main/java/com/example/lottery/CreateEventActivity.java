@@ -210,8 +210,18 @@ public class CreateEventActivity extends AppCompatActivity {
         String details = Objects.requireNonNull(etEventDetails.getText()).toString().trim();
 
         // 1. Mandatory Field Validation (US 02.01.04 Requirement)
-        if (title.isEmpty() || eventStartDate == null || regEndDate == null) {
-            Toast.makeText(this, "Event title, Start Date, and Registration End are required", Toast.LENGTH_SHORT).show();
+        if (title.isEmpty()) {
+            Toast.makeText(this, "Event title is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (eventStartDate == null) {
+            Toast.makeText(this, "Event start date and time are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (regEndDate == null) {
+            Toast.makeText(this, "Registration end date is required", Toast.LENGTH_SHORT).show();
             return;
         }
 
