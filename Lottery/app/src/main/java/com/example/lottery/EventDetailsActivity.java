@@ -5,18 +5,27 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.lottery.model.Event;
 import com.google.firebase.firestore.FirebaseFirestore;
-// import com.github.bumptech.glide.Glide; // Required for future cloud storage loading
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
- * Activity to display the details of a specific event.
+ * Activity to display the details of a specific event and handle registration.
+ *
+ * <p>Key Responsibilities:
+ * <ul>
+ *   <li>Displays event metadata and poster image.</li>
+ *   <li>Enforces US 02.03.01: Disables registration when waiting list is full.</li>
+ *   <li>Provides navigation back to Home or to Create Event.</li>
+ * </ul>
+ * </p>
  */
 public class EventDetailsActivity extends AppCompatActivity {
 
@@ -24,8 +33,13 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     private ImageView ivEventPoster;
     private TextView tvEventTitle, tvScheduledDate, tvRegistrationDeadline, tvEventDetails, tvLocationRequirement;
+    private TextView tvFullMessage;
+    private Button btnRegister;
     private FirebaseFirestore db;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+    
+    private Event currentEvent;
+    private boolean isEventFull = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +53,14 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvRegistrationDeadline = findViewById(R.id.tvRegistrationDeadline);
         tvEventDetails = findViewById(R.id.tvEventDetails);
         tvLocationRequirement = findViewById(R.id.tvLocationRequirement);
+        
+        tvFullMessage = findViewById(R.id.tvFullMessage);
+        btnRegister = findViewById(R.id.btnRegister);
 
         db = FirebaseFirestore.getInstance();
 
-        // Setup common navigation listeners
         setupNavigation();
 
-        // Get eventId from intent passed by the caller
         String eventId = getIntent().getStringExtra("eventId");
         if (eventId != null) {
             fetchEventDetails(eventId);
@@ -53,11 +68,10 @@ public class EventDetailsActivity extends AppCompatActivity {
             Toast.makeText(this, "Error: Event ID missing", Toast.LENGTH_SHORT).show();
             finish();
         }
+        
+        btnRegister.setOnClickListener(v -> handleRegistration());
     }
 
-    /**
-     * Sets up click listeners for the custom bottom navigation bar included in the layout.
-     */
     private void setupNavigation() {
         View btnHome = findViewById(R.id.nav_home);
         if (btnHome != null) {
@@ -76,12 +90,6 @@ public class EventDetailsActivity extends AppCompatActivity {
                 finish();
             });
         }
-
-        // Other buttons can be mapped to Toasts or future activities
-        View btnHistory = findViewById(R.id.nav_calendar);
-        if (btnHistory != null) {
-            btnHistory.setOnClickListener(v -> Toast.makeText(this, "History Coming Soon", Toast.LENGTH_SHORT).show());
-        }
     }
 
     private void fetchEventDetails(String eventId) {
@@ -89,9 +97,10 @@ public class EventDetailsActivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        Event event = documentSnapshot.toObject(Event.class);
-                        if (event != null) {
-                            updateUI(event);
+                        currentEvent = documentSnapshot.toObject(Event.class);
+                        if (currentEvent != null) {
+                            updateUI(currentEvent);
+                            checkWaitingListCapacity(currentEvent);
                         }
                     } else {
                         Toast.makeText(this, "Event not found", Toast.LENGTH_SHORT).show();
@@ -101,6 +110,61 @@ public class EventDetailsActivity extends AppCompatActivity {
                     Log.e(TAG, "Error fetching event details", e);
                     Toast.makeText(this, "Failed to load event details", Toast.LENGTH_SHORT).show();
                 });
+    }
+
+    /**
+     * Checks if the waiting list has reached its limit.
+     * Updates UI based on the availability.
+     */
+    private void checkWaitingListCapacity(Event event) {
+        if (event.getWaitingListLimit() == null) {
+            updateRegistrationState(false);
+            return;
+        }
+
+        db.collection("events").document(event.getEventId())
+                .collection("entrants")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    int currentCount = queryDocumentSnapshots.size();
+                    updateRegistrationState(currentCount >= event.getWaitingListLimit());
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Error counting entrants", e));
+    }
+
+    /**
+     * Updates the registration button's visual state and internal flag.
+     * @param isFull True if the limit has been reached.
+     */
+    private void updateRegistrationState(boolean isFull) {
+        this.isEventFull = isFull;
+        if (isFull) {
+            btnRegister.setAlpha(0.5f);
+            tvFullMessage.setVisibility(View.VISIBLE);
+        } else {
+            btnRegister.setAlpha(1.0f);
+            tvFullMessage.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Handles the registration action.
+     * Enforces AC #6 by showing an error dialog if the event is full.
+     */
+    private void handleRegistration() {
+        if (isEventFull) {
+            // AC #6: If the user clicks while full, show an explanatory dialog
+            new AlertDialog.Builder(this)
+                    .setTitle("Registration Not Possible")
+                    .setMessage("This event has reached its waiting list capacity limit. You cannot join at this time.")
+                    .setPositiveButton("OK", null)
+                    .show();
+            return;
+        }
+        
+        // Normal registration logic
+        Toast.makeText(this, "Joining Waiting List...", Toast.LENGTH_SHORT).show();
+        // TODO: US 02.01.01 Add user to Firestore entrants sub-collection
     }
 
     private void updateUI(Event event) {

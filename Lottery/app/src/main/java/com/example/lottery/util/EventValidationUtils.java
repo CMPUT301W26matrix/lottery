@@ -22,4 +22,15 @@ public class EventValidationUtils {
         }
         return deadline.before(eventDate);
     }
+
+    /**
+     * US 02.03.01: Validates if the waiting list limit is a positive integer.
+     * null is considered valid as it represents an "Unlimited" state.
+     *
+     * @param limit The waiting list limit to validate.
+     * @return true if the limit is null or greater than zero.
+     */
+    public static boolean isWaitingListLimitValid(Integer limit) {
+        return limit == null || limit > 0;
+    }
 }

@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container">
+        app:layout_constraintBottom_toTopOf="@id/bottom_action_container">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -198,6 +198,39 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Action Container for Registration Button -->
+    <LinearLayout
+        android:id="@+id/bottom_action_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:padding="16dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container">
+
+        <TextView
+            android:id="@+id/tvFullMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This event is full. Waiting list is closed."
+            android:textColor="#E53935"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Join Waiting List"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="@color/primary_blue"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
 
     <!-- 2. Bottom Navigation Bar Container -->
     <FrameLayout

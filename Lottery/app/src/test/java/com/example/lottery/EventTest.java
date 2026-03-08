@@ -15,7 +15,7 @@ public class EventTest {
 
     /**
      * Verifies that the constructor and getters correctly handle and return the provided values.
-     * Updated to include US 02.02.03 (requireLocation).
+     * Updated to include US 02.02.03 (requireLocation) and US 02.02.02 (waitingListLimit).
      */
     @Test
     public void testEventConstructorAndGetters() {
@@ -28,15 +28,17 @@ public class EventTest {
         String qrCodeContent = "qr_content";
         String organizerId = "org456";
         boolean requireLocation = true;
+        Integer waitingListLimit = 100;
 
-        // Pass 10 arguments to match the updated Event constructor
+        // Pass 11 arguments to match the updated Event constructor
         Event event = new Event(eventId, title, now, now, 
                                 maxCapacity, details, posterUri, qrCodeContent, 
-                                organizerId, requireLocation);
+                                organizerId, requireLocation, waitingListLimit);
 
         assertEquals(eventId, event.getEventId());
         assertEquals(posterUri, event.getPosterUri());
         assertEquals(requireLocation, event.isRequireLocation());
+        assertEquals(waitingListLimit, event.getWaitingListLimit());
     }
 
     /**

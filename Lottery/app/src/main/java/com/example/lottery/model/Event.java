@@ -25,6 +25,7 @@ import java.util.Date;
  * US 02.01.04: Registration deadline management.
  * US 02.04.01: Event poster support.
  * US 02.02.03: Geolocation requirement toggle.
+ * US 02.02.02: Waiting List Limit.
  * </p>
  */
 public class Event {
@@ -48,6 +49,8 @@ public class Event {
     private String organizerId;
     /** Whether geolocation verification is required for this event. */
     private boolean requireLocation;
+    /** US 02.02.02: Optional limit for the waiting list. null means unlimited. */
+    private Integer waitingListLimit;
 
     /**
      * Default no-argument constructor required for Firebase Firestore serialization.
@@ -55,7 +58,7 @@ public class Event {
     public Event() {}
 
     /**
-     * Constructs a new Event with all required fields.
+     * Constructs a new Event with all metadata.
      *
      * @param eventId              The unique ID of the event.
      * @param title                The title of the event.
@@ -67,10 +70,11 @@ public class Event {
      * @param qrCodeContent        The content of the promotional QR code.
      * @param organizerId          The ID of the event organizer.
      * @param requireLocation      Whether geolocation verification is required.
+     * @param waitingListLimit     The optional limit for the waiting list.
      */
     public Event(String eventId, String title, Date scheduledDateTime, Date registrationDeadline, 
                  Integer maxCapacity, String details, String posterUri, String qrCodeContent, 
-                 String organizerId, boolean requireLocation) {
+                 String organizerId, boolean requireLocation, Integer waitingListLimit) {
         this.eventId = eventId;
         this.title = title;
         this.scheduledDateTime = scheduledDateTime;
@@ -81,6 +85,7 @@ public class Event {
         this.qrCodeContent = qrCodeContent;
         this.organizerId = organizerId;
         this.requireLocation = requireLocation;
+        this.waitingListLimit = waitingListLimit;
     }
 
     /** @return The unique identifier of the event. */
@@ -132,4 +137,9 @@ public class Event {
     public boolean isRequireLocation() { return requireLocation; }
     /** @param requireLocation Sets whether geolocation verification is required. */
     public void setRequireLocation(boolean requireLocation) { this.requireLocation = requireLocation; }
+    
+    /** @return The optional limit for the waiting list. null means unlimited. */
+    public Integer getWaitingListLimit() { return waitingListLimit; }
+    /** @param waitingListLimit The optional limit to set for the waiting list. */
+    public void setWaitingListLimit(Integer waitingListLimit) { this.waitingListLimit = waitingListLimit; }
 }
