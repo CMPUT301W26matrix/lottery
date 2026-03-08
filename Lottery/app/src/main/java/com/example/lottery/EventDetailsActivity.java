@@ -135,8 +135,6 @@ public class EventDetailsActivity extends AppCompatActivity {
         // US 02.02.03: Display geolocation requirement
         if (tvLocationRequirement != null) {
             if (event.isRequireLocation()) {
-                tvLocationRequirement.setText("Location Verification Required");
-                tvLocationRequirement.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
                 tvLocationRequirement.setVisibility(View.VISIBLE);
             } else {
                 tvLocationRequirement.setVisibility(View.GONE);
