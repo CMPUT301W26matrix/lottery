@@ -101,6 +101,19 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">LotteryApplication</span>
 <span class="extends-implements">extends android.app.Application</span></div>
+<div class="block">Base class for maintaining global application state.
+
+ <p>Key Responsibilities:
+ <ul>
+   <li>Initializes Firebase services at the start of the application lifecycle.</li>
+   <li>Provides a central point for configuring global settings and singleton instances.</li>
+ </ul>
+ </p>
+
+ <p>This class is instantiated before any other class when the process for this
+ application is created. It is registered in the AndroidManifest.xml under the
+ <code>&lt;application&gt;</code> tag.
+ </p></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -154,7 +167,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCreate()" class="member-name-link">onCreate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called when the application is starting, before any activity, service,
+ or receiver objects (excluding content providers) have been created.</div>
+</div>
 </div>
 </div>
 </div>
@@ -199,6 +215,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="onCreate()">
 <h3>onCreate</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCreate</span>()</div>
+<div class="block">Called when the application is starting, before any activity, service,
+ or receiver objects (excluding content providers) have been created.
+
+ <p>Initializes the Firebase SDK to ensure that database, storage, and
+ other Firebase services are ready for use throughout the app.</p></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>onCreate</code>&nbsp;in class&nbsp;<code>android.app.Application</code></dd>

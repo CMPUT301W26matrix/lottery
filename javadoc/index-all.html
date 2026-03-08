@@ -49,7 +49,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
+<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:U">U</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
 <dt><a href="com/example/lottery/package-summary.html">com.example.lottery</a> - package com.example.lottery</dt>
@@ -60,7 +60,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/CreateEventActivity.html" class="type-name-link" title="class in com.example.lottery">CreateEventActivity</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
 <dd>
-<div class="block">Activity for organizers to create new events (US 02.01.01).</div>
+<div class="block">Activity for organizers to create new events.</div>
 </dd>
 <dt><a href="com/example/lottery/CreateEventActivity.html#%3Cinit%3E()" class="member-name-link">CreateEventActivity()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/CreateEventActivity.html" title="class in com.example.lottery">CreateEventActivity</a></dt>
 <dd>&nbsp;</dd>
@@ -75,16 +75,28 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Default no-argument constructor required for Firebase Firestore serialization.</div>
 </dd>
-<dt><a href="com/example/lottery/model/Event.html#%3Cinit%3E(java.lang.String,java.lang.String,java.util.Date,java.util.Date,java.lang.Integer,java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">Event(String, String, Date, Date, Integer, String, String, String, String)</a> - Constructor for class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
+<dt><a href="com/example/lottery/model/Event.html#%3Cinit%3E(java.lang.String,java.lang.String,java.util.Date,java.util.Date,java.lang.Integer,java.lang.String,java.lang.String,java.lang.String,java.lang.String,boolean)" class="member-name-link">Event(String, String, Date, Date, Integer, String, String, String, String, boolean)</a> - Constructor for class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
 <dd>
 <div class="block">Constructs a new Event with all required fields.</div>
 </dd>
+<dt><a href="com/example/lottery/EventDetailsActivity.html" class="type-name-link" title="class in com.example.lottery">EventDetailsActivity</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
+<dd>
+<div class="block">Activity to display the details of a specific event.</div>
+</dd>
+<dt><a href="com/example/lottery/EventDetailsActivity.html#%3Cinit%3E()" class="member-name-link">EventDetailsActivity()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/EventDetailsActivity.html" title="class in com.example.lottery">EventDetailsActivity</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/EventValidationUtils.html" class="type-name-link" title="class in com.example.lottery.util">EventValidationUtils</a> - Class in <a href="com/example/lottery/util/package-summary.html">com.example.lottery.util</a></dt>
+<dd>
+<div class="block">Utility class for validating event-related data.</div>
+</dd>
+<dt><a href="com/example/lottery/util/EventValidationUtils.html#%3Cinit%3E()" class="member-name-link">EventValidationUtils()</a> - Constructor for class com.example.lottery.util.<a href="com/example/lottery/util/EventValidationUtils.html" title="class in com.example.lottery.util">EventValidationUtils</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:G">G</h2>
 <dl class="index">
 <dt><a href="com/example/lottery/util/QRCodeUtils.html#generateQRCodeBitmap(java.lang.String)" class="member-name-link">generateQRCodeBitmap(String)</a> - Static method in class com.example.lottery.util.<a href="com/example/lottery/util/QRCodeUtils.html" title="class in com.example.lottery.util">QRCodeUtils</a></dt>
 <dd>
-<div class="block">Generates a QR Code Bitmap from the given content string.</div>
+<div class="block">Generates a QR Code Bitmap from the given content string using the ZXing library.</div>
 </dd>
 <dt><a href="com/example/lottery/util/QRCodeUtils.html#generateUniqueQrContent(java.lang.String)" class="member-name-link">generateUniqueQrContent(String)</a> - Static method in class com.example.lottery.util.<a href="com/example/lottery/util/QRCodeUtils.html" title="class in com.example.lottery.util">QRCodeUtils</a></dt>
 <dd>
@@ -109,10 +121,21 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/example/lottery/model/Event.html#getTitle()" class="member-name-link">getTitle()</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
 <dd>&nbsp;</dd>
 </dl>
+<h2 class="title" id="I:I">I</h2>
+<dl class="index">
+<dt><a href="com/example/lottery/util/EventValidationUtils.html#isRegistrationDeadlineValid(java.util.Date,java.util.Date)" class="member-name-link">isRegistrationDeadlineValid(Date, Date)</a> - Static method in class com.example.lottery.util.<a href="com/example/lottery/util/EventValidationUtils.html" title="class in com.example.lottery.util">EventValidationUtils</a></dt>
+<dd>
+<div class="block">Validates if the registration deadline occurs before the event start time.</div>
+</dd>
+<dt><a href="com/example/lottery/model/Event.html#isRequireLocation()" class="member-name-link">isRequireLocation()</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
+<dd>&nbsp;</dd>
+</dl>
 <h2 class="title" id="I:L">L</h2>
 <dl class="index">
 <dt><a href="com/example/lottery/LotteryApplication.html" class="type-name-link" title="class in com.example.lottery">LotteryApplication</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Base class for maintaining global application state.</div>
+</dd>
 <dt><a href="com/example/lottery/LotteryApplication.html#%3Cinit%3E()" class="member-name-link">LotteryApplication()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/LotteryApplication.html" title="class in com.example.lottery">LotteryApplication</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -128,12 +151,27 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:O">O</h2>
 <dl class="index">
 <dt><a href="com/example/lottery/LotteryApplication.html#onCreate()" class="member-name-link">onCreate()</a> - Method in class com.example.lottery.<a href="com/example/lottery/LotteryApplication.html" title="class in com.example.lottery">LotteryApplication</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Called when the application is starting, before any activity, service,
+ or receiver objects (excluding content providers) have been created.</div>
+</dd>
 <dt><a href="com/example/lottery/CreateEventActivity.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/CreateEventActivity.html" title="class in com.example.lottery">CreateEventActivity</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/EventDetailsActivity.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/EventDetailsActivity.html" title="class in com.example.lottery">EventDetailsActivity</a></dt>
+<dd>
+<div class="block">Initializes the activity, sets up the UI components, and retrieves the event ID from the intent.</div>
+</dd>
 <dt><a href="com/example/lottery/MainActivity.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/MainActivity.html" title="class in com.example.lottery">MainActivity</a></dt>
 <dd>
 <div class="block">Initializes the activity, sets up the layout, and configures role-based access to UI elements.</div>
+</dd>
+<dt><a href="com/example/lottery/UploadPosterDialogFragment.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/UploadPosterDialogFragment.html" title="class in com.example.lottery">UploadPosterDialogFragment</a></dt>
+<dd>
+<div class="block">Initializes the ActivityResultLauncher for picking images from the device storage.</div>
+</dd>
+<dt><a href="com/example/lottery/UploadPosterDialogFragment.html#onCreateDialog(android.os.Bundle)" class="member-name-link">onCreateDialog(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/UploadPosterDialogFragment.html" title="class in com.example.lottery">UploadPosterDialogFragment</a></dt>
+<dd>
+<div class="block">Creates and returns the dialog for this fragment.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:Q">Q</h2>
@@ -161,12 +199,23 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/model/Event.html#setRegistrationDeadline(java.util.Date)" class="member-name-link">setRegistrationDeadline(Date)</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/model/Event.html#setRequireLocation(boolean)" class="member-name-link">setRequireLocation(boolean)</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/model/Event.html#setScheduledDateTime(java.util.Date)" class="member-name-link">setScheduledDateTime(Date)</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/model/Event.html#setTitle(java.lang.String)" class="member-name-link">setTitle(String)</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></dt>
 <dd>&nbsp;</dd>
 </dl>
-<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:S">S</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
+<h2 class="title" id="I:U">U</h2>
+<dl class="index">
+<dt><a href="com/example/lottery/UploadPosterDialogFragment.html" class="type-name-link" title="class in com.example.lottery">UploadPosterDialogFragment</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
+<dd>
+<div class="block">DialogFragment for handling event poster selection and preview.</div>
+</dd>
+<dt><a href="com/example/lottery/UploadPosterDialogFragment.html#%3Cinit%3E()" class="member-name-link">UploadPosterDialogFragment()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/UploadPosterDialogFragment.html" title="class in com.example.lottery">UploadPosterDialogFragment</a></dt>
+<dd>&nbsp;</dd>
+</dl>
+<a href="#I:C">C</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:U">U</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a></main>
 </div>
 </div>
 </body>
