@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="16dp"
     app:cardElevation="2dp"
     app:strokeColor="@color/divider_gray"
@@ -34,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="ACTIVE"
+                android:text="Active"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:textColor="@color/primary_blue"
@@ -75,7 +76,7 @@
                     android:text="Capacity"
                     android:textSize="11sp"
                     android:textColor="@color/text_gray"
-                    android:textAllCaps="true" />
+                    android:textAllCaps="false" />
                 <TextView
                     android:id="@+id/tvCapacityValue"
                     android:layout_width="wrap_content"
@@ -97,7 +98,7 @@
                     android:text="Waiting"
                     android:textSize="11sp"
                     android:textColor="@color/text_gray"
-                    android:textAllCaps="true" />
+                    android:textAllCaps="false" />
                 <TextView
                     android:id="@+id/tvWaitingValue"
                     android:layout_width="wrap_content"
@@ -119,7 +120,7 @@
                     android:text="Selected"
                     android:textSize="11sp"
                     android:textColor="@color/text_gray"
-                    android:textAllCaps="true" />
+                    android:textAllCaps="false" />
                 <TextView
                     android:id="@+id/tvSelectedValue"
                     android:layout_width="wrap_content"
