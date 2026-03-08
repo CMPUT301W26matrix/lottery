@@ -209,7 +209,12 @@ public class CreateEventActivity extends AppCompatActivity {
             qrCodeContent = QRCodeUtils.generateUniqueQrContent(eventId);
         }
 
-        int maxCapacity = capacityStr.isEmpty() ? 0 : Integer.parseInt(capacityStr);
+        int maxCapacity;
+        if (capacityStr.isEmpty()) {
+            maxCapacity = 0;
+        } else {
+            maxCapacity = Integer.parseInt(capacityStr);
+        }
         
         // IMPORTANT: Save image locally before storing URI in Firestore
         String posterUriToSave = "";
