@@ -4,13 +4,28 @@ import java.util.Date;
 
 /**
  * Model class representing an Event.
- * This class encapsulates all data related to an event, including its identity,
- * scheduling, registration details, and promotional content.
- * It is designed to be compatible with Firebase Firestore serialization.
- * 
- * Satisfies requirements for:
+ *
+ * <p>Key Responsibilities:
+ * <ul>
+ *   <li>Encapsulates all metadata for an event, including titles, dates, and descriptions.</li>
+ *   <li>Stores references to promotional assets like poster URIs and QR code content.</li>
+ *   <li>Acts as a Data Transfer Object (DTO) for Firebase Firestore serialization.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Known Limitations:
+ * <ul>
+ *   <li>The {@code posterUri} field currently stores a local device URI string. For cross-device 
+ *       functionality, this should be replaced with a remote storage URL (e.g., Firebase Storage).</li>
+ * </ul>
+ * </p>
+ *
+ * <p>Satisfies requirements for:
  * US 02.01.01: Event creation with promotional QR code.
  * US 02.01.04: Registration deadline management.
+ * US 02.04.01: Event poster support.
+ * US 02.02.03: Geolocation requirement toggle.
+ * </p>
  */
 public class Event {
     /** Unique identifier for the event, used as the Firestore document ID. */
@@ -31,6 +46,8 @@ public class Event {
     private String qrCodeContent;
     /** Unique identifier of the organizer who created the event. */
     private String organizerId;
+    /** Whether geolocation verification is required for this event. */
+    private boolean requireLocation;
 
     /**
      * Default no-argument constructor required for Firebase Firestore serialization.
@@ -49,9 +66,11 @@ public class Event {
      * @param posterUri            The URI of the event poster.
      * @param qrCodeContent        The content of the promotional QR code.
      * @param organizerId          The ID of the event organizer.
+     * @param requireLocation      Whether geolocation verification is required.
      */
     public Event(String eventId, String title, Date scheduledDateTime, Date registrationDeadline, 
-                 Integer maxCapacity, String details, String posterUri, String qrCodeContent, String organizerId) {
+                 Integer maxCapacity, String details, String posterUri, String qrCodeContent, 
+                 String organizerId, boolean requireLocation) {
         this.eventId = eventId;
         this.title = title;
         this.scheduledDateTime = scheduledDateTime;
@@ -61,6 +80,7 @@ public class Event {
         this.posterUri = posterUri;
         this.qrCodeContent = qrCodeContent;
         this.organizerId = organizerId;
+        this.requireLocation = requireLocation;
     }
 
     /** @return The unique identifier of the event. */
@@ -107,4 +127,9 @@ public class Event {
     public String getOrganizerId() { return organizerId; }
     /** @param organizerId The identifier of the event organizer to set. */
     public void setOrganizerId(String organizerId) { this.organizerId = organizerId; }
+
+    /** @return Whether geolocation verification is required for this event. */
+    public boolean isRequireLocation() { return requireLocation; }
+    /** @param requireLocation Sets whether geolocation verification is required. */
+    public void setRequireLocation(boolean requireLocation) { this.requireLocation = requireLocation; }
 }

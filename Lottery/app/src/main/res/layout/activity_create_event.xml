@@ -4,231 +4,485 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_light"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="24dp">
 
         <TextView
             android:id="@+id/tvHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create New Event"
+            android:text="@string/create_new_event"
             android:textColor="@color/primary_blue"
             android:textSize="28sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvSubHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fill in the details to launch your event"
-            android:textColor="@color/text_gray"
-            android:textSize="14sp"
             android:layout_marginTop="4dp"
-            app:layout_constraintTop_toBottomOf="@id/tvHeader"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:text="@string/complete_the_form_below_to_create_your_event"
+            android:textColor="@color/text_gray"
+            android:textSize="14sp" />
 
         <!-- 1. Event Title -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilEventTitle"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Event Title"
-            android:layout_marginTop="32dp"
-            app:boxStrokeColor="@color/primary_blue"
-            app:hintTextColor="@color/primary_blue"
-            app:layout_constraintTop_toBottomOf="@id/tvSubHeader">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEventTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textCapWords" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Selection Buttons Group -->
-        <LinearLayout
-            android:id="@+id/llDatePickers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tilEventTitle">
-
-            <Button
-                android:id="@+id/btnEventDateTime"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Select Event Date &amp; Time"
-                android:textColor="@color/primary_blue"
-                android:textAlignment="viewStart"
-                app:icon="@android:drawable/ic_menu_my_calendar"
-                app:iconTint="@color/primary_blue"
-                app:strokeColor="@color/divider_gray" />
-
-            <Button
-                android:id="@+id/btnRegistrationDeadline"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="12dp"
-                android:text="Set Registration Deadline"
-                android:textColor="@color/primary_blue"
-                android:textAlignment="viewStart"
-                app:icon="@android:drawable/ic_lock_idle_alarm"
-                app:iconTint="@color/primary_blue"
-                app:strokeColor="@color/divider_gray" />
-        </LinearLayout>
-
-        <!-- 4. Max Capacity -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilMaxCapacity"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Maximum Capacity"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/llDatePickers">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMaxCapacity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- 5. Event Details -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilEventDetails"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Event Details &amp; Description"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tilMaxCapacity">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEventDetails"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:minLines="3" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- 6. Poster Section -->
-        <TextView
-            android:id="@+id/tvPosterLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Event Poster"
-            android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/tilEventDetails"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cvPosterPreview"
+            android:id="@+id/cardEventTitle"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:cardBackgroundColor="@color/background_page"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:contentPadding="16dp"
+            app:strokeColor="@color/divider_gray"
+            app:strokeWidth="1dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEventTitle"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/event_title"
+                app:boxStrokeColor="@color/primary_blue"
+                app:hintTextColor="@color/primary_blue">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEventTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 2. Date and Time -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDateInputs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/background_page"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
             app:strokeColor="@color/divider_gray"
-            app:strokeWidth="1dp"
-            app:layout_constraintTop_toBottomOf="@id/tvPosterLabel">
+            app:strokeWidth="1dp">
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvEventDateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/event_date"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvEventStartLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/start"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/primary_blue"
+                            app:hintTextColor="@color/primary_blue">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEventStart"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:hint="@string/mm_dd_yyyy_hh_mm"
+                                android:singleLine="true"
+                                android:textSize="16sp"
+                                tools:ignore="DuplicateSpeakableTextCheck" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvEventEndLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/end"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/primary_blue"
+                            app:hintTextColor="@color/primary_blue">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEventEnd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:hint="@string/mm_dd_yyyy_hh_mm"
+                                android:singleLine="true"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvRegPeriodLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/registration_period"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvRegStartLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/start"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/primary_blue"
+                            app:hintTextColor="@color/primary_blue">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etRegStart"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:hint="@string/mm_dd_yyyy_hh_mm"
+                                android:singleLine="true"
+                                android:textColorHint="#546E7A"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvRegEndLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@string/end"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:boxStrokeColor="@color/primary_blue"
+                            app:hintTextColor="@color/primary_blue">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etRegEnd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:focusable="false"
+                                android:hint="@string/mm_dd_yyyy_hh_mm"
+                                android:singleLine="true"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDrawDateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/draw_date"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:boxStrokeColor="@color/primary_blue"
+                    app:hintTextColor="@color/primary_blue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDrawDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:hint="@string/mm_dd_yyyy_hh_mm"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 3. Capacity and Details -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardEventSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/background_page"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/divider_gray"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilMaxCapacity"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/maximum_capacity"
+                    app:boxStrokeColor="@color/primary_blue"
+                    app:helperText="@string/helper_max_capacity"
+                    app:hintTextColor="@color/primary_blue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMaxCapacity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEventDetails"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="@string/event_details_amp_description"
+                    app:boxStrokeColor="@color/primary_blue"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="500"
+                    app:hintTextColor="@color/primary_blue">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEventDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:inputType="textMultiLine"
+                        android:minLines="3"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/swRequireLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/require_geolocation_for_entrants"
+                    android:textColor="@color/primary_blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 4. Poster -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPoster"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:cardBackgroundColor="@color/background_page"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/divider_gray"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvPosterLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/event_poster"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/llPosterAction"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnOpenUploadDialog"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="@color/primary_light_blue"
+                        android:text="@string/upload_image"
+                        android:textColor="@color/primary_blue"
+                        android:textSize="14sp"
+                        app:icon="@android:drawable/ic_menu_gallery"
+                        app:iconTint="@color/primary_blue" />
+
+                    <TextView
+                        android:id="@+id/tvPosterStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/no_poster_selected"
+                        android:textColor="@color/text_gray"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                 <ImageView
                     android:id="@+id/ivPosterPreview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="12dp"
+                    android:contentDescription="@string/event_poster"
                     android:scaleType="centerCrop"
-                    android:background="@color/primary_light_blue" />
-
-                <Button
-                    android:id="@+id/btnUploadPoster"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Tap to Upload Poster"
-                    android:textColor="@color/primary_blue"
-                    app:icon="@android:drawable/ic_menu_gallery"
-                    app:iconTint="@color/primary_blue" />
-            </FrameLayout>
+                    android:visibility="gone" />
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- QR Code Display Section (US 02.01.01 Upgrade) -->
-        <TextView
-            android:id="@+id/tvQRCodeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Promotional QR Code"
+        <!-- 5. QR Code -->
+        <Button
+            android:id="@+id/btnGenerateQRCode"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/primary_blue"
+            android:text="@string/generate_qr_code"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="24dp"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/cvPosterPreview"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:cornerRadius="12dp" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cvQRCode"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_marginTop="8dp"
-            android:visibility="gone"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp"
-            app:layout_constraintTop_toBottomOf="@id/tvQRCodeLabel"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-            <ImageView
-                android:id="@+id/ivQRCodePreview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:scaleType="fitCenter"
-                android:src="@android:drawable/ic_dialog_info" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Buttons Section -->
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/background_page"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/divider_gray"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvQRCodeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/event_qr_code"
+                    android:textColor="@color/primary_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/ivQRCodePreview"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:contentDescription="@string/event_qr_code"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Launch Button -->
+        <Button
+            android:id="@+id/btnCreateEvent"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="24dp"
-            app:layout_constraintTop_toBottomOf="@id/cvQRCode"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:backgroundTint="@color/primary_blue"
+            android:text="@string/launch_event"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
 
-            <Button
-                android:id="@+id/btnGenerateQRCode"
-                style="@style/Widget.Material3.Button.TonalButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Pre-generate QR Code"
-                android:textColor="@color/primary_blue"
-                android:backgroundTint="@color/primary_light_blue" />
-
-            <Button
-                android:id="@+id/btnCreateEvent"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginTop="12dp"
-                android:text="Launch Event"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:backgroundTint="@color/primary_blue"
-                app:cornerRadius="12dp" />
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </ScrollView>

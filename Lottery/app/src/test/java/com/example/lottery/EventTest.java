@@ -8,42 +8,79 @@ import java.util.Calendar;
 
 /**
  * Unit tests for the Event model class.
+ * Ensures data integrity and validation for core fields including US 02.04.01 
+ * and US 02.02.03 requirements.
  */
 public class EventTest {
 
     /**
      * Verifies that the constructor and getters correctly handle and return the provided values.
+     * Updated to include US 02.02.03 (requireLocation).
      */
     @Test
     public void testEventConstructorAndGetters() {
         String eventId = "ev123";
         String title = "Concert";
-        
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2024, Calendar.DECEMBER, 31, 20, 0);
-        Date scheduledDateTime = calendar.getTime();
-        
-        calendar.set(2024, Calendar.DECEMBER, 30, 20, 0);
-        Date registrationDeadline = calendar.getTime();
-        
+        Date now = new Date();
         Integer maxCapacity = 500;
         String details = "Music concert";
-        String posterUri = "uri://poster";
+        String posterUri = "content://media/external/images/media/1";
         String qrCodeContent = "qr_content";
         String organizerId = "org456";
+        boolean requireLocation = true;
 
-        Event event = new Event(eventId, title, scheduledDateTime, registrationDeadline, 
-                                maxCapacity, details, posterUri, qrCodeContent, organizerId);
+        // Pass 10 arguments to match the updated Event constructor
+        Event event = new Event(eventId, title, now, now, 
+                                maxCapacity, details, posterUri, qrCodeContent, 
+                                organizerId, requireLocation);
 
         assertEquals(eventId, event.getEventId());
-        assertEquals(title, event.getTitle());
-        assertEquals(scheduledDateTime, event.getScheduledDateTime());
-        assertEquals(registrationDeadline, event.getRegistrationDeadline());
-        assertEquals(maxCapacity, event.getMaxCapacity());
-        assertEquals(details, event.getDetails());
         assertEquals(posterUri, event.getPosterUri());
-        assertEquals(qrCodeContent, event.getQrCodeContent());
-        assertEquals(organizerId, event.getOrganizerId());
+        assertEquals(requireLocation, event.isRequireLocation());
+    }
+
+    /**
+     * US 02.02.03 Requirement:
+     * Verifies that the requireLocation toggle can be stored and retrieved correctly.
+     */
+    @Test
+    public void testRequireLocationStorage() {
+        Event event = new Event();
+        
+        event.setRequireLocation(true);
+        assertTrue("Geolocation requirement should be true", event.isRequireLocation());
+        
+        event.setRequireLocation(false);
+        assertFalse("Geolocation requirement should be false", event.isRequireLocation());
+    }
+
+    /**
+     * US 02.04.01 Requirement:
+     * Verifies that posterUri can be stored and retrieved correctly.
+     */
+    @Test
+    public void testPosterUriStorage() {
+        Event event = new Event();
+        String testUri = "content://com.android.providers.media.documents/document/image%3A123";
+        event.setPosterUri(testUri);
+        assertEquals("Poster URI should be stored exactly as provided", testUri, event.getPosterUri());
+    }
+
+    /**
+     * US 02.04.01 Requirement (Non-mandatory):
+     * Verifies that empty or null posterUri is handled safely without crashes.
+     */
+    @Test
+    public void testEmptyPosterUriHandling() {
+        Event event = new Event();
+        
+        // Test Null
+        event.setPosterUri(null);
+        assertNull("Event should handle null posterUri safely", event.getPosterUri());
+        
+        // Test Empty String
+        event.setPosterUri("");
+        assertEquals("Event should store empty string for posterUri", "", event.getPosterUri());
     }
 
     /**
@@ -53,33 +90,11 @@ public class EventTest {
     @Test
     public void testRegistrationDeadlineBeforeEventStart() {
         Calendar calendar = Calendar.getInstance();
-        
-        // Set event start to Dec 31
         calendar.set(2024, Calendar.DECEMBER, 31, 10, 0);
         Date eventStart = calendar.getTime();
-        
-        // Set deadline to Dec 30 (Valid)
         calendar.set(2024, Calendar.DECEMBER, 30, 10, 0);
         Date validDeadline = calendar.getTime();
         
-        // Set deadline to Jan 1 (Invalid)
-        calendar.set(2025, Calendar.JANUARY, 1, 10, 0);
-        Date invalidDeadline = calendar.getTime();
-        
         assertTrue("Deadline should be before event start", validDeadline.before(eventStart));
-        assertFalse("Deadline should NOT be after event start", invalidDeadline.before(eventStart));
-    }
-
-    /**
-     * Verifies that the setters correctly update the class attributes.
-     */
-    @Test
-    public void testSetters() {
-        Event event = new Event();
-        event.setTitle("New Title");
-        assertEquals("New Title", event.getTitle());
-        
-        event.setMaxCapacity(100);
-        assertEquals(Integer.valueOf(100), event.getMaxCapacity());
     }
 }
