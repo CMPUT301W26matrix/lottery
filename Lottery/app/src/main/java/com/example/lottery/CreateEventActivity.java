@@ -61,7 +61,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private TextInputEditText etEventTitle, etMaxCapacity, etEventDetails;
     private TextInputEditText etEventStart, etEventEnd, etRegStart, etRegEnd, etDrawDate;
     private Button btnOpenUploadDialog, btnGenerateQRCode, btnCreateEvent;
-    private ImageView ivQRCodePreview;
+    private ImageView ivQRCodePreview, ivPosterPreview;
     private TextView tvQRCodeLabel, tvPosterStatus;
     private MaterialCardView cvQRCode;
     private SwitchMaterial swRequireLocation;
@@ -136,6 +136,7 @@ public class CreateEventActivity extends AppCompatActivity {
         ivQRCodePreview = findViewById(R.id.ivQRCodePreview);
         tvQRCodeLabel = findViewById(R.id.tvQRCodeLabel);
         tvPosterStatus = findViewById(R.id.tvPosterStatus);
+        ivPosterPreview = findViewById(R.id.ivPosterPreview);
         cvQRCode = findViewById(R.id.cvQRCode);
 
         swRequireLocation = findViewById(R.id.swRequireLocation);
@@ -149,9 +150,10 @@ public class CreateEventActivity extends AppCompatActivity {
             String uriString = bundle.getString("posterUri");
             if (uriString != null) {
                 selectedPosterUri = Uri.parse(uriString);
-                // Update UI status to show selection was successful
                 tvPosterStatus.setText("Poster selected");
                 tvPosterStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+                ivPosterPreview.setImageURI(selectedPosterUri);
+                ivPosterPreview.setVisibility(View.VISIBLE);
                 Log.d(TAG, "Poster URI received from dialog: " + uriString);
             }
         });
