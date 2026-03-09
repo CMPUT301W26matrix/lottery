@@ -2,14 +2,12 @@ package com.example.lottery;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +39,6 @@ public class CreateEventActivity extends AppCompatActivity {
     private TextInputEditText etEventTitle, etMaxCapacity, etEventDetails;
     private TextInputEditText etEventStart, etEventEnd, etRegStart, etRegEnd, etDrawDate;
     private Button btnOpenUploadDialog, btnGenerateQRCode, btnCreateEvent;
-    private ImageButton btnBack;
     private ImageView ivQRCodePreview, ivPosterPreview; // Added ivPosterPreview
     private TextView tvQRCodeLabel, tvPosterStatus;
     private MaterialCardView cvQRCode;
@@ -72,10 +69,6 @@ public class CreateEventActivity extends AppCompatActivity {
         initializeViews();
         setupDialogCallback();
 
-        if (btnBack != null) {
-            btnBack.setOnClickListener(v -> finish());
-        }
-
         btnOpenUploadDialog.setOnClickListener(v -> {
             UploadPosterDialogFragment dialog = new UploadPosterDialogFragment();
             dialog.show(getSupportFragmentManager(), "upload_poster");
@@ -105,7 +98,6 @@ public class CreateEventActivity extends AppCompatActivity {
         btnOpenUploadDialog = findViewById(R.id.btnOpenUploadDialog);
         btnGenerateQRCode = findViewById(R.id.btnGenerateQRCode);
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
-        btnBack = findViewById(R.id.btnBack);
         
         ivQRCodePreview = findViewById(R.id.ivQRCodePreview);
         ivPosterPreview = findViewById(R.id.ivPosterPreview); // Initialize ivPosterPreview
