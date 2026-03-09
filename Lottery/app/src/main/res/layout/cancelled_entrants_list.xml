@@ -71,10 +71,13 @@
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
             <!-- 3. Capacity and Details -->
-            <ListView
-                android:id="@+id/above"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEvents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/buttonAddCity" />
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@id/tvYourEventsTitle"
+                tools:listitem="@layout/item_event" />
         </LinearLayout>
     </ScrollView>
