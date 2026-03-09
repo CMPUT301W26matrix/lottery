@@ -112,34 +112,15 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">EventDetailsActivity</span>
 <span class="extends-implements">extends androidx.appcompat.app.AppCompatActivity</span></div>
 <div class="block">Activity to display the details of a specific event.
- 
- <p>Key Responsibilities:
+
+ <p>Responsibilities:
  <ul>
-   <li>Retrieves event metadata from Firebase Firestore based on a passed event ID.</li>
-   <li>Displays event information including title, description, and dates.</li>
-   <li>Renders the event poster image or a placeholder if none exists.</li>
-   <li>Displays event-specific requirements such as geolocation (US 02.02.03).</li>
+   <li>Fetch the event record from Firestore using the supplied event ID.</li>
+   <li>Render the poster, title, schedule, deadline, and description.</li>
+   <li>Surface organizer-configured requirements such as geolocation.</li>
+   <li>Keep the branch's custom bottom navigation active on the details screen.</li>
  </ul>
- </p>
- 
- <p>Known Limitations:
- <ul>
-   <li>Poster images are loaded using local URIs, which only works if the image is present on the current device.</li>
- </ul>
- </p>
- 
- <p>Satisfies requirements for:
- US 02.04.01: Event poster visualization for entrants.
- US 02.02.03: Geolocation requirement visualization.
  </p></div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="model/Event.html" title="class in com.example.lottery.model"><code>Event</code></a></li>
-</ul>
-</dd>
-</dl>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -203,7 +184,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCreate(android.os.Bundle)" class="member-name-link">onCreate</a><wbr>(android.os.Bundle&nbsp;savedInstanceState)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Initializes the activity, sets up the UI components, and retrieves the event ID from the intent.</div>
+<div class="block">Binds the screen, initializes Firestore, and loads the requested event document.</div>
 </div>
 </div>
 </div>
@@ -267,15 +248,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="onCreate(android.os.Bundle)">
 <h3>onCreate</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCreate</span><wbr><span class="parameters">(android.os.Bundle&nbsp;savedInstanceState)</span></div>
-<div class="block">Initializes the activity, sets up the UI components, and retrieves the event ID from the intent.
- Starts the Firestore fetch process if a valid ID is provided.</div>
+<div class="block">Binds the screen, initializes Firestore, and loads the requested event document.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
 <dt>Parameters:</dt>
-<dd><code>savedInstanceState</code> - If the activity is being re-initialized after
-                           previously being shut down then this Bundle contains the data it most
-                           recently supplied in <code>ComponentActivity.onSaveInstanceState(android.os.Bundle)</code>.</dd>
+<dd><code>savedInstanceState</code> - previously saved activity state, if any</dd>
 </dl>
 </section>
 </li>

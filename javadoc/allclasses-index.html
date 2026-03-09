@@ -50,7 +50,8 @@ loadScripts(document, 'script');</script>
 <h1 title="All Classes and Interfaces" class="title">All Classes and Interfaces</h1>
 </div>
 <div id="all-classes-table">
-<div class="caption"><span>Classes</span></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="all-classes-table-tab0" role="tab" aria-selected="true" aria-controls="all-classes-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="all-classes-table-tab1" role="tab" aria-selected="false" aria-controls="all-classes-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table-tab1', 2)" class="table-tab">Interfaces</button><button id="all-classes-table-tab2" role="tab" aria-selected="false" aria-controls="all-classes-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('all-classes-table', 'all-classes-table-tab2', 2)" class="table-tab">Classes</button></div>
+<div id="all-classes-table.tabpanel" role="tabpanel" aria-labelledby="all-classes-table-tab0">
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
@@ -61,6 +62,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/example/lottery/model/Event.html" title="class in com.example.lottery.model">Event</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Model class representing an Event.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/example/lottery/EventAdapter.html" title="class in com.example.lottery">EventAdapter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Adapter for displaying a list of events in the Organizer Dashboard.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="com/example/lottery/EventAdapter.OnEventClickListener.html" title="interface in com.example.lottery">EventAdapter.OnEventClickListener</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Interface for handling event item clicks.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/example/lottery/EventDetailsActivity.html" title="class in com.example.lottery">EventDetailsActivity</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
@@ -76,7 +85,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/example/lottery/MainActivity.html" title="class in com.example.lottery">MainActivity</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">MainActivity serves as the primary dashboard for the application.</div>
+<div class="block">MainActivity serves as the Organizer Dashboard.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="com/example/lottery/util/QRCodeUtils.html" title="class in com.example.lottery.util">QRCodeUtils</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
@@ -85,6 +94,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="com/example/lottery/UploadPosterDialogFragment.html" title="class in com.example.lottery">UploadPosterDialogFragment</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">DialogFragment for handling event poster selection and preview.</div>
+</div>
 </div>
 </div>
 </div>
