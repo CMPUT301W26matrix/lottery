@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_light">
 
-    <!-- 1. Main Content Area (Scrollable) -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/detail_scroll_view"
         android:layout_width="match_parent"
@@ -15,9 +13,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom_action_container">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:padding="24dp">
 
             <TextView
@@ -27,11 +26,8 @@
                 android:text="@string/event_details_title"
                 android:textColor="@color/primary_blue"
                 android:textSize="28sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textStyle="bold" />
 
-            <!-- 1. Poster -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvPoster"
                 android:layout_width="match_parent"
@@ -40,9 +36,6 @@
                 app:cardBackgroundColor="@color/background_page"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPageHeader"
                 app:strokeColor="@color/divider_gray"
                 app:strokeWidth="1dp">
 
@@ -55,7 +48,6 @@
                     android:src="@drawable/event_placeholder" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 2. Title & Location -->
             <TextView
                 android:id="@+id/tvEventTitle"
                 android:layout_width="match_parent"
@@ -64,9 +56,7 @@
                 android:text="@string/event_title"
                 android:textColor="@color/primary_blue"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cvPoster" />
+                android:textStyle="bold" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/tvLocationRequirement"
@@ -83,11 +73,8 @@
                 app:chipBackgroundColor="@color/primary_light_blue"
                 app:chipIconVisible="false"
                 app:chipStrokeColor="@color/primary_blue"
-                app:chipStrokeWidth="1dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvEventTitle" />
+                app:chipStrokeWidth="1dp" />
 
-            <!-- 3. Schedule Info Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvInfoCard"
                 android:layout_width="match_parent"
@@ -96,7 +83,6 @@
                 app:cardBackgroundColor="@color/background_page"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
-                app:layout_constraintTop_toBottomOf="@id/tvLocationRequirement"
                 app:strokeColor="@color/divider_gray"
                 app:strokeWidth="1dp">
 
@@ -146,7 +132,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 4. About Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,7 +140,6 @@
                 app:cardBackgroundColor="@color/background_page"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
-                app:layout_constraintTop_toBottomOf="@id/cvInfoCard"
                 app:strokeColor="@color/divider_gray"
                 app:strokeWidth="1dp">
 
@@ -185,10 +169,9 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- Bottom Action Container for Registration Button -->
     <LinearLayout
         android:id="@+id/bottom_action_container"
         android:layout_width="match_parent"
@@ -221,7 +204,6 @@
             app:cornerRadius="12dp" />
     </LinearLayout>
 
-    <!-- 2. Bottom Navigation Bar Container -->
     <FrameLayout
         android:id="@+id/bottom_nav_container"
         android:layout_width="match_parent"

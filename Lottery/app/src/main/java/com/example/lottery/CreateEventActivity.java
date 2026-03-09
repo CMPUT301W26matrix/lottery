@@ -23,6 +23,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -41,6 +44,19 @@ import java.util.UUID;
  *   <li>Generates promotional QR codes and handles poster selection callbacks.</li>
  * </ul>
  * </p>
+ * Activity for organizers to create new events.
+ *
+ * <p>Responsibilities:
+ * <ul>
+ *   <li>Collect event metadata, schedule, and organizer-facing options.</li>
+ *   <li>Handle poster selection through {@link UploadPosterDialogFragment}.</li>
+ *   <li>Generate and preview a promotional QR code before saving.</li>
+ *   <li>Validate date relationships before persisting to Firestore.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>For the current prototype, poster images are copied into app-local storage and the
+ * resulting URI is stored with the event record.</p>
  */
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -63,14 +79,34 @@ public class CreateEventActivity extends AppCompatActivity {
     private Date eventStartDate, eventEndDate, regStartDate, regEndDate, drawDate;
     private boolean isEditMode = false;
     
+    private TextInputEditText etEventTitle, etMaxCapacity, etEventDetails;
+    private TextInputEditText etEventStart, etEventEnd, etRegStart, etRegEnd, etDrawDate;
+    private Button btnOpenUploadDialog, btnGenerateQRCode, btnCreateEvent;
+    private ImageView ivQRCodePreview, ivPosterPreview;
+    private TextView tvQRCodeLabel, tvPosterStatus;
+    private MaterialCardView cvQRCode;
+    private SwitchMaterial swRequireLocation;
+    
+    // Core data variables for the new event
+    private final String eventId = UUID.randomUUID().toString();
+    private String qrCodeContent = "";
+    private Date eventStartDate, eventEndDate, regStartDate, regEndDate, drawDate;
+    
+    /** URI returned from the poster picker dialog. */
     private Uri selectedPosterUri = null;
     private FirebaseFirestore db;
 
+    /**
+     * Initializes Firebase, binds the form views, and wires action handlers.
+     *
+     * @param savedInstanceState previously saved activity state, if any
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
+        // Initialize Firestore early so we can fail fast if services are unavailable.
         try {
             db = FirebaseFirestore.getInstance();
         } catch (Exception e) {
@@ -203,6 +239,8 @@ public class CreateEventActivity extends AppCompatActivity {
                 selectedPosterUri = Uri.parse(uriString);
                 tvPosterStatus.setText("Poster selected");
                 tvPosterStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+                
+                // Show the chosen poster immediately so the organizer can confirm the selection.
                 if (ivPosterPreview != null) {
                     ivPosterPreview.setImageURI(selectedPosterUri);
                     ivPosterPreview.setVisibility(View.VISIBLE);
@@ -213,7 +251,31 @@ public class CreateEventActivity extends AppCompatActivity {
 
     /**
      * Generates a unique QR code for the event and displays it.
-     */
+    * Copies the selected image into internal storage to avoid losing URI access later. 
+    */
+    private String saveImageToInternalStorage(Uri uri) {
+        try {
+            String fileName = "poster_" + UUID.randomUUID().toString() + ".jpg";
+            File file = new File(getFilesDir(), fileName);
+            
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            FileOutputStream outputStream = new FileOutputStream(file);
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, read);
+            }
+            outputStream.close();
+            inputStream.close();
+            
+            return Uri.fromFile(file).toString();
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to save image locally", e);
+            return uri.toString(); // Fallback to original URI
+        }
+    }
+
+    /** Generates a QR code preview for the event being drafted. */
     private void generateAndDisplayQRCode() {
         qrCodeContent = QRCodeUtils.generateUniqueQrContent(eventId);
         Bitmap qrBitmap = QRCodeUtils.generateQRCodeBitmap(qrCodeContent);
@@ -316,13 +378,24 @@ public class CreateEventActivity extends AppCompatActivity {
             qrCodeContent = QRCodeUtils.generateUniqueQrContent(eventId);
         }
 
-        int maxCapacity = capacityStr.isEmpty() ? 0 : Integer.parseInt(capacityStr);
-        String posterUriToSave = (selectedPosterUri != null) ? selectedPosterUri.toString() : "";
+        int maxCapacity;
+        if (capacityStr.isEmpty()) {
+            maxCapacity = 0;
+        } else {
+            maxCapacity = Integer.parseInt(capacityStr);
+        }
+        
+        // Persist the poster locally before storing the URI in Firestore.
+        String posterUriToSave = "";
+        if (selectedPosterUri != null) {
+            posterUriToSave = saveImageToInternalStorage(selectedPosterUri);
+        }
+        
         boolean requireLocation = swRequireLocation.isChecked();
 
-        Event event = new Event(
+        Event newEvent = new Event(
                 eventId, title, eventStartDate, regEndDate, maxCapacity, 
-                details, posterUriToSave, qrCodeContent, "organizer_current_user", requireLocation, waitingListLimit
+                details, posterUriToSave, qrCodeContent, "organizer_current_user", requireLocation
         );
 
         db.collection("events").document(eventId)

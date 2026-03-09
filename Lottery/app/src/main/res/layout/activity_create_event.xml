@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/background_light">
 
-    <!-- 1. Main Content Area (Scrollable) -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/create_scroll_view"
         android:layout_width="match_parent"
@@ -20,7 +19,6 @@
             android:layout_height="wrap_content"
             android:padding="24dp">
 
-            <!-- Header Section Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardHeader"
                 android:layout_width="match_parent"
@@ -71,7 +69,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 1. Event Title Section -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardEventTitle"
                 android:layout_width="match_parent"
@@ -80,10 +77,10 @@
                 app:cardBackgroundColor="@color/background_page"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="0dp"
+                app:contentPadding="16dp"
                 app:layout_constraintTop_toBottomOf="@id/cardHeader"
                 app:strokeColor="@color/divider_gray"
-                app:strokeWidth="1dp"
-                app:contentPadding="16dp">
+                app:strokeWidth="1dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilEventTitle"
@@ -107,7 +104,6 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 2. Date and Time Section Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardDateInputs"
                 android:layout_width="match_parent"
@@ -275,8 +271,8 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:layout_marginStart="8dp"
+                            android:layout_weight="1"
                             android:orientation="vertical">
 
                             <TextView
@@ -345,7 +341,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 3. Capacity and Details Section Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardEventSettings"
                 android:layout_width="match_parent"
@@ -386,7 +381,6 @@
                             android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- US 02.02.02: Waiting List Limit Toggle -->
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/swLimitWaitingList"
                         android:layout_width="match_parent"
@@ -445,7 +439,6 @@
                             android:textSize="16sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Geolocation Requirement Toggle -->
                     <com.google.android.material.switchmaterial.SwitchMaterial
                         android:id="@+id/swRequireLocation"
                         android:layout_width="match_parent"
@@ -458,7 +451,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 4. Poster Section Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardPoster"
                 android:layout_width="match_parent"
@@ -501,17 +493,18 @@
                             android:backgroundTint="@color/primary_light_blue"
                             android:text="@string/upload_image"
                             android:textColor="@color/primary_blue"
+                            android:textSize="14sp"
                             app:icon="@android:drawable/ic_menu_gallery"
                             app:iconTint="@color/primary_blue" />
 
-                    <TextView
-                        android:id="@+id/tvPosterStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="@string/no_poster_selected"
-                        android:textColor="@color/text_gray"
-                        android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/tvPosterStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/no_poster_selected"
+                            android:textColor="@color/text_gray"
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <ImageView
@@ -525,7 +518,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 5. QR Code Section Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardQRCode"
                 android:layout_width="match_parent"
@@ -586,7 +578,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Final Launch Button -->
             <Button
                 android:id="@+id/btnCreateEvent"
                 android:layout_width="match_parent"
@@ -595,6 +586,7 @@
                 android:layout_marginBottom="24dp"
                 android:backgroundTint="@color/primary_blue"
                 android:text="@string/launch_event"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:cornerRadius="12dp"
@@ -604,7 +596,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <!-- 2. Bottom Navigation Bar Container -->
     <FrameLayout
         android:id="@+id/bottom_nav_container"
         android:layout_width="match_parent"
