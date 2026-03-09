@@ -85,6 +85,15 @@
     <string name="join_waiting_list">Join Waiting List</string>
     <string name="about_this_event">About this Event</string>
     <string name="location_verification_required">Location Verification Required</string>
+    <string name="welcome_to_lottery_app">Welcome to Lottery App</string>
+    <string name="create_event">Create Event</string>
+    <string name="view_events">View Events</string>
+    <string name="cancelled_entrants_list_header_text">List Of Event Entrants</string>
+    <string name="entrants_list_toggle_button_group_waited_list_button_text">Waited Listed</string>
+    <string name="entrants_list_toggle_button_group_signed_up_button_text">Signed Up</string>
+    <string name="entrants_list_toggle_button_group_cancelled_button_text">Cancelled</string>
+    <string name="entrants_list_function_toggle_button_group_send_notification_text">Send Notification</string>
+    <string name="entrants_list_function_toggle_button_group_view_location_text">View Location</string>
     <string name="organizer_dashboard">Organizer Dashboard</string>
     <string name="organizer_event_browser_title">Lottery Organizer</string>
     <string name="organizer_event_browser_subtitle">Browse events published by you</string>

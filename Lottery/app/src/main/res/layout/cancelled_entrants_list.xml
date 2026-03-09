@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/cancelled_entrants_list_header"
+                android:layout_width="355dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cancelled_entrants_list_header_text"
+                android:textAlignment="center"
+                android:textColor="@color/primary_blue"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/entrants_list_toggle_button_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="8dp"
+                    android:text="@string/entrants_list_toggle_button_group_waited_list_button_text"/>
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="8dp"
+                    android:text="@string/entrants_list_toggle_button_group_signed_up_button_text"/>
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cornerRadius="8dp"
+                    android:text="@string/entrants_list_toggle_button_group_cancelled_button_text"/>
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+            <!-- 2. Date and Time -->
+            <LinearLayout
+                android:layout_width="358dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/accent_blue"
+                    android:text="@string/entrants_list_function_toggle_button_group_send_notification_text"
+                    android:textColor="@color/white"
+                    app:cornerRadius="8dp"
+                    tools:ignore="RtlHardcoded" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:backgroundTint="@color/accent_blue"
+                    android:text="@string/entrants_list_function_toggle_button_group_view_location_text"
+                    android:textColor="@color/white"
+                    app:cornerRadius="8dp"
+                    tools:ignore="RtlHardcoded" />
+            </LinearLayout>
+            <!-- 3. Capacity and Details -->
+            <ListView
+                android:id="@+id/above"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/buttonAddCity" />
+        </LinearLayout>
+    </ScrollView>
