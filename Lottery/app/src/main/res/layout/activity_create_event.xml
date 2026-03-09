@@ -435,6 +435,15 @@
                             android:textColor="@color/text_gray"
                             android:textSize="14sp" />
                     </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivPosterPreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_marginTop="12dp"
+                        android:contentDescription="@string/event_poster"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

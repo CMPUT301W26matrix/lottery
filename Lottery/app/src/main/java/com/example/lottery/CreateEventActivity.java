@@ -52,7 +52,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private TextInputLayout tilWaitingListLimit;
     private Button btnOpenUploadDialog, btnGenerateQRCode, btnCreateEvent;
     private ImageButton btnBack;
-    private ImageView ivQRCodePreview;
+    private ImageView ivQRCodePreview, ivPosterPreview;
     private TextView tvQRCodeLabel, tvPosterStatus, tvHeader;
     private MaterialCardView cvQRCode;
     private SwitchMaterial swRequireLocation, swLimitWaitingList;
@@ -142,6 +142,7 @@ public class CreateEventActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         
         ivQRCodePreview = findViewById(R.id.ivQRCodePreview);
+        ivPosterPreview = findViewById(R.id.ivPosterPreview);
         tvQRCodeLabel = findViewById(R.id.tvQRCodeLabel);
         tvPosterStatus = findViewById(R.id.tvPosterStatus);
         cvQRCode = findViewById(R.id.cvQRCode);
@@ -171,6 +172,14 @@ public class CreateEventActivity extends AppCompatActivity {
                         etWaitingListLimit.setText(String.valueOf(event.getWaitingListLimit()));
                         tilWaitingListLimit.setVisibility(View.VISIBLE);
                     }
+
+                    if (event.getPosterUri() != null && !event.getPosterUri().isEmpty() && ivPosterPreview != null) {
+                        selectedPosterUri = Uri.parse(event.getPosterUri());
+                        ivPosterPreview.setImageURI(selectedPosterUri);
+                        ivPosterPreview.setVisibility(View.VISIBLE);
+                        tvPosterStatus.setText("Poster selected");
+                        tvPosterStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+                    }
                     
                     this.qrCodeContent = event.getQrCodeContent();
                     this.eventStartDate = event.getScheduledDateTime();
@@ -194,6 +203,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 selectedPosterUri = Uri.parse(uriString);
                 tvPosterStatus.setText("Poster selected");
                 tvPosterStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+                if (ivPosterPreview != null) {
+                    ivPosterPreview.setImageURI(selectedPosterUri);
+                    ivPosterPreview.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
