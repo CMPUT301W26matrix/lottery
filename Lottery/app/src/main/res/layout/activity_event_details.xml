@@ -11,7 +11,7 @@
         android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container">
+        app:layout_constraintBottom_toTopOf="@id/bottom_action_container">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +19,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Header -->
             <TextView
                 android:id="@+id/tvPageHeader"
                 android:layout_width="wrap_content"
@@ -29,7 +28,6 @@
                 android:textSize="28sp"
                 android:textStyle="bold" />
 
-            <!-- 1. Poster -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvPoster"
                 android:layout_width="match_parent"
@@ -50,7 +48,6 @@
                     android:src="@drawable/event_placeholder" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 2. Title & Location Badge -->
             <TextView
                 android:id="@+id/tvEventTitle"
                 android:layout_width="match_parent"
@@ -78,7 +75,6 @@
                 app:chipStrokeColor="@color/primary_blue"
                 app:chipStrokeWidth="1dp" />
 
-            <!-- 3. Schedule Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cvInfoCard"
                 android:layout_width="match_parent"
@@ -136,7 +132,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 4. About Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -176,6 +171,38 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/bottom_action_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_container">
+
+        <TextView
+            android:id="@+id/tvFullMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="This event is full. Waiting list is closed."
+            android:textColor="@color/error_red"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="@color/primary_blue"
+            android:text="Join Waiting List"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="12dp" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/bottom_nav_container"
