@@ -2,7 +2,16 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Lottery" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorOutline">@color/border_outline</item>
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="android:colorBackground">@color/background_light</item>
+        <item name="colorSurface">@color/background_light</item>
+        <item name="colorSurfaceVariant">@color/background_page</item>
+        <item name="colorSurfaceContainer">@color/background_page</item>
+        <item name="colorSurfaceContainerLow">@color/background_page</item>
+        <item name="colorSurfaceContainerHigh">@color/background_page</item>
+        <item name="colorSurfaceContainerHighest">@color/background_page</item>
     </style>
 
     <style name="Theme.Lottery" parent="Base.Theme.Lottery" />
