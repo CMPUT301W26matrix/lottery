@@ -30,6 +30,18 @@ import java.util.UUID;
 
 /**
  * Activity for organizers to create new events.
+ *
+ * <p>Responsibilities:
+ * <ul>
+ *   <li>Collect event metadata, schedule, and organizer-facing options.</li>
+ *   <li>Handle poster selection through {@link UploadPosterDialogFragment}.</li>
+ *   <li>Generate and preview a promotional QR code before saving.</li>
+ *   <li>Validate date relationships before persisting to Firestore.</li>
+ * </ul>
+ * </p>
+ *
+ * <p>For the current prototype, poster images are copied into app-local storage and the
+ * resulting URI is stored with the event record.</p>
  */
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -39,7 +51,7 @@ public class CreateEventActivity extends AppCompatActivity {
     private TextInputEditText etEventTitle, etMaxCapacity, etEventDetails;
     private TextInputEditText etEventStart, etEventEnd, etRegStart, etRegEnd, etDrawDate;
     private Button btnOpenUploadDialog, btnGenerateQRCode, btnCreateEvent;
-    private ImageView ivQRCodePreview, ivPosterPreview; // Added ivPosterPreview
+    private ImageView ivQRCodePreview, ivPosterPreview;
     private TextView tvQRCodeLabel, tvPosterStatus;
     private MaterialCardView cvQRCode;
     private SwitchMaterial swRequireLocation;
@@ -49,14 +61,21 @@ public class CreateEventActivity extends AppCompatActivity {
     private String qrCodeContent = "";
     private Date eventStartDate, eventEndDate, regStartDate, regEndDate, drawDate;
     
+    /** URI returned from the poster picker dialog. */
     private Uri selectedPosterUri = null;
     private FirebaseFirestore db;
 
+    /**
+     * Initializes Firebase, binds the form views, and wires action handlers.
+     *
+     * @param savedInstanceState previously saved activity state, if any
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
+        // Initialize Firestore early so we can fail fast if services are unavailable.
         try {
             db = FirebaseFirestore.getInstance();
         } catch (Exception e) {
@@ -69,15 +88,18 @@ public class CreateEventActivity extends AppCompatActivity {
         initializeViews();
         setupDialogCallback();
 
+        // Launch the poster picker dialog.
         btnOpenUploadDialog.setOnClickListener(v -> {
             UploadPosterDialogFragment dialog = new UploadPosterDialogFragment();
             dialog.show(getSupportFragmentManager(), "upload_poster");
         });
 
+        // Generate the QR code lazily when the organizer requests a preview.
         btnGenerateQRCode.setOnClickListener(v -> generateAndDisplayQRCode());
         btnCreateEvent.setOnClickListener(v -> createEvent());
     }
 
+    /** Binds UI controls and sets up the date/time field triggers. */
     private void initializeViews() {
         etEventTitle = findViewById(R.id.etEventTitle);
         etMaxCapacity = findViewById(R.id.etMaxCapacity);
@@ -100,7 +122,7 @@ public class CreateEventActivity extends AppCompatActivity {
         btnCreateEvent = findViewById(R.id.btnCreateEvent);
         
         ivQRCodePreview = findViewById(R.id.ivQRCodePreview);
-        ivPosterPreview = findViewById(R.id.ivPosterPreview); // Initialize ivPosterPreview
+        ivPosterPreview = findViewById(R.id.ivPosterPreview);
         tvQRCodeLabel = findViewById(R.id.tvQRCodeLabel);
         tvPosterStatus = findViewById(R.id.tvPosterStatus);
         cvQRCode = findViewById(R.id.cvQRCode);
@@ -108,6 +130,7 @@ public class CreateEventActivity extends AppCompatActivity {
         swRequireLocation = findViewById(R.id.swRequireLocation);
     }
 
+    /** Receives the selected poster URI from {@link UploadPosterDialogFragment}. */
     private void setupDialogCallback() {
         getSupportFragmentManager().setFragmentResultListener("posterRequest", this, (requestKey, bundle) -> {
             String uriString = bundle.getString("posterUri");
@@ -116,7 +139,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 tvPosterStatus.setText("Poster selected");
                 tvPosterStatus.setTextColor(getResources().getColor(R.color.primary_blue));
                 
-                // Show preview immediately
+                // Show the chosen poster immediately so the organizer can confirm the selection.
                 if (ivPosterPreview != null) {
                     ivPosterPreview.setImageURI(selectedPosterUri);
                     ivPosterPreview.setVisibility(View.VISIBLE);
@@ -125,9 +148,7 @@ public class CreateEventActivity extends AppCompatActivity {
         });
     }
 
-    /**
-     * Copies the selected image to internal storage to ensure persistent access.
-     */
+    /** Copies the selected image into internal storage to avoid losing URI access later. */
     private String saveImageToInternalStorage(Uri uri) {
         try {
             String fileName = "poster_" + UUID.randomUUID().toString() + ".jpg";
@@ -150,6 +171,7 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
+    /** Generates a QR code preview for the event being drafted. */
     private void generateAndDisplayQRCode() {
         qrCodeContent = QRCodeUtils.generateUniqueQrContent(eventId);
         Bitmap qrBitmap = QRCodeUtils.generateQRCodeBitmap(qrCodeContent);
@@ -161,6 +183,7 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
+    /** Opens a date picker followed by a time picker and stores the chosen value by field type. */
     private void showDateTimePicker(final TextInputEditText editText, final String fieldType) {
         final Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(this, (view, year, month, day) -> {
@@ -182,6 +205,7 @@ public class CreateEventActivity extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
+    /** Validates the form and persists the event to Firestore. */
     private void createEvent() {
         String title = Objects.requireNonNull(etEventTitle.getText()).toString().trim();
         String capacityStr = Objects.requireNonNull(etMaxCapacity.getText()).toString().trim();
@@ -208,7 +232,7 @@ public class CreateEventActivity extends AppCompatActivity {
             maxCapacity = Integer.parseInt(capacityStr);
         }
         
-        // IMPORTANT: Save image locally before storing URI in Firestore
+        // Persist the poster locally before storing the URI in Firestore.
         String posterUriToSave = "";
         if (selectedPosterUri != null) {
             posterUriToSave = saveImageToInternalStorage(selectedPosterUri);

@@ -17,16 +17,34 @@ import java.util.Locale;
 
 /**
  * Activity to display the details of a specific event.
+ *
+ * <p>Responsibilities:
+ * <ul>
+ *   <li>Fetch the event record from Firestore using the supplied event ID.</li>
+ *   <li>Render the poster, title, schedule, deadline, and description.</li>
+ *   <li>Surface organizer-configured requirements such as geolocation.</li>
+ *   <li>Keep the branch's custom bottom navigation active on the details screen.</li>
+ * </ul>
+ * </p>
  */
 public class EventDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = "EventDetailsActivity";
 
+    /** Poster preview at the top of the details screen. */
     private ImageView ivEventPoster;
+    /** Primary content fields for the selected event. */
     private TextView tvEventTitle, tvScheduledDate, tvRegistrationDeadline, tvEventDetails, tvLocationRequirement;
+    /** Firestore access for event lookup. */
     private FirebaseFirestore db;
+    /** Shared formatter for event timestamps. */
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
+    /**
+     * Binds the screen, initializes Firestore, and loads the requested event document.
+     *
+     * @param savedInstanceState previously saved activity state, if any
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +102,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Loads the event document from Firestore and updates the UI when found.
+     *
+     * @param eventId Firestore document ID for the event
+     */
     private void fetchEventDetails(String eventId) {
         db.collection("events").document(eventId)
                 .get()
@@ -103,6 +126,12 @@ public class EventDetailsActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Populates the details screen from the fetched {@link Event}.
+     *
+     * <p>Poster URIs are currently local device URIs, so failures fall back to the placeholder
+     * image instead of breaking the screen.</p>
+     */
     private void updateUI(Event event) {
         tvEventTitle.setText(event.getTitle());
         tvEventDetails.setText(event.getDetails());
@@ -132,6 +161,7 @@ public class EventDetailsActivity extends AppCompatActivity {
                 ivEventPoster.setImageURI(null); 
                 ivEventPoster.setImageURI(posterUri);
             } catch (Exception e) {
+                Log.e(TAG, "Failed to load event poster", e);
                 ivEventPoster.setImageResource(R.drawable.event_placeholder);
             }
         } else {
