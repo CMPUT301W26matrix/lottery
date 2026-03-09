@@ -17,33 +17,53 @@ import java.util.Locale;
 
 /**
  * Activity to display the details of a specific event.
- *
- * <p>Responsibilities:
+ * 
+ * <p>Key Responsibilities:
  * <ul>
- *   <li>Fetch the event record from Firestore using the supplied event ID.</li>
- *   <li>Render the poster, title, schedule, deadline, and description.</li>
- *   <li>Surface organizer-configured requirements such as geolocation.</li>
- *   <li>Keep the branch's custom bottom navigation active on the details screen.</li>
+ *   <li>Retrieves event metadata from Firebase Firestore based on a passed event ID.</li>
+ *   <li>Displays event information including title, description, and dates.</li>
+ *   <li>Renders the event poster image or a placeholder if none exists.</li>
+ *   <li>Displays event-specific requirements such as geolocation (US 02.02.03).</li>
  * </ul>
  * </p>
+ * 
+ * <p>Known Limitations:
+ * <ul>
+ *   <li>Poster images are loaded using local URIs, which only works if the image is present on the current device.</li>
+ * </ul>
+ * </p>
+ * 
+ * <p>Satisfies requirements for:
+ * US 02.04.01: Event poster visualization for entrants.
+ * US 02.02.03: Geolocation requirement visualization.
+ * </p>
+ * 
+ * @see com.example.lottery.model.Event
  */
 public class EventDetailsActivity extends AppCompatActivity {
 
+    /** Log tag for debugging. */
     private static final String TAG = "EventDetailsActivity";
 
-    /** Poster preview at the top of the details screen. */
+    /** ImageView for displaying the event poster. */
     private ImageView ivEventPoster;
-    /** Primary content fields for the selected event. */
+    
+    /** TextViews for title, dates, and event description. */
     private TextView tvEventTitle, tvScheduledDate, tvRegistrationDeadline, tvEventDetails, tvLocationRequirement;
-    /** Firestore access for event lookup. */
+    
+    /** Firestore database instance for fetching event data. */
     private FirebaseFirestore db;
-    /** Shared formatter for event timestamps. */
+    
+    /** Formatter for displaying dates in a human-readable format. */
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
     /**
-     * Binds the screen, initializes Firestore, and loads the requested event document.
-     *
-     * @param savedInstanceState previously saved activity state, if any
+     * Initializes the activity, sets up the UI components, and retrieves the event ID from the intent.
+     * Starts the Firestore fetch process if a valid ID is provided.
+     * 
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,17 +174,40 @@ public class EventDetailsActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * Poster Display Logic:
+         * 
+         * Prototype Design:
+         * If a posterUri exists (as a local content:// string), it is converted back 
+         * to a Uri and set to the ImageView. 
+         */
         String posterUriString = event.getPosterUri();
         if (posterUriString != null && !posterUriString.isEmpty()) {
+            
+            // --- ACTUAL PROTOTYPE IMPLEMENTATION (Local URI) ---
             try {
                 Uri posterUri = Uri.parse(posterUriString);
                 ivEventPoster.setImageURI(null); 
                 ivEventPoster.setImageURI(posterUri);
             } catch (Exception e) {
-                Log.e(TAG, "Failed to load event poster", e);
+                Log.e(TAG, "Error parsing local poster URI. Using placeholder fallback.", e);
                 ivEventPoster.setImageResource(R.drawable.event_placeholder);
             }
+
+            /*
+            // --- FUTURE PRODUCTION IMPLEMENTATION (Cloud Storage URL) ---
+            // To enable cross-device loading, replace the local URI logic above with Glide:
+            //
+            // Glide.with(this)
+            //    .load(posterUriString) // Now treated as a https:// URL
+            //    .placeholder(R.drawable.event_placeholder)
+            //    .error(R.drawable.event_placeholder)
+            //    .centerCrop()
+            //    .into(ivEventPoster);
+            */
+
         } else {
+            // Default placeholder if no poster is available
             ivEventPoster.setImageResource(R.drawable.event_placeholder);
         }
     }

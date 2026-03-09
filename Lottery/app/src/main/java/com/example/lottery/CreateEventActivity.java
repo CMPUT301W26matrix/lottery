@@ -2,6 +2,7 @@ package com.example.lottery;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,18 +31,30 @@ import java.util.UUID;
 
 /**
  * Activity for organizers to create new events.
- *
- * <p>Responsibilities:
+ * 
+ * <p>Key Responsibilities:
  * <ul>
- *   <li>Collect event metadata, schedule, and organizer-facing options.</li>
- *   <li>Handle poster selection through {@link UploadPosterDialogFragment}.</li>
- *   <li>Generate and preview a promotional QR code before saving.</li>
- *   <li>Validate date relationships before persisting to Firestore.</li>
+ *   <li>Provides a form to input event details (title, capacity, description).</li>
+ *   <li>Manages date and time selection for the event and its registration deadline.</li>
+ *   <li>Handles event poster selection via a dedicated dialog (US 02.04.01).</li>
+ *   <li>Generates and displays a unique promotional QR code.</li>
+ *   <li>Configures event-specific requirements such as geolocation (US 02.02.03).</li>
+ *   <li>Validates and persists event data to Firebase Firestore.</li>
  * </ul>
  * </p>
- *
- * <p>For the current prototype, poster images are copied into app-local storage and the
- * resulting URI is stored with the event record.</p>
+ * 
+ * <p>NOTE:
+ * For the prototype checkpoint, posters are stored as local URIs.
+ * Cross-device poster sharing will require Firebase Storage upload
+ * in a future implementation.
+ * </p>
+ * 
+ * <p>Satisfies requirements for:
+ * US 02.01.01: Event creation with promotional QR code.
+ * US 02.01.04: Registration deadline management.
+ * US 02.04.01: Event poster support (Dialog-based flow).
+ * US 02.02.03: Geolocation requirement toggle.
+ * </p>
  */
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -61,14 +74,20 @@ public class CreateEventActivity extends AppCompatActivity {
     private String qrCodeContent = "";
     private Date eventStartDate, eventEndDate, regStartDate, regEndDate, drawDate;
     
-    /** URI returned from the poster picker dialog. */
+    /** 
+     * URI of the selected poster image. 
+     * Received from UploadPosterDialogFragment.
+     */
     private Uri selectedPosterUri = null;
+
     private FirebaseFirestore db;
 
     /**
-     * Initializes Firebase, binds the form views, and wires action handlers.
+     * Initializes the activity, sets up Firebase, bind views,
+     * and click button listeners for QR code generation and event creation.
      *
-     * @param savedInstanceState previously saved activity state, if any
+     * @param savedInstanceState If the activity is initialized again after being shut down,
+     *                           this contains the most recent data, in other case it is null.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +124,14 @@ public class CreateEventActivity extends AppCompatActivity {
         etMaxCapacity = findViewById(R.id.etMaxCapacity);
         etEventDetails = findViewById(R.id.etEventDetails);
         
+        // Refactored Date Inputs
         etEventStart = findViewById(R.id.etEventStart);
         etEventEnd = findViewById(R.id.etEventEnd);
         etRegStart = findViewById(R.id.etRegStart);
         etRegEnd = findViewById(R.id.etRegEnd);
         etDrawDate = findViewById(R.id.etDrawDate);
 
+        // Date Picker Click Listeners
         etEventStart.setOnClickListener(v -> showDateTimePicker(etEventStart, "eventStart"));
         etEventEnd.setOnClickListener(v -> showDateTimePicker(etEventEnd, "eventEnd"));
         etRegStart.setOnClickListener(v -> showDateTimePicker(etRegStart, "regStart"));
@@ -183,7 +204,9 @@ public class CreateEventActivity extends AppCompatActivity {
         }
     }
 
-    /** Opens a date picker followed by a time picker and stores the chosen value by field type. */
+    /**
+     * Standard Date and Time picker for form fields.
+     */
     private void showDateTimePicker(final TextInputEditText editText, final String fieldType) {
         final Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(this, (view, year, month, day) -> {
@@ -191,9 +214,13 @@ public class CreateEventActivity extends AppCompatActivity {
                 Calendar selected = Calendar.getInstance();
                 selected.set(year, month, day, hour, min);
                 Date date = selected.getTime();
+                
+                // Format: MM/dd/yyyy HH:mm
                 String formattedDate = String.format(Locale.getDefault(), "%02d/%02d/%04d %02d:%02d", 
                                                      month + 1, day, year, hour, min);
                 editText.setText(formattedDate);
+                
+                // Store value based on field type
                 switch (fieldType) {
                     case "eventStart": eventStartDate = date; break;
                     case "eventEnd": eventEndDate = date; break;
@@ -205,17 +232,33 @@ public class CreateEventActivity extends AppCompatActivity {
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    /** Validates the form and persists the event to Firestore. */
+    /**
+     * Logic for US 02.01.01, US 02.04.01, and US 02.02.03.
+     * Validates input and persists event metadata (including local poster URI and location requirement) to Firestore.
+     */
     private void createEvent() {
         String title = Objects.requireNonNull(etEventTitle.getText()).toString().trim();
         String capacityStr = Objects.requireNonNull(etMaxCapacity.getText()).toString().trim();
         String details = Objects.requireNonNull(etEventDetails.getText()).toString().trim();
 
-        if (title.isEmpty() || eventStartDate == null || regEndDate == null) {
-            Toast.makeText(this, "Event title, Start Date, and Registration End are required", Toast.LENGTH_SHORT).show();
+        // 1. Mandatory Field Validation (US 02.01.04 Requirement)
+        if (title.isEmpty()) {
+            Toast.makeText(this, "Event title is required", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        if (eventStartDate == null) {
+            Toast.makeText(this, "Event start date and time are required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (regEndDate == null) {
+            Toast.makeText(this, "Registration end date is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // 2. Business Rule Validation (US 02.01.04 Requirement)
+        // Uses EventValidationUtils for testable business logic
         if (!EventValidationUtils.isRegistrationDeadlineValid(regEndDate, eventStartDate)) {
             Toast.makeText(this, "Registration must end before the event starts", Toast.LENGTH_LONG).show();
             return;
@@ -249,6 +292,12 @@ public class CreateEventActivity extends AppCompatActivity {
                 .set(newEvent)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Event Launched Successfully!", Toast.LENGTH_SHORT).show();
+                    
+                    // Navigate to details screen to show the created event
+                    Intent intent = new Intent(CreateEventActivity.this, EventDetailsActivity.class);
+                    intent.putExtra("eventId", eventId);
+                    startActivity(intent);
+                    
                     finish();
                 })
                 .addOnFailureListener(e -> {
@@ -256,4 +305,23 @@ public class CreateEventActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failed to create event", Toast.LENGTH_SHORT).show();
                 });
     }
+
+    /*
+    /**
+     * Placeholder for future cloud storage integration (US 02.04.01 Production).
+     * This method will handle uploading the local file to Firebase Storage
+     * and saving the public download URL to Firestore.
+     *
+    private void uploadPosterToFirebase(Uri uri, String eventId) {
+        // StorageReference storageRef = FirebaseStorage.getInstance()
+        //    .getReference("event_posters/" + eventId + ".jpg");
+        //
+        // storageRef.putFile(uri)
+        //    .addOnSuccessListener(taskSnapshot ->
+        //        storageRef.getDownloadUrl().addOnSuccessListener(downloadUri -> {
+        //            // Future: update Firestore with downloadUri.toString()
+        //        })
+        //    );
+    }
+    */
 }
