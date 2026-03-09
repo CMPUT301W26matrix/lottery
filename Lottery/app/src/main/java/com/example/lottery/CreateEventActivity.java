@@ -197,15 +197,28 @@ public class CreateEventActivity extends AppCompatActivity {
 
             this.qrCodeContent = event.getQrCodeContent();
             this.eventStartDate = event.getScheduledDateTime();
+            this.eventEndDate = event.getEventEndDate();
+            this.regStartDate = event.getRegistrationStartDate();
             this.regEndDate = event.getRegistrationDeadline();
+            this.drawDate = event.getDrawDate();
 
             SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm", Locale.getDefault());
             if (eventStartDate != null) {
                 etEventStart.setText(sdf.format(eventStartDate));
             }
+            if (eventEndDate != null) {
+                etEventEnd.setText(sdf.format(eventEndDate));
+            }
+            if (regStartDate != null) {
+                etRegStart.setText(sdf.format(regStartDate));
+            }
             if (regEndDate != null) {
                 etRegEnd.setText(sdf.format(regEndDate));
             }
+            if (drawDate != null) {
+                etDrawDate.setText(sdf.format(drawDate));
+            }
+
         });
     }
 
@@ -430,7 +443,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 eventId,
                 title,
                 eventStartDate,
+                eventEndDate,
+                regStartDate,
                 regEndDate,
+                drawDate,
                 maxCapacity,
                 details,
                 posterUriToSave,
