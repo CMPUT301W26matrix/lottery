@@ -195,6 +195,7 @@ public class CreateEventActivity extends AppCompatActivity {
                     ivPosterPreview.setVisibility(View.VISIBLE);
                     tvPosterStatus.setText("Poster selected");
                     tvPosterStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+                    btnOpenUploadDialog.setText(R.string.update_poster);
                 } catch (SecurityException e) {
                     Log.e(TAG, "Failed to load event poster", e);
                     selectedPosterUri = null;
@@ -243,6 +244,7 @@ public class CreateEventActivity extends AppCompatActivity {
             selectedPosterUri = Uri.parse(saveImageToInternalStorage(Uri.parse(uriString)));
             tvPosterStatus.setText("Poster selected");
             tvPosterStatus.setTextColor(getResources().getColor(R.color.primary_blue));
+            btnOpenUploadDialog.setText(R.string.update_poster);
 
             if (ivPosterPreview != null) {
                 ivPosterPreview.setImageURI(selectedPosterUri);
