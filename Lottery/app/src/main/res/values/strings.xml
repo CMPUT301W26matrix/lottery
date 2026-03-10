@@ -21,4 +21,6 @@
     <string name="error_name_required">Name is required</string>
     <string name="error_password_required">Password is required</string>
     <string name="error_invalid_admin_code">Invalid admin code</string>
+    <string name="backArrow">←</string>
+    <string name="back_button_description">Return to Role Selection</string>
 </resources>
