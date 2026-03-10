@@ -23,4 +23,5 @@
     <string name="error_invalid_admin_code">Invalid admin code</string>
     <string name="backArrow">←</string>
     <string name="back_button_description">Return to Role Selection</string>
+    <string name="sign_in_title">Sign In</string>
 </resources>
