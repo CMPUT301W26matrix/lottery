@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -33,19 +34,31 @@ import androidx.fragment.app.DialogFragment;
  * where the bundle contains the key "posterUri".
  * </p>
  */
-public class UploadPosterDialogFragment extends DialogFragment {
+public class OrganizerUploadPosterDialogFragment extends DialogFragment {
 
-    /** Temporary storage for the URI of the selected image before confirmation. */
+    /**
+     * Temporary storage for the URI of the selected image before confirmation.
+     */
     private Uri tempUri = null;
-    /** ImageView to display the thumbnail of the selected poster. */
+    /**
+     * ImageView to display the thumbnail of the selected poster.
+     */
     private ImageView ivPreview;
-    /** Button to confirm the current image selection and close the dialog. */
+    /**
+     * Button to confirm the current image selection and close the dialog.
+     */
     private Button btnSelect;
-    /** Container view for the preview image, used as a click target for enlargement. */
+    /**
+     * Container view for the preview image, used as a click target for enlargement.
+     */
     private View cvPreviewContainer;
-    /** Hint text shown to the user after an image is selected. */
+    /**
+     * Hint text shown to the user after an image is selected.
+     */
     private View tvHint;
-    /** Launcher for the GetContent activity result contract to pick an image. */
+    /**
+     * Launcher for the GetContent activity result contract to pick an image.
+     */
     private ActivityResultLauncher<String> pickerLauncher;
 
     /**
@@ -76,7 +89,7 @@ public class UploadPosterDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_upload_poster, null);
+        View view = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_organizer_upload_poster, null);
 
         ivPreview = view.findViewById(R.id.ivDialogPreview);
         btnSelect = view.findViewById(R.id.btnSelectConfirm);

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".LotteryApplication"
@@ -24,6 +23,7 @@
         <activity
             android:name=".EntrantEventDetailsActivity"
             android:exported="false" />
+        <activity android:name=".WaitingListActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -33,14 +33,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".EntrantRegistrationActivity" />
+        <activity android:name=".OrganizerRegistrationActivity" />
+        <activity android:name=".AdminSignInActivity" />
+        <activity android:name=".GeneralSignInActivity" />
+        <activity android:name=".EntrantMainActivity" />
+
         <activity
-            android:name=".CreateEventActivity"
+            android:name=".OrganizerCreateEventActivity"
             android:exported="false" />
         <activity
-            android:name=".EventDetailsActivity"
+            android:name=".OrganizerBrowseEventsActivity"
             android:exported="false"
-            android:label="Event Details"
+            android:label="@string/organizer_dashboard" />
+
+        <activity
+            android:name=".AdminBrowseEventsActivity"
+            android:exported="false"
+            android:label="@string/admin_all_events_title"
             android:parentActivityName=".MainActivity" />
+
+        <activity
+            android:name=".AdminEventDetailsActivity"
+            android:exported="false"
+            android:label="@string/admin_event_details_title"
+            android:parentActivityName=".AdminBrowseEventsActivity" />
+
+        <activity
+            android:name=".OrganizerEventDetailsActivity"
+            android:exported="false"
+            android:label="@string/event_details_title"
+            android:parentActivityName=".OrganizerBrowseEventsActivity" />
     </application>
 
 </manifest>

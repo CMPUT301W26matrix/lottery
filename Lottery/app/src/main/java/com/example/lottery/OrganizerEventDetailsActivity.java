@@ -1,20 +1,23 @@
 package com.example.lottery;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.lottery.model.Event;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
@@ -34,30 +37,34 @@ import java.util.Map;
  * </ul>
  * </p>
  */
-public class EventDetailsActivity extends AppCompatActivity {
+public class OrganizerEventDetailsActivity extends AppCompatActivity {
 
-    private static final String TAG = "EventDetailsActivity";
-
+    private static final String TAG = "OrganizerEventDetails";
+    private static final String PREFS_NAME = "AppPrefs";
+    private static final String KEY_USER_ID = "userId";
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
     private ImageView ivEventPoster;
     private TextView tvEventTitle, tvScheduledDate, tvEventEndDate, tvRegistrationStart,
             tvRegistrationDeadline, tvDrawDate, tvEventDetails, tvLocationRequirement;
     private TextView tvFullMessage, tvWaitingListCapacity;
     private Button btnRegister;
-    private Button btnEditEvent;
+    private SharedPreferences sharedPreferences;
 
     private FirebaseFirestore db;
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
-
-    /** The current event being displayed. */
+    /**
+     * The current event being displayed.
+     */
     private Event currentEvent;
     private String eventId;
-    /** Flag indicating if the waiting list has reached its capacity. */
+    /**
+     * Flag indicating if the waiting list has reached its capacity.
+     */
     private boolean isEventFull = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_details);
+        setContentView(R.layout.activity_organizer_event_details);
 
         ivEventPoster = findViewById(R.id.ivEventPoster);
         tvEventTitle = findViewById(R.id.tvEventTitle);
@@ -71,8 +78,9 @@ public class EventDetailsActivity extends AppCompatActivity {
         tvFullMessage = findViewById(R.id.tvFullMessage);
         tvWaitingListCapacity = findViewById(R.id.tvWaitingListCapacity);
         btnRegister = findViewById(R.id.btnRegister);
-        btnEditEvent = findViewById(R.id.btnEditEvent);
-
+        Button btnEditEvent = findViewById(R.id.btnEditEvent);
+        Button btnViewWaitingList = findViewById(R.id.btnViewWaitingList);
+        sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         db = FirebaseFirestore.getInstance();
 
         setupNavigation();
@@ -87,6 +95,11 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(v -> handleRegistration());
         btnEditEvent.setOnClickListener(v -> handleEditEvent());
+        btnViewWaitingList.setOnClickListener(v -> {
+            Intent intent = new Intent(this, WaitingListActivity.class);
+            intent.putExtra("eventId", eventId); // pass event ID
+            startActivity(intent);
+        });
     }
 
     /**
@@ -116,9 +129,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         View btnCreate = findViewById(R.id.nav_create_container);
         if (btnCreate != null) {
-            btnCreate.setOnClickListener(v -> {
-                startActivity(new Intent(this, CreateEventActivity.class));
-            });
+            btnCreate.setOnClickListener(v -> startActivity(new Intent(this, OrganizerCreateEventActivity.class)));
         }
 
         View btnHistory = findViewById(R.id.nav_calendar);
@@ -181,6 +192,7 @@ public class EventDetailsActivity extends AppCompatActivity {
      */
     private void updateRegistrationState(boolean isFull) {
         isEventFull = isFull;
+        btnRegister.setEnabled(!isFull);
         if (isFull) {
             btnRegister.setAlpha(0.5f);
             tvFullMessage.setVisibility(View.VISIBLE);
@@ -192,7 +204,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     /**
      * Implements the actual registration by writing to the Firestore 'entrants' sub-collection.
-     * 
+     *
      * <p>Enforces waiting list capacity rules (US 02.03.01) and saves entrant data (US 02.01.01).</p>
      */
     private void handleRegistration() {
@@ -207,37 +219,58 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         if (currentEvent == null) return;
 
-        // Use Android ID as a persistent unique identifier for the entrant
-        String entrantId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-
-        Map<String, Object> entrantData = new HashMap<>();
-        entrantData.put("entrantId", entrantId);
-        entrantData.put("status", "waiting");
-        entrantData.put("registrationTime", Timestamp.now());
+        String entrantId = getSignedInUserId();
+        if (entrantId == null || entrantId.isEmpty()) {
+            Toast.makeText(this, "Please sign in before joining the waiting list.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         // US 02.01.01: Add user to Firestore entrants sub-collection
         db.collection("events").document(currentEvent.getEventId())
                 .collection("entrants").document(entrantId)
-                .set(entrantData)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Successfully joined the waiting list!", Toast.LENGTH_SHORT).show();
-                    // Refresh capacity check after joining
-                    checkWaitingListCapacity(currentEvent);
+                .get()
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        Toast.makeText(this, "You are already on the waiting list.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Map<String, Object> entrantData = new HashMap<>();
+                    entrantData.put("entrantId", entrantId);
+                    entrantData.put("status", "waiting");
+                    entrantData.put("registrationTime", Timestamp.now());
+                    doc.getReference()
+                            .set(entrantData)
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(this, "Successfully joined the waiting list!", Toast.LENGTH_SHORT).show();
+                                // Refresh capacity check after joining
+                                checkWaitingListCapacity(currentEvent);
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e(TAG, "Error joining waiting list", e);
+                                Toast.makeText(this, "Failed to join waiting list. Please try again.", Toast.LENGTH_SHORT).show();
+                            });
                 })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Error joining waiting list", e);
-                    Toast.makeText(this, "Failed to join waiting list. Please try again.", Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to join waiting list. Please try again.", Toast.LENGTH_SHORT).show());
     }
 
     /**
-     * Launches CreateEventActivity in edit mode for the currently displayed event.
+     * Retrieves the signed-in user's ID from SharedPreferences.
+     *
+     * @return the user ID string, or null if not signed in
+     */
+    private String getSignedInUserId() {
+        return sharedPreferences.getString(KEY_USER_ID, null);
+    }
+
+    /**
+     * Launches OrganizerCreateEventActivity in edit mode for the currently displayed event.
      */
     private void handleEditEvent() {
-        Intent intent = new Intent(this, CreateEventActivity.class);
+        Intent intent = new Intent(this, OrganizerCreateEventActivity.class);
         intent.putExtra("eventId", eventId);
         startActivity(intent);
     }
+
     /**
      * Updates the UI components with the provided event data.
      *
@@ -265,7 +298,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         if (tvLocationRequirement != null) {
             if (event.isRequireLocation()) {
-                tvLocationRequirement.setText("Location Verification Required");
+                tvLocationRequirement.setText(getString(R.string.location_verification_required));
                 tvLocationRequirement.setVisibility(View.VISIBLE);
             } else {
                 tvLocationRequirement.setVisibility(View.GONE);

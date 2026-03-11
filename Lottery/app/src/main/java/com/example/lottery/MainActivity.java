@@ -1,20 +1,16 @@
 package com.example.lottery;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import com.example.lottery.model.Event;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 /**
  * MainActivity serves as the main dashboard for organizers.
@@ -49,6 +45,18 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnEv
     /** Firestore database reference. */
     private FirebaseFirestore db;
 
+    private static final String KEY_IS_ANONYMOUS = "isAnonymous";
+    private static final String KEY_USER_ID = "userId";
+    private static final String KEY_USER_NAME = "userName";
+    private static final String KEY_FID = "fid";
+    private Button signInButton;
+    private Button entrantButton;
+    private Button organizerButton;
+    private Button adminButton;
+    private TextView chooseRoleText;
+    private TextView signInPrompt;
+    private SharedPreferences sharedPreferences;
+
     /**
      * Initializes the activity, sets up UI components,
      * and loads events from Firestore.
@@ -58,23 +66,22 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnEv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        db = FirebaseFirestore.getInstance();
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        // Bind UI Components
-        rvEvents = findViewById(R.id.rvEvents);
-        tvNoEvents = findViewById(R.id.tvNoEvents);
-        tvActiveCount = findViewById(R.id.tvActiveCount);
-        tvClosedCount = findViewById(R.id.tvClosedCount);
-        tvPendingCount = findViewById(R.id.tvPendingCount);
-        tvTotalCount = findViewById(R.id.tvTotalCount);
+        sharedPreferences = getSharedPreferences("AppPrefs", MODE_PRIVATE);
 
-        // Setup RecyclerView
-        eventList = new ArrayList<>();
-        adapter = new EventAdapter(eventList, this);
-        rvEvents.setLayoutManager(new LinearLayoutManager(this));
-        rvEvents.setAdapter(adapter);
+        entrantButton = findViewById(R.id.entrant_login_button);
+        organizerButton = findViewById(R.id.organizer_login_button);
+        adminButton = findViewById(R.id.admin_login_button);
+        signInButton = findViewById(R.id.btnSignIn);
 
         setupNavigation();
         loadOrganizerEvents();
@@ -120,15 +127,29 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnEv
                     Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
             );
         }
+        chooseRoleText = findViewById(R.id.tvChooseRole);
+        signInPrompt = findViewById(R.id.tvSignInHint);
+
+        entrantButton.setOnClickListener(view ->
+                startActivity(new Intent(MainActivity.this, EntrantRegistrationActivity.class)));
+
+        organizerButton.setOnClickListener(view ->
+                startActivity(new Intent(MainActivity.this, OrganizerRegistrationActivity.class)));
+
+        adminButton.setOnClickListener(view ->
+                startActivity(new Intent(MainActivity.this, AdminSignInActivity.class)));
+
+        signInButton.setOnClickListener(view ->
+                startActivity(new Intent(MainActivity.this, GeneralSignInActivity.class)));
     }
 
     /**
      * Reloads event data whenever the activity resumes.
      */
     @Override
-    protected void onResume() {
-        super.onResume();
-        loadOrganizerEvents();
+    protected void onStart() {
+        super.onStart();
+        checkAnonymousSession();
     }
 
     /**
@@ -217,6 +238,26 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnEv
 
         Intent intent = new Intent(this, EventDetailsActivity.class);
         intent.putExtra("eventId", event.getEventId());
+    private void checkAnonymousSession() {
+        boolean isAnonymous = sharedPreferences.getBoolean(KEY_IS_ANONYMOUS, false);
+        String userId = sharedPreferences.getString(KEY_USER_ID, null);
+        String userName = sharedPreferences.getString(KEY_USER_NAME, "Anonymous User");
+        String fid = sharedPreferences.getString(KEY_FID, null);
+
+        if (isAnonymous && userId != null && userId.startsWith("anon_") && fid != null) {
+            navigateToEntrantMain(userId, userName, true);
+        }
+    }
+
+    private void navigateToEntrantMain(String userId, String userName, boolean isAnonymous) {
+        Intent intent = new Intent(MainActivity.this, EntrantMainActivity.class);
+        intent.putExtra("userId", userId);
+        intent.putExtra("userName", userName);
+        intent.putExtra("isRegistered", false);
+        intent.putExtra("isAnonymous", isAnonymous);
+        intent.putExtra("fid", sharedPreferences.getString(KEY_FID, ""));
+
         startActivity(intent);
+        finish();
     }
 }
