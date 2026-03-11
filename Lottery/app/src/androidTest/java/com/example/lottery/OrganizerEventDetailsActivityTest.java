@@ -56,6 +56,8 @@ public class OrganizerEventDetailsActivityTest {
                     .check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
             onView(withId(R.id.tvScheduledDate))
                     .check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
+            onView(withId(R.id.btnViewWaitingList))
+                    .check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
         }
     }
 

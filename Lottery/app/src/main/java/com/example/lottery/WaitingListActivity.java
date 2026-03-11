@@ -13,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-/*
+/**
  * WaitingListActivity
  * Displays the real entrants who joined the waiting list
  * for the selected event.
@@ -24,7 +24,7 @@ public class WaitingListActivity extends AppCompatActivity {
     private TextView emptyMessage;
 
     private ArrayList<User> entrants;
-    private com.example.lottery.EntrantAdapter entrantAdapter;
+    private EntrantAdapter entrantAdapter;
 
     private FirebaseFirestore db;
     private String eventId;
@@ -64,6 +64,7 @@ public class WaitingListActivity extends AppCompatActivity {
         db.collection("events")
                 .document(eventId)
                 .collection("entrants")
+                .whereEqualTo("status", "waiting")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     entrants.clear();
@@ -87,22 +88,19 @@ public class WaitingListActivity extends AppCompatActivity {
                             return;
                         }
 
-                        /*
-                         * If your users collection stores entrantId inside a field
-                         * like "user_id", use whereEqualTo("user_id", entrantId).
-                         */
                         db.collection("users")
-                                .whereEqualTo("user_id", entrantId)
+                                .document(entrantId)
                                 .get()
-                                .addOnSuccessListener(userSnapshots -> {
-                                    if (!userSnapshots.isEmpty()) {
-                                        String username = userSnapshots.getDocuments().get(0).getString("username");
-                                        String email = userSnapshots.getDocuments().get(0).getString("email");
-                                        String phone = userSnapshots.getDocuments().get(0).getString("phone_number");
+                                .addOnSuccessListener(userSnapshot -> {
+                                    if (userSnapshot.exists()) {
+                                        String username = userSnapshot.getString("name");
+                                        String email = userSnapshot.getString("email");
+                                        String phone = userSnapshot.getString("phone");
 
-                                        if (username == null) username = "Unknown User";
-                                        if (email == null) email = "No email";
-                                        if (phone == null) phone = "No phone";
+                                        if (username == null || username.isEmpty())
+                                            username = "Unknown User";
+                                        if (email == null || email.isEmpty()) email = "No email";
+                                        if (phone == null || phone.isEmpty()) phone = "No phone";
 
                                         entrants.add(new User(username, email, phone));
                                     }
@@ -120,9 +118,7 @@ public class WaitingListActivity extends AppCompatActivity {
                                 });
                     });
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Failed to load waiting list", Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to load waiting list", Toast.LENGTH_SHORT).show());
     }
 
     /*

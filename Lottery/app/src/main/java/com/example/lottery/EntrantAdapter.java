@@ -16,7 +16,7 @@ import com.example.lottery.model.User;
 
 import java.util.ArrayList;
 
-/*
+/**
  * EntrantAdapter
  * This adapter connects the list of entrants (User objects)
  * to the ListView in the WaitingListActivity.
@@ -24,8 +24,8 @@ import java.util.ArrayList;
  */
 public class EntrantAdapter extends ArrayAdapter<User> {
 
-    private Context context;
-    private ArrayList<User> entrants;
+    private final Context context;
+    private final ArrayList<User> entrants;
 
     // Constructor: receives the list of entrants
     public EntrantAdapter(Context context, ArrayList<User> entrants) {
