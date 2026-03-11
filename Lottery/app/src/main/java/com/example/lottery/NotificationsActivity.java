@@ -41,28 +41,37 @@ import java.util.List;
  */
 public class NotificationsActivity extends AppCompatActivity implements NotificationAdapter.OnNotificationClickListener {
 
-    /** Intent extra used to pass the user ID to this activity. */
+    /**
+     * Intent extra used to pass the user ID to this activity.
+     */
     public static final String EXTRA_USER_ID = "userId";
-
-    /** RecyclerView used to display notifications. */
-    private RecyclerView rvNotifications;
-
-    /** TextView shown when there are no notifications. */
-    private TextView tvNoNotifications;
-
-    /** Button used to navigate back from the notifications screen. */
-    private ImageButton btnBack;
-
-    /** Firestore database instance used to retrieve notifications. */
-    private FirebaseFirestore db;
-
-    /** Adapter used to bind notification data to the RecyclerView. */
-    private NotificationAdapter adapter;
-
-    /** List storing all notifications retrieved from Firestore. */
+    /**
+     * List storing all notifications retrieved from Firestore.
+     */
     private final List<NotificationItem> notificationList = new ArrayList<>();
-
-    /** ID of the currently logged-in user. */
+    /**
+     * RecyclerView used to display notifications.
+     */
+    private RecyclerView rvNotifications;
+    /**
+     * TextView shown when there are no notifications.
+     */
+    private TextView tvNoNotifications;
+    /**
+     * Button used to navigate back from the notifications screen.
+     */
+    private ImageButton btnBack;
+    /**
+     * Firestore database instance used to retrieve notifications.
+     */
+    private FirebaseFirestore db;
+    /**
+     * Adapter used to bind notification data to the RecyclerView.
+     */
+    private NotificationAdapter adapter;
+    /**
+     * ID of the currently logged-in user.
+     */
     private String userId;
 
     /**

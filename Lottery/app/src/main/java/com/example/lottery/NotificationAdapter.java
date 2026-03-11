@@ -27,22 +27,12 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
     /**
-     * Listener interface used to handle notification click events.
+     * List of notifications to display.
      */
-    public interface OnNotificationClickListener {
-
-        /**
-         * Called when a notification item is clicked.
-         *
-         * @param item the notification that was selected
-         */
-        void onNotificationClick(NotificationItem item);
-    }
-
-    /** List of notifications to display. */
     private final List<NotificationItem> notifications;
-
-    /** Listener used to handle click events on notifications. */
+    /**
+     * Listener used to handle click events on notifications.
+     */
     private final OnNotificationClickListener listener;
 
     /**
@@ -120,23 +110,46 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     /**
+     * Listener interface used to handle notification click events.
+     */
+    public interface OnNotificationClickListener {
+
+        /**
+         * Called when a notification item is clicked.
+         *
+         * @param item the notification that was selected
+         */
+        void onNotificationClick(NotificationItem item);
+    }
+
+    /**
      * ViewHolder representing a single notification item in the RecyclerView.
      */
     static class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-        /** Displays the notification title. */
+        /**
+         * Displays the notification title.
+         */
         TextView tvTitle;
 
-        /** Displays the notification type. */
+        /**
+         * Displays the notification type.
+         */
         TextView tvType;
 
-        /** Displays the notification message. */
+        /**
+         * Displays the notification message.
+         */
         TextView tvMessage;
 
-        /** Badge indicating that the notification is new/unread. */
+        /**
+         * Badge indicating that the notification is new/unread.
+         */
         TextView tvNew;
 
-        /** Displays the user's response to the notification (if any). */
+        /**
+         * Displays the user's response to the notification (if any).
+         */
         TextView tvResponse;
 
         /**

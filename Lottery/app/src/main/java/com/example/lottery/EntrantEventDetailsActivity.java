@@ -48,57 +48,76 @@ import java.util.Map;
  */
 public class EntrantEventDetailsActivity extends AppCompatActivity {
 
-    /** Intent extra key used to pass the event ID to this activity. */
+    /**
+     * Intent extra key used to pass the event ID to this activity.
+     */
     public static final String EXTRA_EVENT_ID = "eventId";
 
-    /** Intent extra key used to pass the user ID to this activity. */
+    /**
+     * Intent extra key used to pass the user ID to this activity.
+     */
     public static final String EXTRA_USER_ID = "userId";
-
-    /** Displays the event title. */
-    private TextView tvEventTitle;
-
-    /** Displays the event registration period. */
-    private TextView tvRegistrationPeriod;
-
-    /** Displays the number of people currently in the waitlist. */
-    private TextView tvWaitlistCount;
-
-    /** Notification badge indicating unread notifications. */
-    private TextView tvNotificationBadge;
-
-    /** Displays the event description. */
-    private TextView tvEventDescription;
-
-    /** Button used to join or leave the waitlist. */
-    private Button btnWaitlistAction;
-
-    /** Button used to open the notifications screen. */
-    private ImageButton btnNotifications;
-
-    /** Button used to close the activity. */
-    private ImageButton btnClose;
-
-    /** Displays the event poster image. */
-    private ImageView ivEventPoster;
-
-    /** Firestore database instance used to retrieve and update event data. */
-    private FirebaseFirestore db;
-
-    /** ID of the selected event. */
-    private String eventId;
-
-    /** ID of the current user (entrant). */
-    private String userId;
-
-    /** Indicates whether the current entrant is already in the waitlist. */
-    private boolean isInWaitlist = false;
-
-    /** Number of entrants currently in the waitlist. */
-    private int waitlistCount = 0;
-
-    /** Date format used to display registration dates. */
+    /**
+     * Date format used to display registration dates.
+     */
     private final SimpleDateFormat dateFormat =
             new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
+    /**
+     * Displays the event title.
+     */
+    private TextView tvEventTitle;
+    /**
+     * Displays the event registration period.
+     */
+    private TextView tvRegistrationPeriod;
+    /**
+     * Displays the number of people currently in the waitlist.
+     */
+    private TextView tvWaitlistCount;
+    /**
+     * Notification badge indicating unread notifications.
+     */
+    private TextView tvNotificationBadge;
+    /**
+     * Displays the event description.
+     */
+    private TextView tvEventDescription;
+    /**
+     * Button used to join or leave the waitlist.
+     */
+    private Button btnWaitlistAction;
+    /**
+     * Button used to open the notifications screen.
+     */
+    private ImageButton btnNotifications;
+    /**
+     * Button used to close the activity.
+     */
+    private ImageButton btnClose;
+    /**
+     * Displays the event poster image.
+     */
+    private ImageView ivEventPoster;
+    /**
+     * Firestore database instance used to retrieve and update event data.
+     */
+    private FirebaseFirestore db;
+    /**
+     * ID of the selected event.
+     */
+    private String eventId;
+    /**
+     * ID of the current user (entrant).
+     */
+    private String userId;
+    /**
+     * Indicates whether the current entrant is already in the waitlist.
+     */
+    private boolean isInWaitlist = false;
+    /**
+     * Number of entrants currently in the waitlist.
+     */
+    private int waitlistCount = 0;
 
     /**
      * Initializes the activity, retrieves intent data, binds UI components,

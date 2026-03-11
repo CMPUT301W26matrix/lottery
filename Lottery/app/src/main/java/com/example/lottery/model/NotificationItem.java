@@ -10,7 +10,8 @@ public class NotificationItem {
     private boolean actionTaken;
     private String response;
 
-    public NotificationItem() {}
+    public NotificationItem() {
+    }
 
     public NotificationItem(String notificationId, String title, String message, String type,
                             String eventId, boolean isRead, boolean actionTaken, String response) {
@@ -48,20 +49,20 @@ public class NotificationItem {
         return isRead;
     }
 
-    public boolean isActionTaken() {
-        return actionTaken;
-    }
-
-    public String getResponse() {
-        return response;
-    }
-
     public void setRead(boolean read) {
         isRead = read;
     }
 
+    public boolean isActionTaken() {
+        return actionTaken;
+    }
+
     public void setActionTaken(boolean actionTaken) {
         this.actionTaken = actionTaken;
+    }
+
+    public String getResponse() {
+        return response;
     }
 
     public void setResponse(String response) {

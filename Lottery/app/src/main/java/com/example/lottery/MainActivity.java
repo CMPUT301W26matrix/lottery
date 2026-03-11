@@ -3,7 +3,6 @@ package com.example.lottery;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,15 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lottery.model.Event;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,31 +32,38 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
 
-    /** Log tag used for debugging. */
+    /**
+     * Log tag used for debugging.
+     */
     private static final String TAG = "MainActivity";
-
-    /** RecyclerView displaying the list of events. */
-    private RecyclerView rvEvents;
-
-    /** Adapter used to bind event data to the RecyclerView. */
-    private EventAdapter adapter;
-
-    /** List storing events retrieved from Firestore. */
-    private List<Event> eventList;
-
-    /** TextView shown when no events exist. */
-    private TextView tvNoEvents;
-
-    /** TextViews displaying event statistics. */
-    private TextView tvActiveCount, tvClosedCount, tvPendingCount, tvTotalCount;
-
-    /** Firestore database reference. */
-    private FirebaseFirestore db;
-
     private static final String KEY_IS_ANONYMOUS = "isAnonymous";
     private static final String KEY_USER_ID = "userId";
     private static final String KEY_USER_NAME = "userName";
     private static final String KEY_FID = "fid";
+    /**
+     * RecyclerView displaying the list of events.
+     */
+    private RecyclerView rvEvents;
+    /**
+     * Adapter used to bind event data to the RecyclerView.
+     */
+    private EventAdapter adapter;
+    /**
+     * List storing events retrieved from Firestore.
+     */
+    private List<Event> eventList;
+    /**
+     * TextView shown when no events exist.
+     */
+    private TextView tvNoEvents;
+    /**
+     * TextViews displaying event statistics.
+     */
+    private TextView tvActiveCount, tvClosedCount, tvPendingCount, tvTotalCount;
+    /**
+     * Firestore database reference.
+     */
+    private FirebaseFirestore db;
     private Button signInButton;
     private Button entrantButton;
     private Button organizerButton;
