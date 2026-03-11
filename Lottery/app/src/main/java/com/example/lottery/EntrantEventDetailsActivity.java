@@ -25,32 +25,87 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Displays detailed information about a selected event for an entrant.
+ *
+ * <p>This activity allows an entrant to:
+ * <ul>
+ *     <li>View event information such as title, description, and registration period</li>
+ *     <li>View the current number of entrants in the waitlist</li>
+ *     <li>Join or leave the event waitlist</li>
+ *     <li>View notifications related to the entrant</li>
+ * </ul>
+ *
+ * <p>The activity retrieves event information from Firebase Firestore and updates
+ * the UI accordingly.</p>
+ *
+ * <p>The activity expects two intent extras:
+ * <ul>
+ *     <li>{@link #EXTRA_EVENT_ID} – the ID of the selected event</li>
+ *     <li>{@link #EXTRA_USER_ID} – the ID of the current entrant</li>
+ * </ul>
+ * </p>
+ */
 public class EntrantEventDetailsActivity extends AppCompatActivity {
 
+    /** Intent extra key used to pass the event ID to this activity. */
     public static final String EXTRA_EVENT_ID = "eventId";
+
+    /** Intent extra key used to pass the user ID to this activity. */
     public static final String EXTRA_USER_ID = "userId";
 
+    /** Displays the event title. */
     private TextView tvEventTitle;
+
+    /** Displays the event registration period. */
     private TextView tvRegistrationPeriod;
+
+    /** Displays the number of people currently in the waitlist. */
     private TextView tvWaitlistCount;
+
+    /** Notification badge indicating unread notifications. */
     private TextView tvNotificationBadge;
+
+    /** Displays the event description. */
     private TextView tvEventDescription;
+
+    /** Button used to join or leave the waitlist. */
     private Button btnWaitlistAction;
+
+    /** Button used to open the notifications screen. */
     private ImageButton btnNotifications;
+
+    /** Button used to close the activity. */
     private ImageButton btnClose;
+
+    /** Displays the event poster image. */
     private ImageView ivEventPoster;
 
+    /** Firestore database instance used to retrieve and update event data. */
     private FirebaseFirestore db;
 
+    /** ID of the selected event. */
     private String eventId;
+
+    /** ID of the current user (entrant). */
     private String userId;
 
+    /** Indicates whether the current entrant is already in the waitlist. */
     private boolean isInWaitlist = false;
+
+    /** Number of entrants currently in the waitlist. */
     private int waitlistCount = 0;
 
+    /** Date format used to display registration dates. */
     private final SimpleDateFormat dateFormat =
             new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
 
+    /**
+     * Initializes the activity, retrieves intent data, binds UI components,
+     * and loads event information from Firestore.
+     *
+     * @param savedInstanceState the previously saved state of the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +157,9 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
         btnClose.setOnClickListener(v -> finish());
     }
 
+    /**
+     * Refreshes event data whenever the activity resumes.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -115,6 +173,10 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
         checkUnreadNotifications();
     }
 
+    /**
+     * Reads event and user identifiers from the launching intent.
+     * If required data is missing, the activity closes.
+     */
     private void readIntentData() {
         Intent intent = getIntent();
         eventId = intent.getStringExtra(EXTRA_EVENT_ID);
@@ -128,6 +190,9 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Retrieves event details from Firestore and updates the UI.
+     */
     private void loadEventDetails() {
         db.collection("events")
                 .document(eventId)
@@ -178,6 +243,9 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
                 );
     }
 
+    /**
+     * Builds a readable registration period string based on available timestamps.
+     */
     private String buildRegistrationText(Timestamp start, Timestamp deadline, Timestamp endDate, Timestamp drawDate) {
         if (start != null && deadline != null) {
             return "Registration Period: " + dateFormat.format(start.toDate()) +
@@ -194,6 +262,9 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Loads and displays the event poster image.
+     */
     private void loadPosterImage(String posterUri) {
         if (posterUri == null || posterUri.isEmpty()) {
             ivEventPoster.setImageResource(android.R.drawable.ic_menu_gallery);
@@ -215,6 +286,9 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Returns the first non-empty string from a list of possible values.
+     */
     private String getFirstNonEmptyString(String... values) {
         for (String value : values) {
             if (value != null && !value.trim().isEmpty()) {
@@ -224,6 +298,9 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
         return null;
     }
 
+    /**
+     * Checks whether the current entrant is already in the event waitlist.
+     */
     private void checkWaitlistStatus() {
         DocumentReference entrantRef = db.collection("events")
                 .document(eventId)
@@ -239,11 +316,12 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
                 isInWaitlist = false;
                 btnWaitlistAction.setText("Join Wait List");
             }
-        }).addOnFailureListener(e ->
-                Toast.makeText(this, "Failed to check waitlist status", Toast.LENGTH_SHORT).show()
-        );
+        });
     }
 
+    /**
+     * Retrieves the number of entrants currently in the waitlist.
+     */
     private void loadWaitlistCount() {
         db.collection("events")
                 .document(eventId)
@@ -253,12 +331,12 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     waitlistCount = queryDocumentSnapshots.size();
                     tvWaitlistCount.setText("People in Waitlist: " + waitlistCount);
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to load waitlist count", Toast.LENGTH_SHORT).show()
-                );
+                });
     }
 
+    /**
+     * Checks whether the entrant has unread notifications.
+     */
     private void checkUnreadNotifications() {
         db.collection("users")
                 .document(userId)
@@ -271,12 +349,12 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
                     } else {
                         tvNotificationBadge.setVisibility(View.GONE);
                     }
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to check notifications", Toast.LENGTH_SHORT).show()
-                );
+                });
     }
 
+    /**
+     * Adds the entrant to the event waitlist in Firestore.
+     */
     private void joinWaitlist() {
         Map<String, Object> entrantData = new HashMap<>();
         entrantData.put("userId", userId);
@@ -293,12 +371,12 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
                     btnWaitlistAction.setText("Leave Wait List");
                     loadWaitlistCount();
                     Toast.makeText(this, "Joined waitlist", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to join waitlist", Toast.LENGTH_SHORT).show()
-                );
+                });
     }
 
+    /**
+     * Removes the entrant from the event waitlist.
+     */
     private void leaveWaitlist() {
         db.collection("events")
                 .document(eventId)
@@ -310,9 +388,6 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
                     btnWaitlistAction.setText("Join Wait List");
                     loadWaitlistCount();
                     Toast.makeText(this, "Left waitlist", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e ->
-                        Toast.makeText(this, "Failed to leave waitlist", Toast.LENGTH_SHORT).show()
-                );
+                });
     }
 }

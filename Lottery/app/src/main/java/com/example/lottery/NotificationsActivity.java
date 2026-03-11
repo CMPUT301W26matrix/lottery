@@ -22,20 +22,55 @@ import com.google.firebase.firestore.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays notifications for the currently logged-in entrant.
+ *
+ * <p>This activity retrieves notifications from Firestore and displays them
+ * in a RecyclerView. Entrants can view notification details and respond to
+ * certain notification types (such as winning an event draw).</p>
+ *
+ * <p>If the notification represents a winning invitation, the entrant can
+ * either accept or reject the invite. The response updates both the user's
+ * notification document and the entrant status within the corresponding
+ * event in Firestore.</p>
+ *
+ * <p>This activity expects the following intent extra:</p>
+ * <ul>
+ *     <li>{@link #EXTRA_USER_ID} – the ID of the current user</li>
+ * </ul>
+ */
 public class NotificationsActivity extends AppCompatActivity implements NotificationAdapter.OnNotificationClickListener {
 
+    /** Intent extra used to pass the user ID to this activity. */
     public static final String EXTRA_USER_ID = "userId";
 
+    /** RecyclerView used to display notifications. */
     private RecyclerView rvNotifications;
+
+    /** TextView shown when there are no notifications. */
     private TextView tvNoNotifications;
+
+    /** Button used to navigate back from the notifications screen. */
     private ImageButton btnBack;
 
+    /** Firestore database instance used to retrieve notifications. */
     private FirebaseFirestore db;
+
+    /** Adapter used to bind notification data to the RecyclerView. */
     private NotificationAdapter adapter;
+
+    /** List storing all notifications retrieved from Firestore. */
     private final List<NotificationItem> notificationList = new ArrayList<>();
 
+    /** ID of the currently logged-in user. */
     private String userId;
 
+    /**
+     * Initializes the activity, binds UI components,
+     * retrieves the user ID from the intent, and loads notifications.
+     *
+     * @param savedInstanceState previously saved activity state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +103,9 @@ public class NotificationsActivity extends AppCompatActivity implements Notifica
         loadNotifications();
     }
 
+    /**
+     * Reloads notifications whenever the activity becomes visible again.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -76,6 +114,10 @@ public class NotificationsActivity extends AppCompatActivity implements Notifica
         }
     }
 
+    /**
+     * Reads the user ID from the intent that launched the activity.
+     * If the user ID is missing, the activity closes.
+     */
     private void readIntentData() {
         userId = getIntent().getStringExtra(EXTRA_USER_ID);
 
@@ -86,6 +128,10 @@ public class NotificationsActivity extends AppCompatActivity implements Notifica
         }
     }
 
+    /**
+     * Retrieves notifications for the current user from Firestore and
+     * updates the RecyclerView.
+     */
     private void loadNotifications() {
         db.collection("users")
                 .document(userId)
@@ -137,6 +183,12 @@ public class NotificationsActivity extends AppCompatActivity implements Notifica
                 });
     }
 
+    /**
+     * Updates the entrant status for a specific event in Firestore.
+     *
+     * @param eventId the event for which the status should be updated
+     * @param status  the new status value (e.g., ACCEPTED or REJECTED)
+     */
     private void updateUserStatusForEvent(String eventId, String status) {
         db.collection("events")
                 .document(eventId)
@@ -148,6 +200,12 @@ public class NotificationsActivity extends AppCompatActivity implements Notifica
                 );
     }
 
+    /**
+     * Marks a notification as having an action taken (accept or reject).
+     *
+     * @param item     the notification item being updated
+     * @param response the response value (ACCEPTED or REJECTED)
+     */
     private void markActionTaken(NotificationItem item, String response) {
         db.collection("users")
                 .document(userId)
@@ -167,8 +225,17 @@ public class NotificationsActivity extends AppCompatActivity implements Notifica
                 );
     }
 
+    /**
+     * Handles notification item clicks.
+     *
+     * <p>If the notification represents a winning invitation,
+     * the entrant is given the option to accept or reject the invite.</p>
+     *
+     * @param item the clicked notification item
+     */
     @Override
     public void onNotificationClick(NotificationItem item) {
+
         db.collection("users")
                 .document(userId)
                 .collection("notifications")
