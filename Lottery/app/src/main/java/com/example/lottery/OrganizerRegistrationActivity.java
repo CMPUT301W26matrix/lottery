@@ -105,8 +105,8 @@ public class OrganizerRegistrationActivity extends AppCompatActivity {
                     } else {
                         // Failed to create account
                         String errorMessage = task.getException() != null ?
-                                task.getException().getMessage() : "Registration failed";
-                        Toast.makeText(this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                                task.getException().getMessage() : getString(R.string.error_registration_failed);
+                        Toast.makeText(this, getString(R.string.error_prefix, errorMessage), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -138,7 +138,7 @@ public class OrganizerRegistrationActivity extends AppCompatActivity {
                     editor.putString(KEY_USER_ROLE, "organizer");
                     editor.apply();
 
-                    Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.registration_successful, Toast.LENGTH_SHORT).show();
 
                     // Go to organizer main screen
                     navigateToOrganizerMain(userId, name, email); // for now: isAnonymous is false (not yet implemented)
@@ -146,7 +146,7 @@ public class OrganizerRegistrationActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     // Failed to save data
                     continueButton.setEnabled(true);
-                    Toast.makeText(this, "Failed to save profile: " + e.getMessage(),
+                    Toast.makeText(this, getString(R.string.error_failed_to_save_profile, e.getMessage()),
                             Toast.LENGTH_LONG).show();
                 });
     }
@@ -159,45 +159,45 @@ public class OrganizerRegistrationActivity extends AppCompatActivity {
 
         // Validate name
         if (name.isEmpty()) {
-            organizerName.setError("Name is required");
+            organizerName.setError(getString(R.string.error_name_required));
             Toast.makeText(OrganizerRegistrationActivity.this,
-                    "Please enter your name", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_your_name, Toast.LENGTH_LONG).show();
             return false;
         }
 
         // Validate email
         if (email.isEmpty()) {
-            organizerEmail.setError("Email is required");
+            organizerEmail.setError(getString(R.string.error_email_required));
             Toast.makeText(OrganizerRegistrationActivity.this,
-                    "Please enter a valid email", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_valid_email, Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            organizerEmail.setError("Invalid email address");
+            organizerEmail.setError(getString(R.string.error_invalid_email));
             Toast.makeText(OrganizerRegistrationActivity.this,
-                    "Please enter a valid email", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_valid_email, Toast.LENGTH_LONG).show();
             return false;
         }
 
         // Validate password
         if (password.isEmpty()) {
-            organizerPassword.setError("Password is required");
+            organizerPassword.setError(getString(R.string.error_password_required));
             Toast.makeText(OrganizerRegistrationActivity.this,
-                    "Please enter a password", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_a_password, Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (password.length() < 8) {
-            organizerPassword.setError("Invalid password");
+            organizerPassword.setError(getString(R.string.error_invalid_password));
             Toast.makeText(OrganizerRegistrationActivity.this,
-                    "Password must be at least 8 characters", Toast.LENGTH_LONG).show();
+                    R.string.prompt_password_min_length, Toast.LENGTH_LONG).show();
             return false;
         }
 
         // Validate password match
         if (!password.equals(password2)) {
-            organizerPassword2.setError("Passwords do not match");
+            organizerPassword2.setError(getString(R.string.error_password_mismatch));
             return false;
         }
 

@@ -103,9 +103,9 @@ public class GeneralSignInActivity extends AppCompatActivity {
                         continueButton.setText(R.string.sign_in);
 
                         String errorMessage = task.getException() != null ?
-                                task.getException().getMessage() : "Sign in failed";
+                                task.getException().getMessage() : getString(R.string.error_sign_in_failed);
                         Toast.makeText(GeneralSignInActivity.this,
-                                "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                                getString(R.string.error_prefix, errorMessage), Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -140,19 +140,19 @@ public class GeneralSignInActivity extends AppCompatActivity {
                                 navigateBasedOnRole(role, userId, name, email);
                             } else {
                                 // Role not found - should not happen
-                                Toast.makeText(this, "User role not found", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, R.string.error_user_role_not_found, Toast.LENGTH_SHORT).show();
                                 continueButton.setText(R.string.sign_in);
                                 mAuth.signOut();
                             }
                         } else {
                             // User document doesn't exist in Firestore
-                            Toast.makeText(this, "User profile not found", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, R.string.error_user_profile_not_found, Toast.LENGTH_SHORT).show();
                             continueButton.setText(R.string.sign_in);
                             mAuth.signOut();
                         }
                     } else {
                         // Failed to get user data
-                        Toast.makeText(this, "Failed to get user data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.error_failed_to_get_user_data, Toast.LENGTH_SHORT).show();
                         continueButton.setText(R.string.sign_in);
                         mAuth.signOut();
                     }
@@ -165,24 +165,24 @@ public class GeneralSignInActivity extends AppCompatActivity {
 
         // Validate email
         if (email.isEmpty()) {
-            userEmail.setError("Email is required");
+            userEmail.setError(getString(R.string.error_email_required));
             Toast.makeText(GeneralSignInActivity.this,
-                    "Please enter a valid email", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_valid_email, Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            userEmail.setError("Invalid email address");
+            userEmail.setError(getString(R.string.error_invalid_email));
             Toast.makeText(GeneralSignInActivity.this,
-                    "Please enter a valid email", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_valid_email, Toast.LENGTH_LONG).show();
             return false;
         }
 
         // Validate password
         if (password.isEmpty()) {
-            userPassword.setError("Password is required");
+            userPassword.setError(getString(R.string.error_password_required));
             Toast.makeText(GeneralSignInActivity.this,
-                    "Please enter your password", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_your_password, Toast.LENGTH_LONG).show();
             return false;
         }
 

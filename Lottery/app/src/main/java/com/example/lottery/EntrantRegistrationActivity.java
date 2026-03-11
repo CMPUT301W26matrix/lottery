@@ -113,9 +113,9 @@ public class EntrantRegistrationActivity extends AppCompatActivity {
 
                                 if (isExistingAnonymous && existingUserId != null && existingFid != null && existingFid.equals(fid)) {
                                     // Device already has an anonymous account with same FID
-                                    anonContinueButton.setText("Continue Without Registering");
+                                    anonContinueButton.setText(R.string.continue_without_registering);
 
-                                    String existingName = sharedPreferences.getString(KEY_USER_NAME, "Unregistered User");
+                                    String existingName = sharedPreferences.getString(KEY_USER_NAME, getString(R.string.unregistered_user));
                                     navigateToEntrantMain(existingUserId, existingName, null, true);
                                     return;
                                 }
@@ -146,7 +146,7 @@ public class EntrantRegistrationActivity extends AppCompatActivity {
                                             editor.putString(KEY_FID, fid);
                                             editor.apply();
 
-                                            Toast.makeText(this, "Continuing as anonymous user", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(this, R.string.continuing_as_anonymous_user, Toast.LENGTH_SHORT).show();
 
                                             // Go to entrant main screen
                                             navigateToEntrantMain(anonymousUserId,
@@ -154,9 +154,9 @@ public class EntrantRegistrationActivity extends AppCompatActivity {
                                                     null, true);
                                         })
                                         .addOnFailureListener(e -> {
-                                            anonContinueButton.setText("Continue Without Registering");
+                                            anonContinueButton.setText(R.string.continue_without_registering);
 
-                                            Toast.makeText(this, "Failed to continue: " + e.getMessage(),
+                                            Toast.makeText(this, getString(R.string.error_failed_to_continue, e.getMessage()),
                                                     Toast.LENGTH_LONG).show();
                                         });
                             }
@@ -189,8 +189,8 @@ public class EntrantRegistrationActivity extends AppCompatActivity {
                     } else {
                         // Failed to create account
                         String errorMessage = task.getException() != null ?
-                                task.getException().getMessage() : "Registration failed";
-                        Toast.makeText(this, "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                                task.getException().getMessage() : getString(R.string.error_registration_failed);
+                        Toast.makeText(this, getString(R.string.error_prefix, errorMessage), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -222,7 +222,7 @@ public class EntrantRegistrationActivity extends AppCompatActivity {
                     editor.putString(KEY_USER_ROLE, "entrant");
                     editor.apply();
 
-                    Toast.makeText(this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.registration_successful, Toast.LENGTH_SHORT).show();
 
                     // Go to entrant main screen
                     navigateToEntrantMain(userId, name, email, false);
@@ -230,7 +230,7 @@ public class EntrantRegistrationActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     // Failed to save data
                     continueButton.setEnabled(true);
-                    Toast.makeText(this, "Failed to save profile: " + e.getMessage(),
+                    Toast.makeText(this, getString(R.string.error_failed_to_save_profile, e.getMessage()),
                             Toast.LENGTH_LONG).show();
                 });
     }
@@ -243,45 +243,45 @@ public class EntrantRegistrationActivity extends AppCompatActivity {
 
         // Validate name
         if (name.isEmpty()) {
-            entrantName.setError("Name is required");
+            entrantName.setError(getString(R.string.error_name_required));
             Toast.makeText(EntrantRegistrationActivity.this,
-                    "Please enter your name", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_your_name, Toast.LENGTH_LONG).show();
             return false;
         }
 
         // Validate email
         if (email.isEmpty()) {
-            entrantEmail.setError("Email is required");
+            entrantEmail.setError(getString(R.string.error_email_required));
             Toast.makeText(EntrantRegistrationActivity.this,
-                    "Please enter a valid email", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_valid_email, Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            entrantEmail.setError("Invalid email address");
+            entrantEmail.setError(getString(R.string.error_invalid_email));
             Toast.makeText(EntrantRegistrationActivity.this,
-                    "Please enter a valid email", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_valid_email, Toast.LENGTH_LONG).show();
             return false;
         }
 
         // Validate password
         if (password.isEmpty()) {
-            entrantPassword.setError("Password is required");
+            entrantPassword.setError(getString(R.string.error_password_required));
             Toast.makeText(EntrantRegistrationActivity.this,
-                    "Please enter a password", Toast.LENGTH_LONG).show();
+                    R.string.prompt_enter_a_password, Toast.LENGTH_LONG).show();
             return false;
         }
 
         if (password.length() < 8) {
-            entrantPassword.setError("Invalid password");
+            entrantPassword.setError(getString(R.string.error_invalid_password));
             Toast.makeText(EntrantRegistrationActivity.this,
-                    "Password must be at least 8 characters", Toast.LENGTH_LONG).show();
+                    R.string.prompt_password_min_length, Toast.LENGTH_LONG).show();
             return false;
         }
 
         // Validate password match
         if (!password.equals(password2)) {
-            entrantPassword2.setError("Passwords do not match");
+            entrantPassword2.setError(getString(R.string.error_password_mismatch));
             return false;
         }
 
