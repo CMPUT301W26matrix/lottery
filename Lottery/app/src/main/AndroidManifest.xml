@@ -12,12 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Lottery">
         <activity
-            android:name=".model.NotificationItem"
-            android:exported="false" />
-        <activity
-            android:name=".model.NotificationActivity"
-            android:exported="false" />
-        <activity
             android:name=".NotificationsActivity"
             android:exported="false" />
         <activity

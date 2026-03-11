@@ -3,14 +3,27 @@ package com.example.lottery;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.lottery.model.Event;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * MainActivity serves as the main dashboard for organizers.
@@ -22,7 +35,7 @@ import androidx.core.view.WindowInsetsCompat;
  * <p>The activity implements {@link EventAdapter.OnEventClickListener}
  * to respond when an event in the list is selected.</p>
  */
-public class MainActivity extends AppCompatActivity implements EventAdapter.OnEventClickListener {
+public class MainActivity extends AppCompatActivity {
 
     /** Log tag used for debugging. */
     private static final String TAG = "MainActivity";
@@ -84,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnEv
         signInButton = findViewById(R.id.btnSignIn);
 
         setupNavigation();
-        loadOrganizerEvents();
 
         /*
         -------------------------------------------------
@@ -116,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnEv
 
         if (btnCreate != null) {
             btnCreate.setOnClickListener(v ->
-                    startActivity(new Intent(MainActivity.this, CreateEventActivity.class))
+                    startActivity(new Intent(MainActivity.this, OrganizerCreateEventActivity.class))
             );
         }
 
@@ -152,92 +164,6 @@ public class MainActivity extends AppCompatActivity implements EventAdapter.OnEv
         checkAnonymousSession();
     }
 
-    /**
-     * Retrieves events from Firestore and updates the RecyclerView.
-     *
-     * <p>This method also calculates event statistics including
-     * active and closed events.</p>
-     */
-    private void loadOrganizerEvents() {
-
-        db.collection("events")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-
-                    eventList.clear();
-                    int active = 0;
-                    int closed = 0;
-                    Date now = new Date();
-
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-
-                        try {
-
-                            Event event = document.toObject(Event.class);
-
-                            // Compatibility fix for older database fields
-                            if (event.getScheduledDateTime() == null) {
-                                Date oldDate = document.getDate("eventDate");
-                                if (oldDate != null) event.setScheduledDateTime(oldDate);
-                            }
-
-                            if (event.getRegistrationDeadline() == null) {
-                                Date oldDeadline = document.getDate("deadlineDate");
-                                if (oldDeadline != null) event.setRegistrationDeadline(oldDeadline);
-                            }
-
-                            eventList.add(event);
-
-                            if (event.getScheduledDateTime() != null &&
-                                    event.getScheduledDateTime().after(now)) {
-                                active++;
-                            } else {
-                                closed++;
-                            }
-
-                        } catch (Exception e) {
-                            Log.e(TAG, "Error mapping document " + document.getId(), e);
-                        }
-                    }
-
-                    adapter.notifyDataSetChanged();
-                    updateSummaryStats(active, closed, 0, eventList.size());
-
-                    tvNoEvents.setVisibility(eventList.isEmpty() ? View.VISIBLE : View.GONE);
-
-                })
-                .addOnFailureListener(e -> {
-                    Log.e(TAG, "Firestore error", e);
-                    Toast.makeText(this, "Failed to load events", Toast.LENGTH_SHORT).show();
-                });
-    }
-
-    /**
-     * Updates the summary statistics displayed on the dashboard.
-     *
-     * @param active number of active events
-     * @param closed number of closed events
-     * @param pending number of pending events
-     * @param total total number of events
-     */
-    private void updateSummaryStats(int active, int closed, int pending, int total) {
-
-        tvActiveCount.setText(String.valueOf(active));
-        tvClosedCount.setText(String.valueOf(closed));
-        tvPendingCount.setText(String.valueOf(pending));
-        tvTotalCount.setText(String.valueOf(total));
-    }
-
-    /**
-     * Handles event item clicks from the RecyclerView.
-     *
-     * @param event the selected event
-     */
-    @Override
-    public void onEventClick(Event event) {
-
-        Intent intent = new Intent(this, EventDetailsActivity.class);
-        intent.putExtra("eventId", event.getEventId());
     private void checkAnonymousSession() {
         boolean isAnonymous = sharedPreferences.getBoolean(KEY_IS_ANONYMOUS, false);
         String userId = sharedPreferences.getString(KEY_USER_ID, null);
