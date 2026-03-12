@@ -1,7 +1,9 @@
 package com.example.lottery;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ public class WaitingListActivity extends AppCompatActivity {
 
     private ListView waitingListView;
     private TextView emptyMessage;
+    private ImageButton backButton;
 
     private ArrayList<User> entrants;
     private EntrantAdapter entrantAdapter;
@@ -36,6 +39,7 @@ public class WaitingListActivity extends AppCompatActivity {
 
         waitingListView = findViewById(R.id.waitingListView);
         emptyMessage = findViewById(R.id.emptyMessage);
+        backButton = findViewById(R.id.btnBack);
 
         db = FirebaseFirestore.getInstance();
         entrants = new ArrayList<>();
@@ -50,7 +54,28 @@ public class WaitingListActivity extends AppCompatActivity {
             return;
         }
 
+        backButton.setOnClickListener(v -> finish());
+        setupNavigation();
         loadWaitingList();
+    }
+
+    private void setupNavigation() {
+        findViewById(R.id.nav_home).setOnClickListener(v -> {
+            Intent intent = new Intent(this, OrganizerBrowseEventsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.nav_profile).setOnClickListener(v -> {
+            startActivity(new Intent(this, OrganizerProfileActivity.class));
+        });
+
+        View btnCreate = findViewById(R.id.nav_create_container);
+        if (btnCreate != null) {
+            btnCreate.setOnClickListener(v ->
+                    startActivity(new Intent(this, OrganizerCreateEventActivity.class))
+            );
+        }
     }
 
     /*
