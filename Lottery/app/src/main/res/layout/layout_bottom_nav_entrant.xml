@@ -23,7 +23,7 @@
             android:weightSum="4">
 
             <LinearLayout
-                android:id="@+id/nav_logs"
+                android:id="@+id/nav_notifications"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -42,6 +42,27 @@
                     android:text="Notifications"
                     android:textColor="@color/text_gray"
                     android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvNotificationBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="#D32F2F"
+                    android:minWidth="20dp"
+                    android:minHeight="20dp"
+                    android:gravity="center"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="4dp"
+                    android:paddingBottom="2dp"
+                    android:text="NEW"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -67,7 +88,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/nav_images"
+                android:id="@+id/nav_qr_scan"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -90,7 +111,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/nav_profiles"
+                android:id="@+id/nav_settings"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

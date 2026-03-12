@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,7 +74,11 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
     private Button btnWaitlistAction;
 
     /** Button used to open the notifications screen. */
-    private ImageButton btnNotifications;
+    private LinearLayout btnNotifications;
+
+    private LinearLayout navHome;
+    // private LinearLayout navQrScan;  --> implement later
+    // private LinearLayout navSettings; --> implement later
 
     /** Button used to close the activity. */
     private ImageButton btnClose;
@@ -126,8 +131,9 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
         tvNotificationBadge = findViewById(R.id.tvNotificationBadge);
         tvEventDescription = findViewById(R.id.tvEventDescription);
         btnWaitlistAction = findViewById(R.id.btnWaitlistAction);
-        btnNotifications = findViewById(R.id.btnNotifications);
-        btnClose = findViewById(R.id.btnClose);
+        btnNotifications = findViewById(R.id.nav_notifications);  // CHANGED: btnNotifications -> nav_notifications
+        navHome = findViewById(R.id.nav_home);  // ADDED: home button in bottom navigation bar returns to entrant main screen
+        btnClose = findViewById(R.id.btnBack);
         ivEventPoster = findViewById(R.id.ivEventPoster);
 
         readIntentData();
@@ -154,8 +160,20 @@ public class EntrantEventDetailsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // ADDED: Home navigation to aEntrantMainActivity (entrant's main screen)
+        navHome.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EntrantMainActivity.class);
+            intent.putExtra("userId", userId);
+            intent.putExtra("isAnonymous", false); // You might want to pass actual value
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+            finish();
+        });
+
         btnClose.setOnClickListener(v -> finish());
+
     }
+
 
     /**
      * Refreshes event data whenever the activity resumes.
