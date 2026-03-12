@@ -45,13 +45,17 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
@@ -206,7 +210,27 @@ public class EntrantsListView extends AppCompatActivity implements NotificationF
     }
     @Override
     public void sampling(int size){
-        entrantsRef.whereEqualTo("entrant_status",)
+        entrantsRef.whereEqualTo("entrant_status","waited_listed")
+                .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    if(queryDocumentSnapshots.isEmpty()){
+                        return;
+                    }
+                    List<DocumentSnapshot> data = queryDocumentSnapshots.getDocuments();
+                    Collections.shuffle(data);
+
+                    if(data.size()<size){
+                        Toast.makeText(this,String.format("sample size should not > %d", data.size()),Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    WriteBatch batch = db.batch();
+                    for(int i = 0; i<size; i++){
+                        DocumentReference pieceDataRef = data.get(i).getReference();
+                        batch.update(pieceDataRef,"entrant_status","invited");
+                    }
+                    batch.commit().addOnFailureListener(e->Log.d("sampling","commit failed"));
+                });
+    }
     }
     @Override
     public void sendNotification(String content){
