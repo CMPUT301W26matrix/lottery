@@ -7,6 +7,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.lottery.model.User;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -32,6 +35,12 @@ public class BrowseProfilesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_profiles);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content), (v, insets) -> {
+            Insets in = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(in.left, in.top, in.right, in.bottom);
+            return insets;
+        });
 
         lvProfiles = findViewById(R.id.lvProfiles);
         tvEmptyProfiles = findViewById(R.id.tvEmptyProfiles);
