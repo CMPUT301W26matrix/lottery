@@ -54,6 +54,7 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:id="@+id/entrants_list_send_notification_btn"
                     android:layout_height="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_marginRight="12dp"
                     android:layout_weight="0.5"
                     android:backgroundTint="@color/accent_blue"
@@ -66,6 +67,7 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:id="@+id/entrants_list_view_location_btn"
                     android:layout_height="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:backgroundTint="@color/accent_blue"
                     android:text="@string/entrants_list_function_toggle_button_group_view_location_text"
@@ -74,10 +76,11 @@
                     tools:ignore="RtlHardcoded" />
             </LinearLayout>
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:visibility="gone"
                 android:id="@+id/cancelled_entrants_list_layout"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cancelled_entrants_view"
                 android:layout_width="match_parent"
@@ -87,10 +90,11 @@
                 tools:listitem="@layout/entrant_list_item" />
             </LinearLayout>
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:visibility="gone"
                 android:id="@+id/waited_list_entrants_list_layout"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/waited_list_events_view"
                     android:layout_width="match_parent"

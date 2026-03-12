@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lottery.model.Event;
@@ -159,10 +160,6 @@ public class EntrantsListView extends AppCompatActivity implements NotificationF
 
         // switch to view location component to display the entrants on the map
         btnViewLocation.setOnClickListener(v->{
-            viewLocationLayout.setVisibility(View.VISIBLE);
-            cancelledEntrantsListLayout.setVisibility(View.GONE);
-            waitedListEntrantsListLayout.setVisibility(View.GONE);
-            signedUpEntrantsListLayout.setVisibility(View.GONE);
             if(googleMap!=null){
                 if(waitedListEntrantsListLayout.getVisibility()==View.VISIBLE){
                     insertMarkers(entrantWaitedListArrayList);
@@ -174,6 +171,10 @@ public class EntrantsListView extends AppCompatActivity implements NotificationF
                     insertMarkers(entrantCancelledArrayList);
                 }
             }
+            viewLocationLayout.setVisibility(View.VISIBLE);
+            cancelledEntrantsListLayout.setVisibility(View.GONE);
+            waitedListEntrantsListLayout.setVisibility(View.GONE);
+            signedUpEntrantsListLayout.setVisibility(View.GONE);
         });
 
         //fetch entrants list from firebase
@@ -231,10 +232,9 @@ public class EntrantsListView extends AppCompatActivity implements NotificationF
                     batch.commit().addOnFailureListener(e->Log.d("sampling","commit failed"));
                 });
     }
-    }
     @Override
     public void sendNotification(String content){
-
+        System.out.print("true");
     }
     /**
      * Initialize view for the create event activity.
@@ -249,6 +249,9 @@ public class EntrantsListView extends AppCompatActivity implements NotificationF
         signedUpEventsView = findViewById(R.id.signed_up_events_view);
         waitedListEventsView = findViewById(R.id.waited_list_events_view);
         cancelledEntrantsView = findViewById(R.id.cancelled_entrants_view);
+        signedUpEventsView.setLayoutManager(new LinearLayoutManager(this));
+        waitedListEventsView.setLayoutManager(new LinearLayoutManager(this));
+        cancelledEntrantsView.setLayoutManager(new LinearLayoutManager(this));
         cancelledEntrantsListLayout = findViewById(R.id.cancelled_entrants_list_layout);
         signedUpEntrantsListLayout = findViewById(R.id.signed_up_entrants_list_layout);
         waitedListEntrantsListLayout = findViewById(R.id.waited_list_entrants_list_layout);

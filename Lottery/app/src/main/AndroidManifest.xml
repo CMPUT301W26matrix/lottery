@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lottery">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="place_holder"/>
+
         <activity
             android:name=".NotificationsActivity"
             android:exported="false" />
