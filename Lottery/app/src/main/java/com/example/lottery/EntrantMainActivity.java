@@ -25,11 +25,11 @@ import java.util.List;
  * Main activity for the entrant user role.
  * Displays a list of events and user statistics.
  */
-public class EntrantMainActivity extends AppCompatActivity implements EventAdapter.OnEventClickListener {
+public class EntrantMainActivity extends AppCompatActivity {
 
+    private final List<Event> eventList = new ArrayList<>();
     private RecyclerView rvEvents;
-    private EventAdapter adapter;
-    private List<Event> eventList;
+    private EntrantEventAdapter adapter;
     private View emptyStateContainer;
     private TextView tvActiveCount, tvJoinedCount;
     private FirebaseFirestore db;
@@ -39,8 +39,8 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
      * Initializes the activity, setting up the UI and loading data.
      *
      * @param savedInstanceState If the activity is being re-initialized after
-     *     previously being shut down then this Bundle contains the data it most
-     *     recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,13 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
         });
 
         userId = getIntent().getStringExtra("userId");
+
+        if (userId == null) {
+            Toast.makeText(this, "User ID missing", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         db = FirebaseFirestore.getInstance();
 
         rvEvents = findViewById(R.id.rvEvents);
@@ -62,8 +69,7 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
         tvActiveCount = findViewById(R.id.tvActiveCount);
         tvJoinedCount = findViewById(R.id.tvJoinedCount);
 
-        eventList = new ArrayList<>();
-        adapter = new EventAdapter(eventList, this);
+        adapter = new EntrantEventAdapter(eventList, this::openEventDetails);
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         rvEvents.setAdapter(adapter);
 
@@ -80,12 +86,12 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
             // Already home
         });
 
-        findViewById(R.id.nav_history).setOnClickListener(v -> 
-            Toast.makeText(this, "History coming soon", Toast.LENGTH_SHORT).show()
+        findViewById(R.id.nav_history).setOnClickListener(v ->
+                Toast.makeText(this, "History coming soon", Toast.LENGTH_SHORT).show()
         );
 
-        findViewById(R.id.nav_qr_scan).setOnClickListener(v -> 
-            Toast.makeText(this, "QR Scan coming soon", Toast.LENGTH_SHORT).show()
+        findViewById(R.id.nav_qr_scan).setOnClickListener(v ->
+                Toast.makeText(this, "QR Scan coming soon", Toast.LENGTH_SHORT).show()
         );
 
         findViewById(R.id.nav_profile).setOnClickListener(v -> {
@@ -105,6 +111,7 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
                     eventList.clear();
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         Event event = document.toObject(Event.class);
+                        event.setEventId(document.getId());
                         eventList.add(event);
                     }
                     adapter.notifyDataSetChanged();
@@ -153,8 +160,7 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
      *
      * @param event The event that was clicked.
      */
-    @Override
-    public void onEventClick(Event event) {
+    private void openEventDetails(Event event) {
         Intent intent = new Intent(this, EntrantEventDetailsActivity.class);
         intent.putExtra(EntrantEventDetailsActivity.EXTRA_EVENT_ID, event.getEventId());
         intent.putExtra(EntrantEventDetailsActivity.EXTRA_USER_ID, userId);
