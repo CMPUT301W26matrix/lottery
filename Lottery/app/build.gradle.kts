@@ -37,13 +37,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.ext.junit)
-    implementation(libs.espresso.core)
     implementation(libs.firebase.installations)
+
     testImplementation(libs.junit)
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.0.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.0.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.9.2")
+
+    androidTestImplementation("androidx.test:core:1.5.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test.espresso:espresso-intents:3.6.1")
@@ -53,10 +54,10 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
 
-    // ZXing for QR Code generation (US 02.01.01)
+    // ZXing for QR Code generation
     implementation("com.google.zxing:core:3.5.3")
 
-    // Glide for image loading (Optional but useful for local URIs too)
+    // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 }
