@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="70dp">
 
@@ -44,6 +45,27 @@
                     android:text="@string/nav_home"
                     android:textColor="@color/primary_blue"
                     android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tvNotificationBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="#D32F2F"
+                    android:minWidth="20dp"
+                    android:minHeight="20dp"
+                    android:gravity="center"
+                    android:paddingLeft="4dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="4dp"
+                    android:paddingBottom="2dp"
+                    android:text="NEW"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -72,26 +94,24 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/nav_favorites"
+                android:id="@+id/nav_qr_scan"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:clickable="true"
-                android:focusable="true"
-                android:background="?attr/selectableItemBackground">
+                android:orientation="vertical">
+
                 <ImageView
-                    android:id="@+id/iv_nav_favorites"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@android:drawable/btn_star_big_off"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    app:srcCompat="@android:drawable/ic_menu_zoom"
                     app:tint="@color/text_gray" />
+
                 <TextView
-                    android:id="@+id/tv_nav_favorites"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/nav_favorites"
+                    android:text="QR Scan"
                     android:textColor="@color/text_gray"
                     android:textSize="11sp" />
             </LinearLayout>

@@ -29,6 +29,17 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     /**
      * List of notifications to display.
      */
+    public interface OnNotificationClickListener {
+
+        /**
+         * Called when a notification item is clicked.
+         *
+         * @param item the notification that was selected
+         */
+        void onNotificationClick(NotificationItem item);
+    }
+
+    /** List of notifications to display. */
     private final List<NotificationItem> notifications;
     /**
      * Listener used to handle click events on notifications.

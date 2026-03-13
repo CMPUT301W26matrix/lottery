@@ -19,6 +19,18 @@
             android:exported="false" />
         <activity android:name=".WaitingListActivity" />
         <activity
+            android:name=".model.NotificationItem"
+            android:exported="false" />
+        <activity
+            android:name=".model.NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EntrantEventDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

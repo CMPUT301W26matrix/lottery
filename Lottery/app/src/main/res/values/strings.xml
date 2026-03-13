@@ -167,4 +167,31 @@
     <string name="notification_response">Response: %1$s</string>
     <string name="notification_new_badge">NEW</string>
     <string name="settings">Settings</string>
+
+    <!-- Entrant Main Screen Strings -->
+    <string name="your_wait_listed_events">Your Wait-Listed Events</string>
+    <string name="your_invited_events">Your Invited Events</string>
+    <string name="your_signed_up_events">Your Signed-Up Events</string>
+
+    <!-- Empty State Messages -->
+    <string name="no_wait_listed_events">You have no events in your wait list</string>
+    <string name="no_invited_events">You have no pending invitations</string>
+    <string name="no_signed_up_events">You haven\'t signed up for any events yet</string>
+    <string name="join_events_to_see_them_here">Join events to see them here</string>
+    <string name="wait_for_lottery_to_see_invites">Wait for lottery results to see invitations here</string>
+    <string name="accept_invites_to_see_signed_up">Accept invitations to see signed-up events here</string>
+
+    <!-- Event Item/Details Strings -->
+    <string name="wait_listed">WAIT-LISTED</string>
+    <string name="invited">INVITED</string>
+    <string name="signed_up">SIGNED-UP</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="cancel_membership">Cancel Membership</string>
+    <string name="registration_period_template">Registration Period: %1$s - %2$s</string>
+    <string name="people_in_waitlist_template">People in Waitlist: %1$d</string>
+    <string name="event_description_placeholder">Event description will appear here...</string>
+    <string name="view_details">View Details</string>
+    <string name="event_details">Event Details</string>
+    <string name="no_event_description">No event description available.</string>
 </resources>
