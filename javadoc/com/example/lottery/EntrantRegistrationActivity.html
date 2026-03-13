@@ -112,18 +112,18 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">EntrantRegistrationActivity</span>
 <span class="extends-implements">extends androidx.appcompat.app.AppCompatActivity</span></div>
 <div class="block">EntrantRegistrationActivity handles the registration process for entrant users.
- 
+
  <p>It provides two registration options:
  <ul>
-     <li><b>Full Registration:</b> Creates a persistent account with email and password 
+     <li><b>Full Registration:</b> Creates a persistent account with email and password
          using Firebase Authentication. User profiles are stored in Firestore.</li>
-     <li><b>Anonymous Registration:</b> Identifies the user solely by their device using 
-         Firebase Installation ID (FID). This allows immediate app access without 
+     <li><b>Anonymous Registration:</b> Identifies the user solely by their device using
+         Firebase Installation ID (FID). This allows immediate app access without
          manual input (aligned with device-based identification requirements).</li>
  </ul>
  </p>
 
- <p>This activity handles input validation, Firebase interaction, Firestore document 
+ <p>This activity handles input validation, Firebase interaction, Firestore document
  creation, and local session management via SharedPreferences.</p></div>
 <dl class="notes">
 <dt>See Also:</dt>

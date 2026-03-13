@@ -106,12 +106,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.FullyDrawnReporterOwner</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.OnUserLeaveHintProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.navigationevent.NavigationEventDispatcherOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code>, <code><a href="EventAdapter.OnEventClickListener.html" title="interface in com.example.lottery">EventAdapter.OnEventClickListener</a></code></dd>
+<dd><code>android.content.ComponentCallbacks</code>, <code>android.content.ComponentCallbacks2</code>, <code>android.view.KeyEvent.Callback</code>, <code>android.view.LayoutInflater.Factory</code>, <code>android.view.LayoutInflater.Factory2</code>, <code>android.view.View.OnCreateContextMenuListener</code>, <code>android.view.Window.Callback</code>, <code>androidx.activity.contextaware.ContextAware</code>, <code>androidx.activity.FullyDrawnReporterOwner</code>, <code>androidx.activity.OnBackPressedDispatcherOwner</code>, <code>androidx.activity.result.ActivityResultCaller</code>, <code>androidx.activity.result.ActivityResultRegistryOwner</code>, <code>androidx.appcompat.app.ActionBarDrawerToggle.DelegateProvider</code>, <code>androidx.appcompat.app.AppCompatCallback</code>, <code>androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback</code>, <code>androidx.core.app.ActivityCompat.RequestPermissionsRequestCodeValidator</code>, <code>androidx.core.app.OnMultiWindowModeChangedProvider</code>, <code>androidx.core.app.OnNewIntentProvider</code>, <code>androidx.core.app.OnPictureInPictureModeChangedProvider</code>, <code>androidx.core.app.OnUserLeaveHintProvider</code>, <code>androidx.core.app.TaskStackBuilder.SupportParentable</code>, <code>androidx.core.content.OnConfigurationChangedProvider</code>, <code>androidx.core.content.OnTrimMemoryProvider</code>, <code>androidx.core.view.KeyEventDispatcher.Component</code>, <code>androidx.core.view.MenuHost</code>, <code>androidx.lifecycle.HasDefaultViewModelProviderFactory</code>, <code>androidx.lifecycle.LifecycleOwner</code>, <code>androidx.lifecycle.ViewModelStoreOwner</code>, <code>androidx.navigationevent.NavigationEventDispatcherOwner</code>, <code>androidx.savedstate.SavedStateRegistryOwner</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">EntrantMainActivity</span>
-<span class="extends-implements">extends androidx.appcompat.app.AppCompatActivity
-implements <a href="EventAdapter.OnEventClickListener.html" title="interface in com.example.lottery">EventAdapter.OnEventClickListener</a></span></div>
+<span class="extends-implements">extends androidx.appcompat.app.AppCompatActivity</span></div>
 <div class="block">Main activity for the entrant user role.
  Displays a list of events and user statistics.</div>
 </section>
@@ -178,11 +177,6 @@ implements <a href="EventAdapter.OnEventClickListener.html" title="interface in 
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onCreate(android.os.Bundle)" class="member-name-link">onCreate</a><wbr>(android.os.Bundle&nbsp;savedInstanceState)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Initializes the activity, setting up the UI and loading data.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onEventClick(com.example.lottery.model.Event)" class="member-name-link">onEventClick</a><wbr>(<a href="model/Event.html" title="class in com.example.lottery.model">Event</a>&nbsp;event)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles the event click event.</div>
 </div>
 </div>
 </div>
@@ -252,21 +246,8 @@ implements <a href="EventAdapter.OnEventClickListener.html" title="interface in 
 <dd><code>onCreate</code>&nbsp;in class&nbsp;<code>androidx.fragment.app.FragmentActivity</code></dd>
 <dt>Parameters:</dt>
 <dd><code>savedInstanceState</code> - If the activity is being re-initialized after
-     previously being shut down then this Bundle contains the data it most
-     recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="onEventClick(com.example.lottery.model.Event)">
-<h3>onEventClick</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onEventClick</span><wbr><span class="parameters">(<a href="model/Event.html" title="class in com.example.lottery.model">Event</a>&nbsp;event)</span></div>
-<div class="block">Handles the event click event.</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="EventAdapter.OnEventClickListener.html#onEventClick(com.example.lottery.model.Event)">onEventClick</a></code>&nbsp;in interface&nbsp;<code><a href="EventAdapter.OnEventClickListener.html" title="interface in com.example.lottery">EventAdapter.OnEventClickListener</a></code></dd>
-<dt>Parameters:</dt>
-<dd><code>event</code> - The event that was clicked.</dd>
+                           previously being shut down then this Bundle contains the data it most
+                           recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.</dd>
 </dl>
 </section>
 </li>
