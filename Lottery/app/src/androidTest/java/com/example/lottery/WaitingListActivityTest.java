@@ -3,21 +3,39 @@ package com.example.lottery;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
-import static androidx.test.espresso.matcher.ViewMatchers.Visibility;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import android.content.Intent;
 
-import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.UUID;
+
 @RunWith(AndroidJUnit4.class)
 public class WaitingListActivityTest {
+
+    // Use an Intent to provide the required "eventId" extra.
+    static Intent intent;
+    static {
+        intent = new Intent(
+                ApplicationProvider.getApplicationContext(),
+                WaitingListActivity.class
+        );
+        intent.putExtra("eventId", UUID.randomUUID().toString()); // Mock event ID
+    }
+
+    @Rule
+    public ActivityScenarioRule<WaitingListActivity> activityRule =
+            new ActivityScenarioRule<>(intent);
 
     private void waitFor(long millis) {
         try {
@@ -27,42 +45,33 @@ public class WaitingListActivityTest {
         }
     }
 
-    /**
-     * Test that WaitingListActivity launches successfully.
-     * Since the activity always shows either the list or the empty message,
-     * we verify the activity itself loads by checking the empty message view exists.
-     */
     @Test
-    public void waitingListActivity_launchesSuccessfully() {
-        Intent intent = new Intent(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                WaitingListActivity.class
-        );
-        intent.putExtra("eventId", "nonexistent_event_id_12345");
-
-        try (ActivityScenario<WaitingListActivity> scenario = ActivityScenario.launch(intent)) {
-            waitFor(3000);
-            // After load, one of these two views must always be visible
-            onView(withId(R.id.emptyMessage))
-                    .check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
-        }
+    public void testAllViewsAreDisplayed() {
+        // These views should always be visible.
+        onView(withId(R.id.btnBack)).check(matches(isDisplayed()));
+        onView(withId(R.id.waitingListTitle)).check(matches(isDisplayed()));
+        onView(withId(R.id.bottom_nav_container)).check(matches(isDisplayed()));
     }
 
-    /**
-     * Test that the empty message is shown when there are no entrants.
-     */
     @Test
-    public void waitingListActivity_displaysEmptyMessageView() {
-        Intent intent = new Intent(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                WaitingListActivity.class
-        );
-        intent.putExtra("eventId", "nonexistent_event_id_12345");
+    public void testEmptyStateIsDisplayed() {
+        // Since a random UUID is used, the waiting list should be empty.
+        // Wait briefly in case the activity loads data asynchronously.
+        waitFor(3000);
+        onView(withId(R.id.emptyMessage))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
 
-        try (ActivityScenario<WaitingListActivity> scenario = ActivityScenario.launch(intent)) {
-            waitFor(3000);
-            onView(withId(R.id.emptyMessage))
-                    .check(matches(withEffectiveVisibility(Visibility.VISIBLE)));
-        }
+    @Test
+    public void testHeaderTitleIsCorrect() {
+        onView(withId(R.id.waitingListTitle))
+                .check(matches(withText("Event Waiting List")));
+    }
+
+    @Test
+    public void testNavigationIsDisplayed() {
+        onView(withId(R.id.bottom_nav_container)).check(matches(isDisplayed()));
+        onView(withId(R.id.nav_home)).check(matches(isDisplayed()));
+        onView(withId(R.id.nav_profile)).check(matches(isDisplayed()));
     }
 }
