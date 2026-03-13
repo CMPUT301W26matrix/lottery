@@ -79,8 +79,8 @@ public class EntrantProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "History coming soon", Toast.LENGTH_SHORT).show()
         );
 
-        findViewById(R.id.nav_favorites).setOnClickListener(v -> 
-            Toast.makeText(this, "Favorites coming soon", Toast.LENGTH_SHORT).show()
+        findViewById(R.id.nav_qr_scan).setOnClickListener(v -> 
+            Toast.makeText(this, "QR Scan coming soon", Toast.LENGTH_SHORT).show()
         );
 
         findViewById(R.id.nav_profile).setOnClickListener(v -> {

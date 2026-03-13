@@ -22,7 +22,7 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
     private RecyclerView rvEvents;
     private EventAdapter adapter;
     private List<Event> eventList;
-    private TextView tvNoEvents;
+    private View emptyStateContainer;
     private TextView tvActiveCount, tvJoinedCount;
     private FirebaseFirestore db;
     private String userId;
@@ -36,7 +36,7 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
         db = FirebaseFirestore.getInstance();
 
         rvEvents = findViewById(R.id.rvEvents);
-        tvNoEvents = findViewById(R.id.tvNoEvents);
+        emptyStateContainer = findViewById(R.id.emptyStateContainer);
         tvActiveCount = findViewById(R.id.tvActiveCount);
         tvJoinedCount = findViewById(R.id.tvJoinedCount);
 
@@ -59,8 +59,8 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
             Toast.makeText(this, "History coming soon", Toast.LENGTH_SHORT).show()
         );
 
-        findViewById(R.id.nav_favorites).setOnClickListener(v -> 
-            Toast.makeText(this, "Favorites coming soon", Toast.LENGTH_SHORT).show()
+        findViewById(R.id.nav_qr_scan).setOnClickListener(v -> 
+            Toast.makeText(this, "QR Scan coming soon", Toast.LENGTH_SHORT).show()
         );
 
         findViewById(R.id.nav_profile).setOnClickListener(v -> {
@@ -87,7 +87,9 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
 
     private void loadStats() {
         db.collection("events").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            tvActiveCount.setText(String.valueOf(queryDocumentSnapshots.size()));
+            if (tvActiveCount != null) {
+                tvActiveCount.setText(String.valueOf(queryDocumentSnapshots.size()));
+            }
         });
 
         if (userId != null) {
@@ -95,17 +97,19 @@ public class EntrantMainActivity extends AppCompatActivity implements EventAdapt
                     .whereEqualTo("entrantId", userId)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
-                        tvJoinedCount.setText(String.valueOf(queryDocumentSnapshots.size()));
+                        if (tvJoinedCount != null) {
+                            tvJoinedCount.setText(String.valueOf(queryDocumentSnapshots.size()));
+                        }
                     });
         }
     }
 
     private void updateEmptyState() {
         if (eventList.isEmpty()) {
-            tvNoEvents.setVisibility(View.VISIBLE);
+            if (emptyStateContainer != null) emptyStateContainer.setVisibility(View.VISIBLE);
             rvEvents.setVisibility(View.GONE);
         } else {
-            tvNoEvents.setVisibility(View.GONE);
+            if (emptyStateContainer != null) emptyStateContainer.setVisibility(View.GONE);
             rvEvents.setVisibility(View.VISIBLE);
         }
     }

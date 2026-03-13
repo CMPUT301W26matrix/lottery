@@ -27,7 +27,7 @@ import java.util.List;
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
     /**
-     * List of notifications to display.
+     * Listener interface used to handle notification click events.
      */
     public interface OnNotificationClickListener {
 
@@ -122,22 +122,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     /**
-     * Listener interface used to handle notification click events.
-     */
-    public interface OnNotificationClickListener {
-
-        /**
-         * Called when a notification item is clicked.
-         *
-         * @param item the notification that was selected
-         */
-        void onNotificationClick(NotificationItem item);
-    }
-
-    /**
      * ViewHolder representing a single notification item in the RecyclerView.
      */
-    static class NotificationViewHolder extends RecyclerView.ViewHolder {
+    public static class NotificationViewHolder extends RecyclerView.ViewHolder {
 
         /**
          * Displays the notification title.
