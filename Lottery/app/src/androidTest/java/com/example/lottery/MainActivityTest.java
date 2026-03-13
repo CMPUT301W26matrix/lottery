@@ -21,20 +21,31 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MainActivityTest {
 
+    private ActivityScenario<MainActivity> scenario;
+
     @Before
     public void setUp() {
         Intents.init();
+        clearSharedPreferences();
+        scenario = ActivityScenario.launch(MainActivity.class);
+    }
+
+    @After
+    public void tearDown() {
+        if (scenario != null) {
+            scenario.close();
+        }
+
+        clearSharedPreferences();
+        Intents.release();
+    }
+
+    private void clearSharedPreferences() {
         ApplicationProvider.getApplicationContext()
                 .getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
                 .edit()
                 .clear()
                 .commit();
-        ActivityScenario<MainActivity> launch = ActivityScenario.launch(MainActivity.class);
-    }
-
-    @After
-    public void tearDown() {
-        Intents.release();
     }
 
     @Test
