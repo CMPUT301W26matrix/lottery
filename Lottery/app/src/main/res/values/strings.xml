@@ -2,10 +2,10 @@
     <string name="app_name">Lottery</string>
     <string name="choose_your_role">Choose your role</string>
     <string name="already_have_an_account">Already have an account?</string>
-    <string name="i_m_an_entrant">✪ I\'m an Entrant</string>
-    <string name="i_m_an_organizer">✪ I\'m an Organizer</string>
-    <string name="i_m_an_admin">✪ I\'m an Admin</string>
-    <string name="sign_in">✪ Sign In</string>
+    <string name="i_m_an_entrant">I\'m an Entrant</string>
+    <string name="i_m_an_organizer">I\'m an Organizer</string>
+    <string name="i_m_an_admin">I\'m an Admin</string>
+    <string name="sign_in">Sign In</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="phone_number_optional">Phone Number (Optional)</string>
@@ -150,4 +150,9 @@
     <string name="notification_response">Response: %1$s</string>
     <string name="notification_new_badge">NEW</string>
     <string name="settings">Settings</string>
+    <string name="browse_profiles">Browse Profiles</string>
+    <string name="view_user_profiles">View user profiles</string>
+    <string name="there_are_no_user_profiles_in_the_system">There are no user profiles in the system.</string>
+    <string name="no_user_profiles_in_the_system">No user profiles in the system</string>
+    <string name="failed_to_load_profiles">Failed to load profiles</string>
 </resources>
