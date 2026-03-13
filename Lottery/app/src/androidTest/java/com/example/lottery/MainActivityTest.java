@@ -1,12 +1,13 @@
 package com.example.lottery;
 
+import android.content.Context;
+
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -20,21 +21,20 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 public class MainActivityTest {
 
-    @Rule
-    public ActivityScenarioRule<MainActivity> activityRule =
-            new ActivityScenarioRule<>(MainActivity.class);
-
     @Before
     public void setUp() {
         Intents.init();
-        // Clear any existing SharedPreferences before each test
-//        clearSharedPreferences();
+        ApplicationProvider.getApplicationContext()
+                .getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+                .edit()
+                .clear()
+                .commit();
+        ActivityScenario<MainActivity> launch = ActivityScenario.launch(MainActivity.class);
     }
 
     @After
     public void tearDown() {
         Intents.release();
-//        clearSharedPreferences();
     }
 
     @Test
