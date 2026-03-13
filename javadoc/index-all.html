@@ -49,7 +49,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
 <dt><a href="com/example/lottery/model/EntrantEvent.Status.html#ACCEPTED" class="member-name-link">ACCEPTED</a> - Enum constant in enum class com.example.lottery.model.<a href="com/example/lottery/model/EntrantEvent.Status.html" title="enum class in com.example.lottery.model">EntrantEvent.Status</a></dt>
@@ -88,6 +88,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/example/lottery/BrowseProfilesActivity.html#%3Cinit%3E()" class="member-name-link">BrowseProfilesActivity()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/BrowseProfilesActivity.html" title="class in com.example.lottery">BrowseProfilesActivity</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#buildHandledNotificationUpdate(java.lang.String)" class="member-name-link">buildHandledNotificationUpdate(String)</a> - Static method in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>
+<div class="block">Builds the Firestore payload used when syncing a handled win notification.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
@@ -168,6 +172,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="com/example/lottery/EntrantRegistrationActivity.html#%3Cinit%3E()" class="member-name-link">EntrantRegistrationActivity()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/EntrantRegistrationActivity.html" title="class in com.example.lottery">EntrantRegistrationActivity</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#entrantStatusFromNotificationResponse(java.lang.String)" class="member-name-link">entrantStatusFromNotificationResponse(String)</a> - Static method in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>
+<div class="block">Maps notification response values to the canonical entrant status.</div>
+</dd>
 <dt><a href="com/example/lottery/model/Event.html" class="type-name-link" title="class in com.example.lottery.model">Event</a> - Class in <a href="com/example/lottery/model/package-summary.html">com.example.lottery.model</a></dt>
 <dd>
 <div class="block">Model class representing an Event.</div>
@@ -328,6 +336,10 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:I">I</h2>
 <dl class="index">
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html" class="type-name-link" title="class in com.example.lottery.util">InvitationFlowUtil</a> - Class in <a href="com/example/lottery/util/package-summary.html">com.example.lottery.util</a></dt>
+<dd>
+<div class="block">Shared invitation flow helpers used by entrant event details and notifications.</div>
+</dd>
 <dt><a href="com/example/lottery/model/EntrantEvent.Status.html#INVITED" class="member-name-link">INVITED</a> - Enum constant in enum class com.example.lottery.model.<a href="com/example/lottery/model/EntrantEvent.Status.html" title="enum class in com.example.lottery.model">EntrantEvent.Status</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/model/NotificationItem.html#isActionTaken()" class="member-name-link">isActionTaken()</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/NotificationItem.html" title="class in com.example.lottery.model">NotificationItem</a></dt>
@@ -371,6 +383,10 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:N">N</h2>
 <dl class="index">
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#normalizeEntrantStatus(java.lang.String)" class="member-name-link">normalizeEntrantStatus(String)</a> - Static method in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>
+<div class="block">Normalizes entrant status values from Firestore into one canonical form.</div>
+</dd>
 <dt><a href="com/example/lottery/NotificationAdapter.html" class="type-name-link" title="class in com.example.lottery">NotificationAdapter</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
 <dd>
 <div class="block">Adapter used to display notifications in a RecyclerView.</div>
@@ -596,6 +612,15 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/example/lottery/util/QRCodeUtils.html#%3Cinit%3E()" class="member-name-link">QRCodeUtils()</a> - Constructor for class com.example.lottery.util.<a href="com/example/lottery/util/QRCodeUtils.html" title="class in com.example.lottery.util">QRCodeUtils</a></dt>
 <dd>&nbsp;</dd>
 </dl>
+<h2 class="title" id="I:R">R</h2>
+<dl class="index">
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#RESPONSE_ACCEPTED" class="member-name-link">RESPONSE_ACCEPTED</a> - Static variable in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#RESPONSE_CANCELLED" class="member-name-link">RESPONSE_CANCELLED</a> - Static variable in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#RESPONSE_REJECTED" class="member-name-link">RESPONSE_REJECTED</a> - Static variable in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>&nbsp;</dd>
+</dl>
 <h2 class="title" id="I:S">S</h2>
 <dl class="index">
 <dt><a href="com/example/lottery/model/EntrantEvent.Status.html#SELECTED" class="member-name-link">SELECTED</a> - Enum constant in enum class com.example.lottery.model.<a href="com/example/lottery/model/EntrantEvent.Status.html" title="enum class in com.example.lottery.model">EntrantEvent.Status</a></dt>
@@ -658,6 +683,14 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/model/EntrantEvent.html#setWaitlistPosition(int)" class="member-name-link">setWaitlistPosition(int)</a> - Method in class com.example.lottery.model.<a href="com/example/lottery/model/EntrantEvent.html" title="class in com.example.lottery.model">EntrantEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#STATUS_ACCEPTED" class="member-name-link">STATUS_ACCEPTED</a> - Static variable in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#STATUS_DECLINED" class="member-name-link">STATUS_DECLINED</a> - Static variable in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#STATUS_INVITED" class="member-name-link">STATUS_INVITED</a> - Static variable in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/util/InvitationFlowUtil.html#STATUS_WAITING" class="member-name-link">STATUS_WAITING</a> - Static variable in class com.example.lottery.util.<a href="com/example/lottery/util/InvitationFlowUtil.html" title="class in com.example.lottery.util">InvitationFlowUtil</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:U">U</h2>
 <dl class="index">
@@ -701,7 +734,7 @@ the order they are declared.</div>
 <dt><a href="com/example/lottery/model/EntrantEvent.Status.html#WAITLISTED" class="member-name-link">WAITLISTED</a> - Enum constant in enum class com.example.lottery.model.<a href="com/example/lottery/model/EntrantEvent.Status.html" title="enum class in com.example.lottery.model">EntrantEvent.Status</a></dt>
 <dd>&nbsp;</dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a></main>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a></main>
 </div>
 </div>
 </body>
