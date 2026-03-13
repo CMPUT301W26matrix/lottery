@@ -250,6 +250,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Intent extra key used to pass the event ID to this activity.</div>
 </dd>
+<dt><a href="com/example/lottery/OrganizerQrCodeDetailActivity.html#EXTRA_EVENT_TITLE" class="member-name-link">EXTRA_EVENT_TITLE</a> - Static variable in class com.example.lottery.<a href="com/example/lottery/OrganizerQrCodeDetailActivity.html" title="class in com.example.lottery">OrganizerQrCodeDetailActivity</a></dt>
+<dd>
+<div class="block">Intent extra key for the event title.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrCodeDetailActivity.html#EXTRA_QR_CONTENT" class="member-name-link">EXTRA_QR_CONTENT</a> - Static variable in class com.example.lottery.<a href="com/example/lottery/OrganizerQrCodeDetailActivity.html" title="class in com.example.lottery">OrganizerQrCodeDetailActivity</a></dt>
+<dd>
+<div class="block">Intent extra key for the QR code raw content.</div>
+</dd>
 <dt><a href="com/example/lottery/EntrantEventDetailsActivity.html#EXTRA_USER_ID" class="member-name-link">EXTRA_USER_ID</a> - Static variable in class com.example.lottery.<a href="com/example/lottery/EntrantEventDetailsActivity.html" title="class in com.example.lottery">EntrantEventDetailsActivity</a></dt>
 <dd>
 <div class="block">Intent extra key used to pass the user ID to this activity.</div>
@@ -327,6 +335,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the total number of notifications.</div>
 </dd>
+<dt><a href="com/example/lottery/OrganizerQrEventAdapter.html#getItemCount()" class="member-name-link">getItemCount()</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerQrEventAdapter.html" title="class in com.example.lottery">OrganizerQrEventAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/SignedUpListAdapter.html#getItemCount()" class="member-name-link">getItemCount()</a> - Method in class com.example.lottery.<a href="com/example/lottery/SignedUpListAdapter.html" title="class in com.example.lottery">SignedUpListAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/WaitedListedListAdapter.html#getItemCount()" class="member-name-link">getItemCount()</a> - Method in class com.example.lottery.<a href="com/example/lottery/WaitedListedListAdapter.html" title="class in com.example.lottery">WaitedListedListAdapter</a></dt>
@@ -538,10 +548,6 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:O">O</h2>
 <dl class="index">
-<dt><a href="com/example/lottery/EntrantMainActivity.html#onActivityResult(int,int,android.content.Intent)" class="member-name-link">onActivityResult(int, int, Intent)</a> - Method in class com.example.lottery.<a href="com/example/lottery/EntrantMainActivity.html" title="class in com.example.lottery">EntrantMainActivity</a></dt>
-<dd>
-<div class="block">Handles the QR scan result.</div>
-</dd>
 <dt><a href="com/example/lottery/NotificationFragment.html#onAttach(android.content.Context)" class="member-name-link">onAttach(Context)</a> - Method in class com.example.lottery.<a href="com/example/lottery/NotificationFragment.html" title="class in com.example.lottery">NotificationFragment</a></dt>
 <dd>
 <div class="block">check if the caller implemented the communication protocol</div>
@@ -566,6 +572,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Binds notification data to the ViewHolder.</div>
 </dd>
+<dt><a href="com/example/lottery/OrganizerQrEventAdapter.html#onBindViewHolder(com.example.lottery.OrganizerQrEventAdapter.ViewHolder,int)" class="member-name-link">onBindViewHolder(OrganizerQrEventAdapter.ViewHolder, int)</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerQrEventAdapter.html" title="class in com.example.lottery">OrganizerQrEventAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/SignedUpListAdapter.html#onBindViewHolder(com.example.lottery.SignedUpListAdapter.ViewHolder,int)" class="member-name-link">onBindViewHolder(SignedUpListAdapter.ViewHolder, int)</a> - Method in class com.example.lottery.<a href="com/example/lottery/SignedUpListAdapter.html" title="class in com.example.lottery">SignedUpListAdapter</a></dt>
 <dd>
 <div class="block">get total number of rows</div>
@@ -634,6 +642,17 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Initializes the activity, sets up the layout, and configures UI components.</div>
 </dd>
+<dt><a href="com/example/lottery/OrganizerQrCodeDetailActivity.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerQrCodeDetailActivity.html" title="class in com.example.lottery">OrganizerQrCodeDetailActivity</a></dt>
+<dd>
+<div class="block">Initializes the activity, sets up the Toolbar with back navigation,
+ retrieves the event title and QR content from the launching Intent,
+ and generates and displays the QR code bitmap.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrEventListActivity.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerQrEventListActivity.html" title="class in com.example.lottery">OrganizerQrEventListActivity</a></dt>
+<dd>
+<div class="block">Initializes the activity, sets up the Toolbar with back navigation,
+ configures the RecyclerView and adapter, and triggers event loading from Firestore.</div>
+</dd>
 <dt><a href="com/example/lottery/OrganizerRegistrationActivity.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerRegistrationActivity.html" title="class in com.example.lottery">OrganizerRegistrationActivity</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/OrganizerUploadPosterDialogFragment.html#onCreate(android.os.Bundle)" class="member-name-link">onCreate(Bundle)</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerUploadPosterDialogFragment.html" title="class in com.example.lottery">OrganizerUploadPosterDialogFragment</a></dt>
@@ -674,6 +693,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a new ViewHolder for notification items.</div>
 </dd>
+<dt><a href="com/example/lottery/OrganizerQrEventAdapter.html#onCreateViewHolder(android.view.ViewGroup,int)" class="member-name-link">onCreateViewHolder(ViewGroup, int)</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerQrEventAdapter.html" title="class in com.example.lottery">OrganizerQrEventAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/SignedUpListAdapter.html#onCreateViewHolder(android.view.ViewGroup,int)" class="member-name-link">onCreateViewHolder(ViewGroup, int)</a> - Method in class com.example.lottery.<a href="com/example/lottery/SignedUpListAdapter.html" title="class in com.example.lottery">SignedUpListAdapter</a></dt>
 <dd>
 <div class="block">inflates the row layout from xml when needed</div>
@@ -697,6 +718,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/example/lottery/OrganizerBrowseEventsActivity.html#onEventClick(com.example.lottery.model.Event)" class="member-name-link">onEventClick(Event)</a> - Method in class com.example.lottery.<a href="com/example/lottery/OrganizerBrowseEventsActivity.html" title="class in com.example.lottery">OrganizerBrowseEventsActivity</a></dt>
 <dd>
 <div class="block">Handles clicks on individual event items in the RecyclerView.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrEventAdapter.OnEventClickListener.html#onEventClick(com.example.lottery.model.Event)" class="member-name-link">onEventClick(Event)</a> - Method in interface com.example.lottery.<a href="com/example/lottery/OrganizerQrEventAdapter.OnEventClickListener.html" title="interface in com.example.lottery">OrganizerQrEventAdapter.OnEventClickListener</a></dt>
+<dd>
+<div class="block">Called when an event item has been clicked.</div>
 </dd>
 <dt><a href="com/example/lottery/EntrantsListActivity.html#onLowMemory()" class="member-name-link">onLowMemory()</a> - Method in class com.example.lottery.<a href="com/example/lottery/EntrantsListActivity.html" title="class in com.example.lottery">EntrantsListActivity</a></dt>
 <dd>
@@ -777,6 +802,30 @@ loadScripts(document, 'script');</script>
 <div class="block">Activity class representing the profile screen for an organizer.</div>
 </dd>
 <dt><a href="com/example/lottery/OrganizerProfileActivity.html#%3Cinit%3E()" class="member-name-link">OrganizerProfileActivity()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/OrganizerProfileActivity.html" title="class in com.example.lottery">OrganizerProfileActivity</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/OrganizerQrCodeDetailActivity.html" class="type-name-link" title="class in com.example.lottery">OrganizerQrCodeDetailActivity</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
+<dd>
+<div class="block">Activity for displaying the large QR code for a specific event.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrCodeDetailActivity.html#%3Cinit%3E()" class="member-name-link">OrganizerQrCodeDetailActivity()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/OrganizerQrCodeDetailActivity.html" title="class in com.example.lottery">OrganizerQrCodeDetailActivity</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/example/lottery/OrganizerQrEventAdapter.html" class="type-name-link" title="class in com.example.lottery">OrganizerQrEventAdapter</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
+<dd>
+<div class="block">Adapter for displaying events in the QR code selection list.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrEventAdapter.html#%3Cinit%3E(java.util.List,com.example.lottery.OrganizerQrEventAdapter.OnEventClickListener)" class="member-name-link">OrganizerQrEventAdapter(List&lt;Event&gt;, OrganizerQrEventAdapter.OnEventClickListener)</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/OrganizerQrEventAdapter.html" title="class in com.example.lottery">OrganizerQrEventAdapter</a></dt>
+<dd>
+<div class="block">Constructs a new OrganizerQrEventAdapter.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrEventAdapter.OnEventClickListener.html" class="type-name-link" title="interface in com.example.lottery">OrganizerQrEventAdapter.OnEventClickListener</a> - Interface in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
+<dd>
+<div class="block">Interface definition for a callback to be invoked when an event item is clicked.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrEventListActivity.html" class="type-name-link" title="class in com.example.lottery">OrganizerQrEventListActivity</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
+<dd>
+<div class="block">Activity that displays a list of events for the organizer to select and view their QR codes.</div>
+</dd>
+<dt><a href="com/example/lottery/OrganizerQrEventListActivity.html#%3Cinit%3E()" class="member-name-link">OrganizerQrEventListActivity()</a> - Constructor for class com.example.lottery.<a href="com/example/lottery/OrganizerQrEventListActivity.html" title="class in com.example.lottery">OrganizerQrEventListActivity</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/example/lottery/OrganizerRegistrationActivity.html" class="type-name-link" title="class in com.example.lottery">OrganizerRegistrationActivity</a> - Class in <a href="com/example/lottery/package-summary.html">com.example.lottery</a></dt>
 <dd>
