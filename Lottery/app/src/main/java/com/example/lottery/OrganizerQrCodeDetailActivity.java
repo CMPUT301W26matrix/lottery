@@ -28,6 +28,14 @@ public class OrganizerQrCodeDetailActivity extends AppCompatActivity {
     /** Intent extra key for the QR code raw content. */
     public static final String EXTRA_QR_CONTENT = "extra_qr_content";
 
+    /**
+     * Initializes the activity, sets up the Toolbar with back navigation,
+     * retrieves the event title and QR content from the launching Intent,
+     * and generates and displays the QR code bitmap.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously
+     *                           being shut down, this contains the saved state; otherwise null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -39,6 +39,13 @@ public class OrganizerQrEventListActivity extends AppCompatActivity {
     /** Firebase Firestore instance for database access. */
     private FirebaseFirestore db;
 
+    /**
+     * Initializes the activity, sets up the Toolbar with back navigation,
+     * configures the RecyclerView and adapter, and triggers event loading from Firestore.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously
+     *                           being shut down, this contains the saved state; otherwise null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
